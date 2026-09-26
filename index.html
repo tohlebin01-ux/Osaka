@@ -3,703 +3,1013 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>大阪 7 日冬旅 | 家族旅行手账</title>
+  <title>大阪 · 家族旅簿 | OSAKA FAMILY TRAVEL BOOK</title>
+  
+  <!-- 引入高质感思源宋体（明朝体）与思源黑体，浓郁日系出版物质感 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@500;600;700;900&family=Shippori+Mincho:wght@600;800&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --bg-color: #f7f3e8;
-      --card-bg: #fffdf9;
-      --primary-red: #8b262a; /* 传统茜色/绯红 */
-      --primary-red-hover: #701d20;
-      --text-main: #2b2b2b;
-      --text-muted: #6e6b64;
-      --border-color: #e2dbce;
-      --highlight-yellow: #fef9d9;
-      --tag-bg: #ede6d8;
+      --bg-rice-paper: #f6f2e9;
+      --card-bg: #fcf9f2;
+      --card-inner: #ffffff;
+      --banner-bg: #1c3644; /* 深绀青色 */
+      --primary-red: #8f292b; /* 传统朱印茜色 */
+      --primary-red-hover: #731e20;
+      --text-main: #242220;
+      --text-muted: #736d65;
+      --border-color: #e5ded2;
+      --border-darker: #c8bead;
+      --note-yellow: #fdf8d8;
+      --font-serif: "Shippori Mincho", "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Hiragino Sans", "PingFang SC", sans-serif;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", "PingFang SC", "Microsoft YaHei", sans-serif;
     }
 
     body {
-      background-color: var(--bg-color);
-      background-image: radial-gradient(#dfd6c5 1px, transparent 1px);
-      background-size: 16px 16px;
+      background-color: var(--bg-rice-paper);
+      /* 和纸质感暗纹网点 */
+      background-image: radial-gradient(#d8cebe 1.1px, transparent 1.1px);
+      background-size: 14px 14px;
       color: var(--text-main);
-      padding: 20px 15px;
-      max-width: 1200px;
+      font-family: var(--font-sans);
+      padding: 30px 18px 60px 18px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .main-wrapper {
+      max-width: 1100px;
       margin: 0 auto;
     }
 
-    /* 顶部导航与和风标题 */
+    /* ================= 1. 顶部 Header 与 家族印章 ================= */
     header {
-      border-bottom: 2px dashed #d5ccba;
-      padding-bottom: 15px;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
     .header-top {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-end;
+      padding-bottom: 12px;
+      border-bottom: 1.5px solid #1a1a1a;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 15px;
+      gap: 15px;
     }
-    .travel-title {
-      font-size: 1.6rem;
-      font-weight: bold;
+    .brand-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    /* 和风圆形印章 Logo */
+    .stamp-logo {
+      width: 42px;
+      height: 42px;
+      border: 2px solid var(--primary-red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: var(--primary-red);
+      font-family: var(--font-serif);
+      font-weight: 900;
+      font-size: 1.35rem;
+      background: #fbf5ee;
+      box-shadow: inset 0 0 0 1.5px var(--bg-rice-paper);
+      user-select: none;
+    }
+    .brand-text h1 {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: #1a1a1a;
+      line-height: 1.1;
+    }
+    .brand-text p {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      color: #8c8275;
+      text-transform: uppercase;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+    /* 旅の仲間 (5人出行) */
+    .companion-box {
+      font-size: 0.85rem;
+      color: #555;
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .quick-tools {
-      display: flex;
-      gap: 15px;
-      background: var(--card-bg);
-      padding: 8px 14px;
-      border-radius: 8px;
+    .companion-label {
+      font-family: var(--font-serif);
+      color: #7b7367;
+      font-size: 0.82rem;
+    }
+    .companion-names {
       border: 1px solid var(--border-color);
-      font-size: 0.85rem;
-      align-items: center;
+      background: #fffdf9;
+      padding: 4px 12px;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+      font-weight: 500;
+    }
+    .companion-names span {
+      color: var(--primary-red);
+      font-weight: 600;
     }
 
-    /* 选项卡导航 */
+    /* ================= 2. Banner 与 出发前小提醒 (还原设计) ================= */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+    @media (max-width: 820px) {
+      .hero-grid { grid-template-columns: 1fr; }
+    }
+
+    .hero-banner {
+      background: linear-gradient(135deg, rgba(28,54,68,0.95), rgba(16,36,46,0.92)),
+                  url('https://images.unsplash.com/photo-1590559899731-a372a14c5688?w=1000&auto=format&fit=crop&q=80') center/cover no-repeat;
+      border-radius: 8px;
+      color: #fff;
+      padding: 30px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 200px;
+      box-shadow: 0 4px 16px rgba(18, 36, 46, 0.12);
+    }
+    .hero-subtitle {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: #9eb5c4;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: 2.3rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+    .hero-desc {
+      font-size: 0.88rem;
+      color: #d6e2e8;
+      line-height: 1.6;
+      max-width: 90%;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .hero-tag {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      padding: 4px 10px;
+      font-size: 0.76rem;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    /* 出发前小提醒卡片 */
+    .notice-card {
+      background: var(--card-inner);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .notice-title {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 14px;
+    }
+    .weather-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .cloud-icon {
+      font-size: 1.3rem;
+      color: #cb533d;
+    }
+    .weather-text b {
+      font-size: 0.95rem;
+      display: block;
+      color: #2b2b2b;
+    }
+    .weather-text span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .notice-tips {
+      font-size: 0.82rem;
+      color: #4f4c47;
+      line-height: 1.65;
+      background: #faf7f0;
+      padding: 10px 12px;
+      border-radius: 6px;
+      margin-top: 6px;
+    }
+
+    /* ================= 3. 主导航 Tabs (红底白字高亮) ================= */
     .nav-tabs {
       display: flex;
-      gap: 10px;
+      gap: 8px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 14px;
     }
-    .nav-tab-btn {
+    .tab-btn {
       background: transparent;
-      border: 1px solid transparent;
-      padding: 8px 18px;
-      font-size: 1rem;
+      border: none;
+      padding: 9px 24px;
+      font-size: 0.98rem;
       font-weight: 600;
-      color: var(--text-main);
+      font-family: var(--font-serif);
+      color: #4a453f;
       cursor: pointer;
       border-radius: 4px;
       transition: all 0.2s ease;
+      letter-spacing: 0.05em;
     }
-    .nav-tab-btn.active {
+    .tab-btn:hover {
+      color: var(--primary-red);
+      background: rgba(143, 41, 43, 0.04);
+    }
+    .tab-btn.active {
       background: var(--primary-red);
-      color: #fff;
-      box-shadow: 2px 2px 0px rgba(0,0,0,0.15);
+      color: #ffffff;
+      box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.18);
     }
 
-    /* 容器控制 */
-    .tab-content {
+    .tab-pane {
       display: none;
     }
-    .tab-content.active {
+    .tab-pane.active {
       display: block;
     }
 
-    /* 卡片通用和风样式 */
+    /* ================= 和风通用控件样式 ================= */
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-      margin-bottom: 20px;
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 22px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.03);
     }
-    .card-title {
-      font-size: 1.15rem;
-      font-weight: bold;
-      margin-bottom: 15px;
+    .card-heading {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #242220;
+      margin-bottom: 18px;
       display: flex;
       align-items: center;
-      gap: 8px;
-      color: #1a1a1a;
+      justify-content: space-between;
     }
-
-    /* 输入控件 */
     input, select, textarea {
-      padding: 8px 12px;
+      padding: 9px 12px;
       border: 1px solid var(--border-color);
-      border-radius: 6px;
+      border-radius: 4px;
       background: #fff;
       font-size: 0.9rem;
       color: var(--text-main);
+      font-family: var(--font-sans);
     }
     input:focus, select:focus, textarea:focus {
-      outline: 2px solid var(--primary-red);
+      outline: none;
+      border-color: var(--primary-red);
+      box-shadow: 0 0 0 2px rgba(143, 41, 43, 0.1);
     }
     .btn-red {
       background: var(--primary-red);
       color: #fff;
       border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
+      padding: 9px 18px;
+      border-radius: 4px;
       cursor: pointer;
       font-weight: 600;
+      font-size: 0.88rem;
+      font-family: var(--font-serif);
+      letter-spacing: 0.05em;
       transition: background 0.2s;
     }
     .btn-red:hover {
       background: var(--primary-red-hover);
     }
     .btn-subtle {
-      background: #eae3d5;
-      color: var(--text-main);
-      border: none;
+      background: #ede6d8;
+      color: #4a453e;
+      border: 1px solid #d5cbba;
       padding: 6px 12px;
       border-radius: 4px;
       cursor: pointer;
       font-size: 0.8rem;
+      transition: background 0.2s;
+    }
+    .btn-subtle:hover {
+      background: #e2d8c5;
     }
 
-    /* 表格 */
-    .table-responsive {
+    /* 和风细致表格 */
+    .table-container {
       overflow-x: auto;
+      margin-top: 14px;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      text-align: left;
-      font-size: 0.9rem;
-      margin-top: 10px;
+      font-size: 0.88rem;
     }
     th {
       background: #ebd8bd;
-      padding: 10px;
+      color: #3b352b;
+      padding: 10px 14px;
       font-weight: 600;
+      font-family: var(--font-serif);
+      border-bottom: 1px solid #d2c0a4;
+      text-align: left;
     }
     td {
-      padding: 10px;
-      border-bottom: 1px solid var(--border-color);
+      padding: 12px 14px;
+      border-bottom: 1px dashed var(--border-color);
+      background: #ffffff;
+      color: #333;
+    }
+    tr:hover td {
+      background: #fdfcf7;
     }
 
-    /* Day 按钮条 */
-    .day-selector {
+    /* ================= 页面 1：每日行程特定样式 ================= */
+    .transit-guide-box {
+      background: #fdfaf2;
+      border-left: 4px solid var(--primary-red);
+      padding: 15px 18px;
+      border-radius: 4px;
+      margin-bottom: 22px;
+      font-size: 0.86rem;
+      line-height: 1.7;
+      border-top: 1px solid var(--border-color);
+      border-right: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .transit-guide-box b {
+      color: var(--primary-red);
+    }
+    .day-pills {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 20px;
+      gap: 9px;
+      margin-bottom: 22px;
     }
-    .day-btn {
-      background: var(--card-bg);
+    .day-pill {
+      background: var(--card-inner);
       border: 1px solid var(--border-color);
-      padding: 6px 14px;
+      padding: 7px 18px;
       border-radius: 20px;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #555;
+      transition: all 0.2s;
     }
-    .day-btn.active {
+    .day-pill:hover {
+      border-color: var(--primary-red);
+      color: var(--primary-red);
+    }
+    .day-pill.active {
       background: var(--primary-red);
-      color: #fff;
+      color: #ffffff;
       border-color: var(--primary-red);
     }
 
-    /* 交通提示条 */
-    .transit-tip {
-      background: #fcf4e4;
-      border-left: 4px solid #d4a359;
-      padding: 12px;
-      border-radius: 4px;
-      margin-bottom: 15px;
-      font-size: 0.85rem;
-      line-height: 1.5;
-    }
-
-    /* 行程项卡片 */
-    .itinerary-item {
+    .spot-card {
       display: flex;
-      gap: 15px;
-      border-bottom: 1px solid var(--border-color);
-      padding: 15px 0;
+      gap: 18px;
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 18px;
+      margin-bottom: 16px;
+      align-items: flex-start;
+      transition: box-shadow 0.2s;
     }
-    .itinerary-img {
-      width: 110px;
-      height: 80px;
+    .spot-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+    .spot-img {
+      width: 130px;
+      height: 95px;
       object-fit: cover;
       border-radius: 6px;
-      border: 1px solid var(--border-color);
-      background: #ede6d8;
+      background: #eae2d3;
+      flex-shrink: 0;
     }
-    .itinerary-details {
+    .spot-info {
       flex: 1;
     }
-
-    /* “我的旅程”图片网格排版 */
-    .my-trip-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 20px;
+    .spot-name {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .todo-list-item {
+    .spot-meta {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .spot-desc {
+      font-size: 0.88rem;
+      color: #4a453f;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .spot-links a {
+      color: var(--primary-red);
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .spot-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* ================= 页面 3：我的旅程（完全复刻图 1 风格） ================= */
+    .trip-top-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+    @media (max-width: 900px) {
+      .trip-top-row { grid-template-columns: 1fr; }
+    }
+    .check-item {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 8px 0;
-      border-bottom: 1px dashed var(--border-color);
+      padding: 10px 0;
+      border-bottom: 1px dashed #e8e0d2;
+      font-size: 0.9rem;
+    }
+    .check-item:last-child {
+      border-bottom: none;
+    }
+    .check-item input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      accent-color: var(--primary-red);
+      cursor: pointer;
     }
     .memo-paper {
-      background-color: var(--highlight-yellow);
-      border: 1px solid #ebdca8;
-      border-radius: 8px;
-      padding: 15px;
-      min-height: 120px;
+      background-color: var(--note-yellow);
+      border: 1px solid #e9deaa;
+      border-radius: 6px;
+      padding: 16px;
+      min-height: 140px;
       width: 100%;
       resize: vertical;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: #3b352b;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.02);
     }
   </style>
 </head>
 <body>
 
-  <!-- 顶部标题与快速小工具 -->
-  <header>
-    <div class="header-top">
-      <div class="travel-title">🌸 大阪 7 日冬旅手账</div>
-      <div class="quick-tools">
-        <div>📍 <b>大阪 2月天气预估</b>: 3°C ~ 11°C (请备防风羽绒)</div>
-        <div>
-          💴 <b>实时换算</b>:
-          <input type="number" id="calc-jpy" placeholder="JPY" style="width: 80px;" oninput="convertCurrency('jpy')"> 
-          ≈ <span id="calc-myr" style="font-weight: bold; color: var(--primary-red);">0.00</span> MYR
+  <div class="main-wrapper">
+    <!-- ================= 顶部 Header ================= -->
+    <header>
+      <div class="header-top">
+        <div class="brand-area">
+          <div class="stamp-logo">大</div>
+          <div class="brand-text">
+            <h1>大阪 · 家族旅簿</h1>
+            <p>OSAKA FAMILY TRAVEL BOOK · FEBRUARY</p>
+          </div>
+        </div>
+
+        <!-- 旅の仲間 (5人出行) -->
+        <div class="companion-box">
+          <span class="companion-label">旅の仲間</span>
+          <div class="companion-names">
+            <span>小英</span> · <span>乐缤</span> · <span>紫琦</span> · <span>楷翔</span> · <span>楷哲</span>
+          </div>
         </div>
       </div>
-    </div>
+    </header>
 
-    <!-- 主页面切换选项卡 -->
+    <!-- ================= Banner 与 出发前小提醒 ================= -->
+    <section class="hero-grid">
+      <!-- 深青色和风 Banner -->
+      <div class="hero-banner">
+        <div>
+          <div class="hero-subtitle">WINTER JOURNEY / 7 DAYS</div>
+          <h2 class="hero-title">在关西，慢慢走</h2>
+          <p class="hero-desc">为一家人整理的轻松节奏：每天只安排一个重点区域，留足吃饭、休息和临时发现的时间。</p>
+        </div>
+        <div class="hero-tags">
+          <span class="hero-tag">2 月 · 7 天</span>
+          <span class="hero-tag">大阪为主</span>
+          <span class="hero-tag">日常温度 3-10°C</span>
+        </div>
+      </div>
+
+      <!-- 出发前小提醒 -->
+      <div class="notice-card">
+        <h3 class="notice-title">出发前小提醒</h3>
+        <div class="weather-row">
+          <div class="cloud-icon">☁️</div>
+          <div class="weather-text">
+            <b>大阪二月</b>
+            <span>偏冷、偶有冬雨，早晚温差明显</span>
+          </div>
+        </div>
+        <div class="notice-tips">
+          <b>出行建议：</b>保暖内层 + 防风防寒外套、轻便好走的运动鞋。热门餐厅建议提前关注预约；地铁刷 iPhone 交通卡（ICOCA/Suica）通行最便捷。
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 页面导航选项卡 ================= -->
     <nav class="nav-tabs">
-      <button class="nav-tab-btn active" onclick="switchTab('itinerary')">每日行程</button>
-      <button class="nav-tab-btn" onclick="switchTab('family-budget')">家庭账本</button>
-      <button class="nav-tab-btn" onclick="switchTab('my-trip')">我的旅程</button>
+      <button class="tab-btn active" onclick="switchPage('itinerary')">每日行程</button>
+      <button class="tab-btn" onclick="switchPage('family-ledger')">家庭账本</button>
+      <button class="tab-btn" onclick="switchPage('my-trip')">我的旅程</button>
     </nav>
-  </header>
 
-  <!-- ================= 页面 1：每日行程 ================= -->
-  <main id="tab-itinerary" class="tab-content active">
-    <!-- 地铁与交通指南建议 -->
-    <div class="transit-tip">
-      🚆 <b>大阪交通与路线指引推荐：</b><br>
-      • <b>推荐查交通 App</b>：在手机上优先使用 <b>Google Maps</b>（站台出口编号如 3号口超清晰）与 <b>Yahoo!乗換案内 / 乘换NAVITIME</b>（看精确时刻表与发车站台）。<br>
-      • <b>乘车攻略</b>：全家手机直接绑定 Apple Wallet 的 <b>ICOCA 或 Suica</b>，直接进出闸机最方便；从住宿点前往地铁站请优先点击每个景点的「查看地图路线」。
-    </div>
-
-    <!-- 7 天切换按钮 (7天完整可看) -->
-    <div class="day-selector" id="day-selector">
-      <!-- JS 生成 7 天按钮 -->
-    </div>
-
-    <!-- 每日行程列表与新增 -->
-    <div class="card">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-        <h3 class="card-title" id="current-day-title" style="margin: 0;">Day 1 行程安排</h3>
-        <button class="btn-red" onclick="openAddItineraryModal()">+ 新增行程点</button>
+    <!-- ================= PAGE 1: 每日行程 ================= -->
+    <main id="page-itinerary" class="tab-pane active">
+      <!-- 交通指引与 App 建议 -->
+      <div class="transit-guide-box">
+        🚆 <b>交通乘车与路线查询推荐：</b><br>
+        1. <b>推荐 App</b>：手机首选 <b>Google Maps</b>（查询步行去最近地铁站、出入口编号如“北改札·3号出口”最精准）配合 <b>Yahoo!乗換案内</b>（查日本地下铁精准发车站台、时刻表与避开拥挤车厢）。<br>
+        2. <b>全家乘车提示</b>：进出站请留意各站台线路颜色（如御堂筋线为红色、谷町线为紫色）。点击下方每个景点的「查看地图路线」，可直接导航规划！
       </div>
 
-      <div id="itinerary-list-container">
-        <!-- 动态显示当日行程 -->
+      <!-- 7 天完整切换按钮（Day 1 到 Day 7 均完整可选） -->
+      <div class="day-pills" id="day-pills-bar">
+        <!-- JS 动态生成 7 天 -->
       </div>
-    </div>
-  </main>
 
-  <!-- ================= 页面 2：家庭账本 ================= -->
-  <main id="tab-family-budget" class="tab-content">
-    <!-- 数据同步栏（支持导出/导入与云同步说明） -->
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
-      <span style="font-size:0.85rem; color:var(--text-muted);">
-        👨‍👩‍👧‍👦 家庭成员：<b>小英、乐缤、紫琦、楷翔、楷哲</b>
-      </span>
-      <div>
-        <button class="btn-subtle" onclick="exportData()">📤 导出账本(发给家人)</button>
-        <button class="btn-subtle" onclick="importData()">📥 导入账本合并</button>
-      </div>
-    </div>
-
-    <!-- 消费概览与百分比分析 -->
-    <div class="card" style="background:#fffcf5;">
-      <h3 class="card-title">📊 家庭开销总汇 (按类别统计)</h3>
-      <div style="display:flex; gap:30px; flex-wrap:wrap; margin-bottom:15px;">
-        <div>总支出 (JPY)：<span id="total-jpy-sum" style="font-size:1.4rem; font-weight:bold; color:var(--primary-red);">¥0</span></div>
-        <div>折合 (MYR)：<span id="total-myr-sum" style="font-size:1.4rem; font-weight:bold; color:var(--primary-red);">RM 0.00</span></div>
-      </div>
-      <div id="category-percentage-bar" style="display:flex; gap:10px; flex-wrap:wrap; font-size:0.85rem;">
-        <!-- 统计各类别百分比 -->
-      </div>
-    </div>
-
-    <!-- 记账表单 -->
-    <div class="card">
-      <h3 class="card-title">📝 记录公共支出</h3>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) 80px; gap: 10px; align-items: end;">
-        <div>
-          <label style="font-size:0.8rem;">日期</label>
-          <select id="expense-day" style="width:100%;">
-            <option value="Day 1">Day 1</option>
-            <option value="Day 2">Day 2</option>
-            <option value="Day 3">Day 3</option>
-            <option value="Day 4">Day 4</option>
-            <option value="Day 5">Day 5</option>
-            <option value="Day 6">Day 6</option>
-            <option value="Day 7">Day 7</option>
-          </select>
+      <!-- 选中日的行程卡片列表 -->
+      <div class="card">
+        <div class="card-heading">
+          <span id="current-day-label">第 1 天 (Day 1) 行程安排</span>
+          <button class="btn-red" onclick="openAddSpotModal()">+ 增加行程点</button>
         </div>
-        <div>
-          <label style="font-size:0.8rem;">项目描述</label>
-          <input type="text" id="expense-item" placeholder="如：一兰拉面、地铁票" style="width:100%;">
+
+        <div id="spots-list-box">
+          <!-- 动态渲染行程景点 -->
         </div>
-        <div>
-          <label style="font-size:0.8rem;">类别</label>
-          <select id="expense-category" style="width:100%;">
-            <option value="餐饮">餐饮</option>
-            <option value="交通">交通/地铁</option>
-            <option value="住宿">住宿</option>
-            <option value="门票">门票景点</option>
-            <option value="采购">超市/日用品</option>
+      </div>
+    </main>
+
+    <!-- ================= PAGE 2: 家庭账本 ================= -->
+    <main id="page-family-ledger" class="tab-pane">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+        <span style="font-size:0.85rem; color:var(--text-muted);">
+          💴 默认换算汇率：<b>1 JPY ≈ 0.031 MYR</b>（可在个人各自设备记账后导出合并）
+        </span>
+        <div style="display:flex; gap:8px;">
+          <button class="btn-subtle" onclick="exportLedger()">📤 导出账本(发给家人)</button>
+          <button class="btn-subtle" onclick="importLedger()">📥 导入合并家人账单</button>
+        </div>
+      </div>
+
+      <!-- 统计汇总看板 -->
+      <div class="card" style="background:#fffcf7;">
+        <div class="card-heading">
+          <span>📊 家庭支出总汇与开销比例</span>
+        </div>
+        <div style="display:flex; gap:36px; flex-wrap:wrap; margin-bottom:16px;">
+          <div>
+            <span style="font-size:0.85rem; color:var(--text-muted);">总支出 (日币)</span>
+            <div id="family-total-jpy" style="font-size:1.8rem; font-weight:800; color:var(--primary-red); font-family:var(--font-serif);">¥ 0</div>
+          </div>
+          <div>
+            <span style="font-size:0.85rem; color:var(--text-muted);">折合总额 (马币)</span>
+            <div id="family-total-myr" style="font-size:1.8rem; font-weight:800; color:var(--primary-red); font-family:var(--font-serif);">RM 0.00</div>
+          </div>
+        </div>
+
+        <!-- 分类百分比标签 -->
+        <div id="family-category-stats" style="display:flex; flex-wrap:wrap; gap:10px;">
+          <!-- 动态显示各类别百分比 -->
+        </div>
+      </div>
+
+      <!-- 记一笔表单 -->
+      <div class="card">
+        <div class="card-heading">
+          <span>📝 记录公共开销</span>
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) 90px; gap:10px; align-items:flex-end;">
+          <div>
+            <label style="font-size:0.78rem; color:#666;">日程</label>
+            <select id="fl-day" style="width:100%;">
+              <option value="Day 1">Day 1</option>
+              <option value="Day 2">Day 2</option>
+              <option value="Day 3">Day 3</option>
+              <option value="Day 4">Day 4</option>
+              <option value="Day 5">Day 5</option>
+              <option value="Day 6">Day 6</option>
+              <option value="Day 7">Day 7</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:0.78rem; color:#666;">开销项目</label>
+            <input type="text" id="fl-item" placeholder="如：家庭晚餐、南海电铁" style="width:100%;">
+          </div>
+          <div>
+            <label style="font-size:0.78rem; color:#666;">消费类别</label>
+            <select id="fl-category" style="width:100%;">
+              <option value="餐饮">餐饮</option>
+              <option value="交通">交通/地铁</option>
+              <option value="住宿">住宿</option>
+              <option value="门票">门票体验</option>
+              <option value="采购">超市零食</option>
+              <option value="其他">其他</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:0.78rem; color:#666;">付款人</label>
+            <select id="fl-payer" style="width:100%;">
+              <option value="小英">小英</option>
+              <option value="乐缤">乐缤</option>
+              <option value="紫琦">紫琦</option>
+              <option value="楷翔">楷翔</option>
+              <option value="楷哲">楷哲</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:0.78rem; color:#666;">金额 (JPY)</label>
+            <input type="number" id="fl-amount" placeholder="¥" style="width:100%;">
+          </div>
+          <button class="btn-red" onclick="addFamilyExpense()">记一笔</button>
+        </div>
+
+        <!-- 过滤与账单列表 -->
+        <div style="margin-top:28px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h4 style="font-size:0.95rem; font-family:var(--font-serif);">支出明细</h4>
+            <select id="fl-filter" onchange="renderFamilyLedger()" style="font-size:0.8rem; padding:4px 8px;">
+              <option value="ALL">全部日程 (7天)</option>
+              <option value="Day 1">Day 1</option>
+              <option value="Day 2">Day 2</option>
+              <option value="Day 3">Day 3</option>
+              <option value="Day 4">Day 4</option>
+              <option value="Day 5">Day 5</option>
+              <option value="Day 6">Day 6</option>
+              <option value="Day 7">Day 7</option>
+            </select>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>日程</th>
+                  <th>项目</th>
+                  <th>类别</th>
+                  <th>付款人</th>
+                  <th>日币 (JPY)</th>
+                  <th>折合 (MYR)</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="family-table-body">
+                <!-- 动态数据 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ================= PAGE 3: 我的旅程 (复刻图 1) ================= -->
+    <main id="page-my-trip" class="tab-pane">
+      <!-- 上半部三栏卡片 -->
+      <div class="trip-top-row">
+        <!-- 我的行李清单 -->
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-heading" style="font-size:1.15rem;">我的行李清单</div>
+          <div id="my-pack-list">
+            <!-- 勾选项目 -->
+          </div>
+          <div style="display:flex; gap:8px; margin-top:12px;">
+            <input type="text" id="new-pack-input" placeholder="新增行李物品..." style="flex:1;">
+            <button class="btn-subtle" onclick="addPackItem()">添加</button>
+          </div>
+        </div>
+
+        <!-- 我的个人预算 -->
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-heading" style="font-size:1.15rem;">我的个人预算</div>
+          <div style="font-family:var(--font-serif); font-size:2.4rem; font-weight:800; color:var(--primary-red); margin:12px 0;">
+            ¥ <span id="my-budget-num">0</span>
+          </div>
+          <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6;">
+            个人购物、咖啡、伴手礼；不会混进家庭共用账本。
+          </p>
+          <div style="display:flex; gap:8px; margin-top:16px;">
+            <input type="number" id="budget-input-val" placeholder="设定预算 (JPY)" style="flex:1;">
+            <button class="btn-subtle" onclick="setPersonalBudget()">保存</button>
+          </div>
+        </div>
+
+        <!-- 想去清单 -->
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-heading" style="font-size:1.15rem;">想去清单</div>
+          <div id="my-wish-list">
+            <!-- 想去小店/零食清单 -->
+          </div>
+          <div style="display:flex; gap:8px; margin-top:12px;">
+            <input type="text" id="new-wish-input" placeholder="如：黑门市场草莓、Loft..." style="flex:1;">
+            <button class="btn-subtle" onclick="addWishItem()">添加</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 我的记账表格 -->
+      <div class="card" style="margin-top:22px;">
+        <div class="card-heading">
+          <span>我的记账</span>
+        </div>
+        <div style="display:grid; grid-template-columns: 2fr 1fr 1fr 90px; gap:10px; margin-bottom:15px;">
+          <input type="text" id="my-item" placeholder="项目，例如：咖啡">
+          <select id="my-category">
+            <option value="购物">购物</option>
+            <option value="零食饮料">零食/饮料</option>
+            <option value="伴手礼">伴手礼</option>
+            <option value="个人车资">个人车资</option>
             <option value="其他">其他</option>
           </select>
+          <input type="number" id="my-amount" placeholder="JPY">
+          <button class="btn-red" onclick="addPersonalExpense()">记一笔</button>
         </div>
-        <div>
-          <label style="font-size:0.8rem;">付款人</label>
-          <select id="expense-payer" style="width:100%;">
-            <option value="小英">小英</option>
-            <option value="乐缤">乐缤</option>
-            <option value="紫琦">紫琦</option>
-            <option value="楷翔">楷翔</option>
-            <option value="楷哲">楷哲</option>
-          </select>
-        </div>
-        <div>
-          <label style="font-size:0.8rem;">金额 (JPY)</label>
-          <input type="number" id="expense-amount" placeholder="¥" style="width:100%;">
-        </div>
-        <button class="btn-red" onclick="addFamilyExpense()">记一笔</button>
-      </div>
 
-      <!-- 筛选与记录列表 -->
-      <div style="margin-top: 25px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
-          <h4 style="font-size:1rem;">支出明细</h4>
-          <select id="filter-day" onchange="renderFamilyExpenses()" style="font-size:0.8rem;">
-            <option value="ALL">显示全部 7 天</option>
-            <option value="Day 1">仅显示 Day 1</option>
-            <option value="Day 2">仅显示 Day 2</option>
-            <option value="Day 3">仅显示 Day 3</option>
-            <option value="Day 4">仅显示 Day 4</option>
-            <option value="Day 5">仅显示 Day 5</option>
-            <option value="Day 6">仅显示 Day 6</option>
-            <option value="Day 7">仅显示 Day 7</option>
-          </select>
-        </div>
-        <div class="table-responsive">
+        <div class="table-container">
           <table>
             <thead>
               <tr>
-                <th>日程</th>
                 <th>项目</th>
                 <th>类别</th>
-                <th>付款人</th>
-                <th>日币 (JPY)</th>
+                <th>金额 (JPY)</th>
                 <th>折合 (MYR)</th>
                 <th>操作</th>
               </tr>
             </thead>
-            <tbody id="family-expense-list">
-              <!-- 记账条目 -->
+            <tbody id="my-expense-body">
+              <!-- 个人账单 -->
             </tbody>
           </table>
         </div>
       </div>
-    </div>
-  </main>
 
-  <!-- ================= 页面 3：我的旅程（复刻图片） ================= -->
-  <main id="tab-my-trip" class="tab-content">
-    <div class="my-trip-grid">
-      <!-- 我的行李清单 -->
-      <div class="card">
-        <h3 class="card-title">我的行李清单</h3>
-        <div id="packing-checklist">
-          <!-- 默认预留清单项 -->
+      <!-- 旅途小记 -->
+      <div class="card" style="margin-top:22px;">
+        <div class="card-heading">
+          <span>旅途小记</span>
         </div>
-        <div style="display:flex; gap:8px; margin-top:10px;">
-          <input type="text" id="new-pack-item" placeholder="添加行李物品..." style="flex:1;">
-          <button class="btn-subtle" onclick="addPackItem()">添加</button>
-        </div>
+        <textarea id="my-notes" class="memo-paper" placeholder="记录今天逛到的小巷子、好吃的点心、有趣的新发现..." oninput="savePersonalNotes()"></textarea>
       </div>
-
-      <!-- 我的个人预算 -->
-      <div class="card">
-        <h3 class="card-title">我的个人预算</h3>
-        <div style="font-size: 2.2rem; font-weight: bold; color: var(--primary-red); margin: 15px 0;">
-          ¥ <span id="personal-budget-display">0</span>
-        </div>
-        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
-          个人购物、咖啡、伴手礼；不会混进家庭共用账本。
-        </p>
-        <div style="margin-top:15px; display:flex; gap:8px;">
-          <input type="number" id="budget-input" placeholder="设定预算 (JPY)" style="flex:1;">
-          <button class="btn-subtle" onclick="savePersonalBudget()">设置</button>
-        </div>
-      </div>
-
-      <!-- 想去清单 -->
-      <div class="card">
-        <h3 class="card-title">想去清单</h3>
-        <div id="wishlist-container">
-          <!-- 愿望清单 -->
-        </div>
-        <div style="display:flex; gap:8px; margin-top:10px;">
-          <input type="text" id="new-wish-item" placeholder="想逛的店、想吃的点心..." style="flex:1;">
-          <button class="btn-subtle" onclick="addWishItem()">添加</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 我的记账 -->
-    <div class="card" style="margin-top: 20px;">
-      <h3 class="card-title">我的记账</h3>
-      <div style="display: grid; grid-template-columns: 2fr 1.2fr 1.2fr 90px; gap: 10px; margin-bottom: 15px;">
-        <input type="text" id="my-expense-item" placeholder="项目，例如：咖啡">
-        <select id="my-expense-category">
-          <option value="购物">购物</option>
-          <option value="零食">零食/饮料</option>
-          <option value="伴手礼">伴手礼</option>
-          <option value="个人交通">个人交通</option>
-          <option value="其他">其他</option>
-        </select>
-        <input type="number" id="my-expense-amount" placeholder="JPY">
-        <button class="btn-red" onclick="addPersonalExpense()">记一笔</button>
-      </div>
-
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>项目</th>
-              <th>类别</th>
-              <th>金额 (JPY)</th>
-              <th>折合 (MYR)</th>
-              <th>操作</th>
-            </tr>
-          </thead>
-          <tbody id="my-expense-list">
-            <!-- 个人开销明细 -->
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- 旅途小记 -->
-    <div class="card" style="margin-top: 20px;">
-      <h3 class="card-title">旅途小记</h3>
-      <textarea id="my-travel-notes" class="memo-paper" placeholder="记录当天心得、战利品、好吃的心得便签..." oninput="savePersonalNotes()"></textarea>
-    </div>
-  </main>
+    </main>
+  </div>
 
   <script>
-    /* ================= 基础配置与换算 ================= */
-    const JPY_RATE = 0.031; // 1 JPY ≈ 0.031 MYR (可微调)
+    const JPY_TO_MYR = 0.031;
 
-    function convertCurrency(type) {
-      if (type === 'jpy') {
-        const val = parseFloat(document.getElementById('calc-jpy').value) || 0;
-        document.getElementById('calc-myr').innerText = (val * JPY_RATE).toFixed(2);
-      }
-    }
-
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.nav-tab-btn').forEach(el => el.classList.remove('active'));
+    /* ================= 页面切换逻辑 ================= */
+    function switchPage(pageId) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
       
-      document.getElementById('tab-' + tabId).classList.add('active');
-      const tabs = ['itinerary', 'family-budget', 'my-trip'];
-      const index = tabs.indexOf(tabId);
-      if (index !== -1) {
-        document.querySelectorAll('.nav-tab-btn')[index].classList.add('active');
+      document.getElementById('page-' + pageId).classList.add('active');
+      const tabs = ['itinerary', 'family-ledger', 'my-trip'];
+      const idx = tabs.indexOf(pageId);
+      if (idx !== -1) {
+        document.querySelectorAll('.tab-btn')[idx].classList.add('active');
       }
     }
 
-    /* ================= 1. 每日行程逻辑 (Day 1 - Day 7) ================= */
+    /* ================= 1. 每日行程逻辑 (Day 1 - 7) ================= */
     let currentDay = 1;
-    let itineraryData = JSON.parse(localStorage.getItem('osaka_itinerary')) || {
+    let itineraryData = JSON.parse(localStorage.getItem('osaka_family_itinerary')) || {
       1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: []
     };
 
-    function initDaySelector() {
-      const container = document.getElementById('day-selector');
+    function renderDayPills() {
+      const container = document.getElementById('day-pills-bar');
       container.innerHTML = '';
       for (let i = 1; i <= 7; i++) {
         const btn = document.createElement('button');
-        btn.className = `day-btn ${i === currentDay ? 'active' : ''}`;
+        btn.className = `day-pill ${i === currentDay ? 'active' : ''}`;
         btn.innerText = `第 ${i} 天 (Day ${i})`;
-        btn.onclick = () => selectDay(i);
+        btn.onclick = () => {
+          currentDay = i;
+          renderDayPills();
+          document.getElementById('current-day-label').innerText = `第 ${i} 天 (Day ${i}) 行程安排`;
+          renderSpotList();
+        };
         container.appendChild(btn);
       }
     }
 
-    function selectDay(day) {
-      currentDay = day;
-      initDaySelector();
-      document.getElementById('current-day-title').innerText = `Day ${day} 行程安排`;
-      renderItinerary();
-    }
+    function renderSpotList() {
+      const box = document.getElementById('spots-list-box');
+      const spots = itineraryData[currentDay] || [];
 
-    function renderItinerary() {
-      const container = document.getElementById('itinerary-list-container');
-      const items = itineraryData[currentDay] || [];
-      if (items.length === 0) {
-        container.innerHTML = `
-          <div style="text-align: center; color: var(--text-muted); padding: 30px;">
-            当天行程目前还是空的，点击右上角「+ 新增行程点」安排您的景点、餐厅与地铁路线吧！
+      if (spots.length === 0) {
+        box.innerHTML = `
+          <div style="text-align: center; color: var(--text-muted); padding: 40px 10px; font-size: 0.95rem;">
+            🌸 这一天的行程目前还留白中，点击右上角「+ 增加行程点」添加景点、餐厅与具体地铁乘车方式吧！
           </div>`;
         return;
       }
 
-      container.innerHTML = items.map((item, idx) => `
-        <div class="itinerary-item">
-          <img src="${item.img || 'https://images.unsplash.com/photo-1590559899731-a372a14c5688?w=300'}" class="itinerary-img" alt="景点图片">
-          <div class="itinerary-details">
-            <div style="display:flex; justify-content:space-between; align-items:start;">
-              <h4 style="font-size:1.1rem; margin-bottom: 4px;">${item.name}</h4>
-              <button class="btn-subtle" onclick="deleteItineraryItem(${idx})" style="color:#a00;">删除</button>
+      box.innerHTML = spots.map((s, idx) => `
+        <div class="spot-card">
+          <img src="${s.img || 'https://images.unsplash.com/photo-1590559899731-a372a14c5688?w=300'}" class="spot-img" alt="${s.name}">
+          <div class="spot-info">
+            <div class="spot-name">
+              <span>${s.name}</span>
+              <button class="btn-subtle" onclick="removeSpot(${idx})" style="color:#b22;">删除</button>
             </div>
-            <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom: 6px;">
-              ⏱ 建议时间：${item.time || '待定'} | 🚇 交通：${item.transit || '步行 / 地铁直达'}
+            <div class="spot-meta">
+              <span>⏱ 建议时间：<b>${s.time || '弹性'}</b></span>
+              <span>🚇 乘车路线：<b>${s.transit || '步行 / 地铁直达'}</b></span>
             </div>
-            <p style="font-size:0.9rem; line-height: 1.4; margin-bottom: 8px;">${item.desc || ''}</p>
-            ${item.mapUrl ? `<a href="${item.mapUrl}" target="_blank" style="color:var(--primary-red); font-size:0.85rem; text-decoration:none; font-weight:600;">📍 打开 Google Maps 路线导航 &rarr;</a>` : ''}
+            <div class="spot-desc">${s.desc || '自由游览与体验'}</div>
+            <div class="spot-links">
+              <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('大阪 ' + s.name)}" target="_blank">
+                📍 打开 Google Maps 路线导航 &rarr;
+              </a>
+            </div>
           </div>
         </div>
       `).join('');
     }
 
-    function openAddItineraryModal() {
-      const name = prompt('请输入景点/活动名称（例如：心斋桥、黑门市场）：');
+    function openAddSpotModal() {
+      const name = prompt('请输入景点或活动名称（如：黑门市场、道顿堀、通天阁）：');
       if (!name) return;
-      const time = prompt('建议游览时间（例如：10:00 - 12:30）：', '10:00');
-      const transit = prompt('地铁及交通方式（例如：从难波站搭御堂筋线至梅田站 5号口出）：', '');
-      const mapQuery = encodeURIComponent(`大阪 ${name}`);
-      const mapUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
-      const img = prompt('图片 URL 链接（可留空使用默认图片）：', '');
-      const desc = prompt('行程详情与小提醒：', '');
+      const time = prompt('建议游玩时间（例如：09:30 - 12:00）：', '10:00');
+      const transit = prompt('从住处或上一站前往的地铁路线（如：从难波站搭千日前线至日本桥站 10号口出）：', '');
+      const desc = prompt('行程详情、必吃推荐或小提醒：', '');
+      const img = prompt('景点图片网址（留空将自动匹配默认和风风景图）：', '');
 
       if (!itineraryData[currentDay]) itineraryData[currentDay] = [];
-      itineraryData[currentDay].push({ name, time, transit, mapUrl, img, desc });
-      localStorage.setItem('osaka_itinerary', JSON.stringify(itineraryData));
-      renderItinerary();
+      itineraryData[currentDay].push({ name, time, transit, desc, img });
+      localStorage.setItem('osaka_family_itinerary', JSON.stringify(itineraryData));
+      renderSpotList();
     }
 
-    function deleteItineraryItem(idx) {
-      if (confirm('确定删除此行程点吗？')) {
+    function removeSpot(idx) {
+      if (confirm('确定要删除这个行程点吗？')) {
         itineraryData[currentDay].splice(idx, 1);
-        localStorage.setItem('osaka_itinerary', JSON.stringify(itineraryData));
-        renderItinerary();
+        localStorage.setItem('osaka_family_itinerary', JSON.stringify(itineraryData));
+        renderSpotList();
       }
     }
 
     /* ================= 2. 家庭账本逻辑 ================= */
-    let familyExpenses = JSON.parse(localStorage.getItem('osaka_family_expenses')) || [];
+    let familyLedger = JSON.parse(localStorage.getItem('osaka_shared_ledger')) || [];
 
     function addFamilyExpense() {
-      const day = document.getElementById('expense-day').value;
-      const item = document.getElementById('expense-item').value.trim();
-      const category = document.getElementById('expense-category').value;
-      const payer = document.getElementById('expense-payer').value;
-      const amount = parseFloat(document.getElementById('expense-amount').value);
+      const day = document.getElementById('fl-day').value;
+      const item = document.getElementById('fl-item').value.trim();
+      const category = document.getElementById('fl-category').value;
+      const payer = document.getElementById('fl-payer').value;
+      const amount = parseFloat(document.getElementById('fl-amount').value);
 
       if (!item || isNaN(amount) || amount <= 0) {
-        alert('请输入有效的项目与金额');
+        alert('请填入完整的项目名称与有效金额');
         return;
       }
 
-      familyExpenses.push({
-        id: Date.now(),
-        day, item, category, payer, amount
-      });
+      familyLedger.push({ id: Date.now(), day, item, category, payer, amount });
+      localStorage.setItem('osaka_shared_ledger', JSON.stringify(familyLedger));
 
-      localStorage.setItem('osaka_family_expenses', JSON.stringify(familyExpenses));
-      document.getElementById('expense-item').value = '';
-      document.getElementById('expense-amount').value = '';
-      renderFamilyExpenses();
+      document.getElementById('fl-item').value = '';
+      document.getElementById('fl-amount').value = '';
+      renderFamilyLedger();
     }
 
     function deleteFamilyExpense(id) {
-      familyExpenses = familyExpenses.filter(e => e.id !== id);
-      localStorage.setItem('osaka_family_expenses', JSON.stringify(familyExpenses));
-      renderFamilyExpenses();
+      familyLedger = familyLedger.filter(x => x.id !== id);
+      localStorage.setItem('osaka_shared_ledger', JSON.stringify(familyLedger));
+      renderFamilyLedger();
     }
 
-    function renderFamilyExpenses() {
-      const filterDay = document.getElementById('filter-day').value;
-      const tbody = document.getElementById('family-expense-list');
-      
-      const filtered = filterDay === 'ALL' ? familyExpenses : familyExpenses.filter(e => e.day === filterDay);
+    function renderFamilyLedger() {
+      const filter = document.getElementById('fl-filter').value;
+      const tbody = document.getElementById('family-table-body');
+      const list = filter === 'ALL' ? familyLedger : familyLedger.filter(x => x.day === filter);
 
-      if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--text-muted);">暂无记录</td></tr>`;
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:18px;">暂无该日期的支出条目</td></tr>`;
       } else {
-        tbody.innerHTML = filtered.map(e => `
+        tbody.innerHTML = list.map(x => `
           <tr>
-            <td>${e.day}</td>
-            <td><b>${e.item}</b></td>
-            <td><span style="background:var(--tag-bg); padding:3px 8px; border-radius:4px; font-size:0.8rem;">${e.category}</span></td>
-            <td>${e.payer}</td>
-            <td>¥ ${e.amount.toLocaleString()}</td>
-            <td>RM ${(e.amount * JPY_RATE).toFixed(2)}</td>
-            <td><button class="btn-subtle" onclick="deleteFamilyExpense(${e.id})">删除</button></td>
+            <td><b>${x.day}</b></td>
+            <td>${x.item}</td>
+            <td><span style="background:#f0e9dc; padding:3px 8px; border-radius:4px; font-size:0.8rem;">${x.category}</span></td>
+            <td><b>${x.payer}</b></td>
+            <td style="font-weight:600;">¥ ${x.amount.toLocaleString()}</td>
+            <td style="color:var(--text-muted);">RM ${(x.amount * JPY_TO_MYR).toFixed(2)}</td>
+            <td><button class="btn-subtle" onclick="deleteFamilyExpense(${x.id})">删除</button></td>
           </tr>
         `).join('');
       }
 
-      // 计算总开销与百分比
-      let totalJPY = familyExpenses.reduce((acc, cur) => acc + cur.amount, 0);
-      document.getElementById('total-jpy-sum').innerText = `¥ ${totalJPY.toLocaleString()}`;
-      document.getElementById('total-myr-sum').innerText = `RM ${(totalJPY * JPY_RATE).toFixed(2)}`;
+      // 计算总金额与百分比
+      const totalJPY = familyLedger.reduce((sum, item) => sum + item.amount, 0);
+      document.getElementById('family-total-jpy').innerText = `¥ ${totalJPY.toLocaleString()}`;
+      document.getElementById('family-total-myr').innerText = `RM ${(totalJPY * JPY_TO_MYR).toFixed(2)}`;
 
-      // 统计分类百分比
-      const catTotals = {};
-      familyExpenses.forEach(e => {
-        catTotals[e.category] = (catTotals[e.category] || 0) + e.amount;
-      });
+      const catMap = {};
+      familyLedger.forEach(x => { catMap[x.category] = (catMap[x.category] || 0) + x.amount; });
 
-      const barContainer = document.getElementById('category-percentage-bar');
+      const statsBox = document.getElementById('family-category-stats');
       if (totalJPY === 0) {
-        barContainer.innerHTML = '<span style="color:var(--text-muted);">尚无统计数据</span>';
+        statsBox.innerHTML = '<span style="font-size:0.85rem; color:var(--text-muted);">等待记账中...</span>';
       } else {
-        barContainer.innerHTML = Object.keys(catTotals).map(cat => {
-          const pct = ((catTotals[cat] / totalJPY) * 100).toFixed(1);
-          return `<span style="background:white; border:1px solid var(--border-color); padding:4px 8px; border-radius:4px;">
-            <b>${cat}</b>: ${pct}% (¥${catTotals[cat].toLocaleString()})
+        statsBox.innerHTML = Object.keys(catMap).map(c => {
+          const pct = ((catMap[c] / totalJPY) * 100).toFixed(1);
+          return `<span style="background:#fff; border:1px solid var(--border-color); padding:4px 10px; border-radius:4px; font-size:0.82rem;">
+            <b>${c}</b>: ${pct}% (¥${catMap[c].toLocaleString()})
           </span>`;
         }).join('');
       }
     }
 
-    // 导出数据供家人导入（实现零服务器免费多机同步）
-    function exportData() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(familyExpenses));
-      const downloadAnchor = document.createElement('a');
-      downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", `osaka_family_expenses_${new Date().toISOString().slice(0,10)}.json`);
-      document.body.appendChild(downloadAnchor);
-      downloadAnchor.click();
-      downloadAnchor.remove();
+    function exportLedger() {
+      const dataUri = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(familyLedger));
+      const a = document.createElement('a');
+      a.setAttribute('href', dataUri);
+      a.setAttribute('download', `osaka_family_ledger_${new Date().toISOString().slice(0,10)}.json`);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
     }
 
-    function importData() {
+    function importLedger() {
       const input = document.createElement('input');
       input.type = 'file';
       input.accept = '.json';
       input.onchange = e => {
         const file = e.target.files[0];
         const reader = new FileReader();
-        reader.onload = event => {
+        reader.onload = ev => {
           try {
-            const imported = JSON.parse(event.target.result);
-            if (Array.isArray(imported)) {
-              familyExpenses = imported;
-              localStorage.setItem('osaka_family_expenses', JSON.stringify(familyExpenses));
-              renderFamilyExpenses();
-              alert('账本同步成功！');
+            const data = JSON.parse(ev.target.result);
+            if (Array.isArray(data)) {
+              familyLedger = data;
+              localStorage.setItem('osaka_shared_ledger', JSON.stringify(familyLedger));
+              renderFamilyLedger();
+              alert('账本同步导入完成！');
             }
-          } catch (err) {
-            alert('文件格式错误');
+          } catch(err) {
+            alert('文件格式不正确');
           }
         };
         reader.readAsText(file);
@@ -707,8 +1017,8 @@
       input.click();
     }
 
-    /* ================= 3. 我的旅程逻辑 (个人专属设备存储) ================= */
-    let myPackList = JSON.parse(localStorage.getItem('my_pack_list')) || [
+    /* ================= 3. 我的旅程 (复刻图 1 细节) ================= */
+    let myPackList = JSON.parse(localStorage.getItem('my_trip_pack')) || [
       { text: '护照、IC、保险资料', checked: false },
       { text: '现金、Wise / 银行卡', checked: false },
       { text: '防风外套与保暖衣', checked: false },
@@ -716,129 +1026,127 @@
       { text: '常用药、口罩', checked: false }
     ];
 
-    let myWishList = JSON.parse(localStorage.getItem('my_wish_list')) || [
+    let myWishList = JSON.parse(localStorage.getItem('my_trip_wish')) || [
       { text: 'Loft 文具', checked: false },
       { text: '黑门市场草莓', checked: false },
       { text: '日本桥电器街', checked: false }
     ];
 
-    let myExpenses = JSON.parse(localStorage.getItem('my_expenses')) || [];
+    let myExpenses = JSON.parse(localStorage.getItem('my_trip_expenses')) || [];
 
     function renderMyTrip() {
-      // 1. 行李清单
-      const packBox = document.getElementById('packing-checklist');
+      // 行李清单
+      const packBox = document.getElementById('my-pack-list');
       packBox.innerHTML = myPackList.map((item, idx) => `
-        <div class="todo-list-item">
+        <div class="check-item">
           <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="togglePack(${idx})">
           <span style="${item.checked ? 'text-decoration: line-through; color: var(--text-muted);' : ''}">${item.text}</span>
         </div>
       `).join('');
 
-      // 2. 预算
-      const budget = localStorage.getItem('my_personal_budget') || '0';
-      document.getElementById('personal-budget-display').innerText = Number(budget).toLocaleString();
+      // 预算
+      const budget = localStorage.getItem('my_trip_budget') || '0';
+      document.getElementById('my-budget-num').innerText = Number(budget).toLocaleString();
 
-      // 3. 愿望清单
-      const wishBox = document.getElementById('wishlist-container');
+      // 想去清单
+      const wishBox = document.getElementById('my-wish-list');
       wishBox.innerHTML = myWishList.map((item, idx) => `
-        <div class="todo-list-item">
+        <div class="check-item">
           <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleWish(${idx})">
           <span style="${item.checked ? 'text-decoration: line-through; color: var(--text-muted);' : ''}">${item.text}</span>
         </div>
       `).join('');
 
-      // 4. 个人记账
-      const expBox = document.getElementById('my-expense-list');
+      // 个人记账
+      const expBody = document.getElementById('my-expense-body');
       if (myExpenses.length === 0) {
-        expBox.innerHTML = `<tr><td colspan="5" style="color:var(--text-muted);">还没有个人开销，抵达后从这里开始记。</td></tr>`;
+        expBody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:16px;">还没有个人开销，抵达后从这里开始记。</td></tr>`;
       } else {
-        expBox.innerHTML = myExpenses.map((e, idx) => `
+        expBody.innerHTML = myExpenses.map((x, idx) => `
           <tr>
-            <td>${e.item}</td>
-            <td><span style="background:var(--tag-bg); padding:2px 6px; border-radius:4px; font-size:0.8rem;">${e.category}</span></td>
-            <td>¥ ${e.amount.toLocaleString()}</td>
-            <td>RM ${(e.amount * JPY_RATE).toFixed(2)}</td>
+            <td>${x.item}</td>
+            <td><span style="background:#f0e9dc; padding:3px 8px; border-radius:4px; font-size:0.8rem;">${x.category}</span></td>
+            <td style="font-weight:600;">¥ ${x.amount.toLocaleString()}</td>
+            <td style="color:var(--text-muted);">RM ${(x.amount * JPY_TO_MYR).toFixed(2)}</td>
             <td><button class="btn-subtle" onclick="deleteMyExpense(${idx})">删除</button></td>
           </tr>
         `).join('');
       }
 
-      // 5. 小记
-      document.getElementById('my-travel-notes').value = localStorage.getItem('my_notes') || '';
+      // 小记
+      document.getElementById('my-notes').value = localStorage.getItem('my_trip_notes') || '';
     }
 
     function togglePack(idx) {
       myPackList[idx].checked = !myPackList[idx].checked;
-      localStorage.setItem('my_pack_list', JSON.stringify(myPackList));
+      localStorage.setItem('my_trip_pack', JSON.stringify(myPackList));
       renderMyTrip();
     }
-
     function addPackItem() {
-      const text = document.getElementById('new-pack-item').value.trim();
-      if (!text) return;
-      myPackList.push({ text, checked: false });
-      localStorage.setItem('my_pack_list', JSON.stringify(myPackList));
-      document.getElementById('new-pack-item').value = '';
+      const val = document.getElementById('new-pack-input').value.trim();
+      if (!val) return;
+      myPackList.push({ text: val, checked: false });
+      localStorage.setItem('my_trip_pack', JSON.stringify(myPackList));
+      document.getElementById('new-pack-input').value = '';
       renderMyTrip();
     }
 
     function toggleWish(idx) {
       myWishList[idx].checked = !myWishList[idx].checked;
-      localStorage.setItem('my_wish_list', JSON.stringify(myWishList));
+      localStorage.setItem('my_trip_wish', JSON.stringify(myWishList));
       renderMyTrip();
     }
-
     function addWishItem() {
-      const text = document.getElementById('new-wish-item').value.trim();
-      if (!text) return;
-      myWishList.push({ text, checked: false });
-      localStorage.setItem('my_wish_list', JSON.stringify(myWishList));
-      document.getElementById('new-wish-item').value = '';
+      const val = document.getElementById('new-wish-input').value.trim();
+      if (!val) return;
+      myWishList.push({ text: val, checked: false });
+      localStorage.setItem('my_trip_wish', JSON.stringify(myWishList));
+      document.getElementById('new-wish-input').value = '';
       renderMyTrip();
     }
 
-    function savePersonalBudget() {
-      const val = document.getElementById('budget-input').value;
+    function setPersonalBudget() {
+      const val = document.getElementById('budget-input-val').value;
       if (val) {
-        localStorage.setItem('my_personal_budget', val);
-        document.getElementById('budget-input').value = '';
+        localStorage.setItem('my_trip_budget', val);
+        document.getElementById('budget-input-val').value = '';
         renderMyTrip();
       }
     }
 
     function addPersonalExpense() {
-      const item = document.getElementById('my-expense-item').value.trim();
-      const category = document.getElementById('my-expense-category').value;
-      const amount = parseFloat(document.getElementById('my-expense-amount').value);
+      const item = document.getElementById('my-item').value.trim();
+      const category = document.getElementById('my-category').value;
+      const amount = parseFloat(document.getElementById('my-amount').value);
 
       if (!item || isNaN(amount) || amount <= 0) {
-        alert('请输入有效项目与金额');
+        alert('请输入项目与有效金额');
         return;
       }
 
       myExpenses.push({ item, category, amount });
-      localStorage.setItem('my_expenses', JSON.stringify(myExpenses));
-      document.getElementById('my-expense-item').value = '';
-      document.getElementById('my-expense-amount').value = '';
+      localStorage.setItem('my_trip_expenses', JSON.stringify(myExpenses));
+      document.getElementById('my-item').value = '';
+      document.getElementById('my-amount').value = '';
       renderMyTrip();
     }
 
     function deleteMyExpense(idx) {
       myExpenses.splice(idx, 1);
-      localStorage.setItem('my_expenses', JSON.stringify(myExpenses));
+      localStorage.setItem('my_trip_expenses', JSON.stringify(myExpenses));
       renderMyTrip();
     }
 
     function savePersonalNotes() {
-      const val = document.getElementById('my-travel-notes').value;
+      const val = document.getElementById('my-notes').value;
       localStorage.setItem('my_notes', val);
     }
 
     /* 启动初始化 */
     window.onload = function() {
-      initDaySelector();
-      renderItinerary();
-      renderFamilyExpenses();
+      renderDayPills();
+      renderSpotList();
+      renderFamilyLedger();
       renderMyTrip();
     };
   </script>
