@@ -417,10 +417,10 @@
       document.querySelectorAll('.tab-btn')[tabs.indexOf(pageId)].classList.add('active');
     }
 
-    // 已为您更新为全部真实的关西实拍图片 ID
     const defaultItinerary = {
       1: [
-        { name: "关西机场 ➔ b&黒門1号店", time: "抵达后 - 16:00", transit: "【南海电铁特急 Rapi:t】直达难波站，打车或步行入住", desc: "抵达大阪！放好行李后直接下楼吃现烤扇贝或和牛串充饥。", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=500", mapQuery: "b&黒門1号店" },
+        { name: "关西机场 ➔ 入住 b&黒門1号店", time: "抵达后 - 15:30", transit: "【南海电铁特急 Rapi:t】直达难波站，打车或步行入住", desc: "抵达大阪！出站后直接前往民宿安顿好大件行李，轻装上阵。", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=500", mapQuery: "b&黒門1号店" },
+        { name: "黑门市场 (关西的厨房)", time: "15:30 - 17:00", transit: "民宿下楼即达", desc: "近水楼台先得月！开启第一顿美食狂欢：现烤海鲜、黑毛和牛串、海胆、淡雪草莓，边逛边吃。", img: "https://images.unsplash.com/photo-1590559899731-a372a14c5688?w=500", mapQuery: "黒門市場" },
         { name: "道顿堀与戎桥打卡", time: "17:30 - 晚间", transit: "步行 8 分钟即达", desc: "晚餐吃一兰拉面，或街头现烤章鱼烧。别忘了与格力高奔跑小人合影。", img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500", mapQuery: "道頓堀 戎橋" }
       ],
       2: [
@@ -466,11 +466,11 @@
     };
 
     let currentDay = 1;
-    // 数据升级至 _v9 确保真实照片全面刷新
-    let itineraryData = JSON.parse(localStorage.getItem('osaka_family_itinerary_v9'));
+    // 数据升级至 _v11 彻底解锁上下排序功能
+    let itineraryData = JSON.parse(localStorage.getItem('osaka_family_itinerary_v11'));
     if (!itineraryData) {
       itineraryData = defaultItinerary;
-      localStorage.setItem('osaka_family_itinerary_v9', JSON.stringify(itineraryData));
+      localStorage.setItem('osaka_family_itinerary_v11', JSON.stringify(itineraryData));
     }
 
     const fallbackImg = "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=500&q=80";
@@ -511,6 +511,7 @@
         return;
       }
 
+      // 新增了上下移动排序按钮 ▲ ▼
       box.innerHTML = spots.map((s, idx) => {
         let query = s.mapQuery ? s.mapQuery : s.name;
         return `
@@ -520,6 +521,8 @@
             <div class="spot-name">
               <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('日本 大阪 ' + query)}" target="_blank" title="在 Google Maps 中查看">📍 ${s.name}</a>
               <div>
+                <button class="btn-subtle" onclick="window.moveSpotUp(${idx})" ${idx === 0 ? 'disabled style="opacity:0.3;cursor:not-allowed;"' : 'style="color:#555; padding:4px 8px;"'} title="上移">▲</button>
+                <button class="btn-subtle" onclick="window.moveSpotDown(${idx})" ${idx === spots.length - 1 ? 'disabled style="opacity:0.3;cursor:not-allowed;"' : 'style="color:#555; padding:4px 8px; margin-right:6px;"'} title="下移">▼</button>
                 <button class="btn-subtle" onclick="window.editSpot(${idx})" style="color:#0056b3; font-size:0.75rem; padding:4px 10px; margin-right:6px; border:1px solid #0056b3; background:#f0f8ff;">✏️ 修改</button>
                 <button class="btn-subtle" onclick="window.removeSpot(${idx})" style="color:#b22; font-size:0.75rem; padding:4px 8px;">删除</button>
               </div>
@@ -531,7 +534,27 @@
       `}).join('');
     }
 
-    // --- 全新可视化弹窗逻辑 ---
+    // --- 上下移动排序功能 ---
+    window.moveSpotUp = function(idx) {
+      if (idx === 0) return;
+      const spots = itineraryData[currentDay];
+      const temp = spots[idx - 1];
+      spots[idx - 1] = spots[idx];
+      spots[idx] = temp;
+      localStorage.setItem('osaka_family_itinerary_v11', JSON.stringify(itineraryData));
+      window.renderSpotList();
+    }
+
+    window.moveSpotDown = function(idx) {
+      const spots = itineraryData[currentDay];
+      if (idx === spots.length - 1) return;
+      const temp = spots[idx + 1];
+      spots[idx + 1] = spots[idx];
+      spots[idx] = temp;
+      localStorage.setItem('osaka_family_itinerary_v11', JSON.stringify(itineraryData));
+      window.renderSpotList();
+    }
+
     window.openAddSpotModal = function() {
       document.getElementById('modal-title').innerText = '新增行程点';
       document.getElementById('modal-spot-idx').value = '-1';
@@ -572,10 +595,8 @@
       if (!itineraryData[currentDay]) itineraryData[currentDay] = [];
 
       if (idx === -1) {
-        // 新增模式
         itineraryData[currentDay].push({ name, time, transit, desc, img, mapQuery: name });
       } else {
-        // 修改模式
         const spot = itineraryData[currentDay][idx];
         spot.name = name; spot.time = time; spot.transit = transit; spot.desc = desc; spot.img = img;
         if (!spot.mapQuery || spot.mapQuery === itineraryData[currentDay][idx].name) {
@@ -583,7 +604,7 @@
         }
       }
       
-      localStorage.setItem('osaka_family_itinerary_v9', JSON.stringify(itineraryData));
+      localStorage.setItem('osaka_family_itinerary_v11', JSON.stringify(itineraryData));
       window.renderSpotList();
       window.closeSpotModal();
     }
@@ -591,7 +612,7 @@
     window.removeSpot = function(idx) {
       if (confirm('确定要删除这个行程点吗？')) { 
         itineraryData[currentDay].splice(idx, 1); 
-        localStorage.setItem('osaka_family_itinerary_v9', JSON.stringify(itineraryData)); 
+        localStorage.setItem('osaka_family_itinerary_v11', JSON.stringify(itineraryData)); 
         window.renderSpotList(); 
       }
     }
