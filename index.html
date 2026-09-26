@@ -165,13 +165,14 @@
     .modal-form-group input, .modal-form-group textarea { width: 100%; border: 1px solid #c8bead; background: #fffdf9; padding: 10px 12px;}
     .modal-form-group textarea { resize: vertical; min-height: 80px; }
 
-    /* 饼图专属底部美化布局 */
-    .pie-chart-container { display: flex; align-items: center; gap: 30px; flex-wrap: wrap; margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--border-color); }
-    .pie-svg-box { width: 110px; height: 110px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-    .pie-svg { width: 110px; height: 110px; transform: rotate(-90deg); }
-    .pie-legend { display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem; flex: 1; min-width: 200px; }
-    .legend-item { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
-    .legend-color-box { width: 12px; height: 12px; border-radius: 3px; display: inline-block; flex-shrink: 0; }
+    /* 饼图底部独立卡片美化样式 */
+    .pie-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 24px; margin-top: 22px; box-shadow: 0 1px 4px rgba(0,0,0,0.03); }
+    .pie-container { display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 15px; }
+    .pie-svg-box { width: 140px; height: 140px; flex-shrink: 0; }
+    .pie-svg { width: 140px; height: 140px; transform: rotate(-90deg); filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.08)); }
+    .pie-legend { display: flex; flex-direction: column; gap: 10px; font-size: 0.9rem; flex: 1; min-width: 240px; }
+    .legend-item { display: flex; align-items: center; justify-content: space-between; gap: 15px; background: #fff; padding: 8px 14px; border-radius: 6px; border: 1px solid var(--border-color); }
+    .legend-color-box { width: 14px; height: 14px; border-radius: 4px; display: inline-block; flex-shrink: 0; }
   </style>
 </head>
 <body>
@@ -287,31 +288,19 @@
       </div>
     </main>
 
-    <!-- PAGE 2: 家庭账本 (饼图位于最下方) -->
+    <!-- PAGE 2: 家庭账本 -->
     <main id="page-family-ledger" class="tab-pane">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
         <span style="font-size:0.85rem; color:var(--text-muted);">💴 当前汇率：<b>1 MYR = 38 JPY</b></span>
         <div class="sync-badge"><div class="sync-dot"></div>家庭账本与行程云端实时同步中</div>
       </div>
 
-      <!-- 支出总汇卡片 (饼图在底部) -->
+      <!-- 支出总汇卡片 (只显示总额数字) -->
       <div class="card" style="background:#fffcf7;">
-        <div class="card-heading"><span>📊 家庭支出总汇与开销比例</span></div>
-        <div style="display:flex; gap:36px; flex-wrap:wrap; margin-bottom:10px;">
+        <div class="card-heading"><span>📊 家庭支出总汇</span></div>
+        <div style="display:flex; gap:36px; flex-wrap:wrap;">
           <div><span style="font-size:0.85rem; color:var(--text-muted);">总支出 (日币)</span><div id="family-total-jpy" style="font-size:1.8rem; font-weight:800; color:var(--primary-red); font-family:var(--font-serif);">¥ 0</div></div>
           <div><span style="font-size:0.85rem; color:var(--text-muted);">折合总额 (马币)</span><div id="family-total-myr" style="font-size:1.8rem; font-weight:800; color:var(--primary-red); font-family:var(--font-serif);">RM 0.00</div></div>
-        </div>
-        
-        <!-- 分类占比饼图 (已移至底部) -->
-        <div class="pie-chart-container">
-          <div class="pie-svg-box">
-            <svg class="pie-svg" id="expense-pie-svg" viewBox="0 0 32 32">
-              <!-- 动态生成扇区 -->
-            </svg>
-          </div>
-          <div class="pie-legend" id="expense-pie-legend">
-            <span style="color: var(--text-muted); font-size: 0.85rem;">暂无分类开销数据</span>
-          </div>
         </div>
       </div>
 
@@ -362,6 +351,21 @@
           </div>
           <div class="table-container">
             <table><thead><tr><th>日程</th><th>项目</th><th>类别</th><th>付款人</th><th>原币金额</th><th>折合 JPY</th><th>折合 MYR</th><th>操作</th></tr></thead><tbody id="family-table-body"></tbody></table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 💡 饼图独立卡片：老老实实呆在页面的最底部 -->
+      <div class="pie-card">
+        <div class="card-heading"><span>📊 各分类开销占比统计</span></div>
+        <div class="pie-container">
+          <div class="pie-svg-box">
+            <svg class="pie-svg" id="expense-pie-svg" viewBox="0 0 32 32">
+              <!-- 动态生成扇区 -->
+            </svg>
+          </div>
+          <div class="pie-legend" id="expense-pie-legend">
+            <span style="color: var(--text-muted); font-size: 0.9rem;">暂无分类开销数据</span>
           </div>
         </div>
       </div>
@@ -779,14 +783,14 @@
       window.renderFamilyLedger();
     });
 
-    // 纯前端 SVG 饼图绘制逻辑
+    // 完美比例饼图渲染逻辑
     function renderPieChart(catMap, totalJPY) {
       const svg = document.getElementById('expense-pie-svg');
       const legend = document.getElementById('expense-pie-legend');
       
       if (totalJPY === 0 || Object.keys(catMap).length === 0) {
         svg.innerHTML = '<circle cx="16" cy="16" r="15.9155" fill="transparent" stroke="#e5ded2" stroke-width="6.5"></circle>';
-        legend.innerHTML = '<span style="color: var(--text-muted); font-size: 0.85rem;">暂无分类开销数据</span>';
+        legend.innerHTML = '<span style="color: var(--text-muted); font-size: 0.9rem;">暂无分类开销数据</span>';
         return;
       }
 
