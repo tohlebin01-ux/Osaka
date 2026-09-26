@@ -165,11 +165,11 @@
     .modal-form-group input, .modal-form-group textarea { width: 100%; border: 1px solid #c8bead; background: #fffdf9; padding: 10px 12px;}
     .modal-form-group textarea { resize: vertical; min-height: 80px; }
 
-    /* 饼图底部独立卡片美化样式 */
+    /* 纯正圆形饼图卡片样式 */
     .pie-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 24px; margin-top: 22px; box-shadow: 0 1px 4px rgba(0,0,0,0.03); }
     .pie-container { display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 15px; }
-    .pie-svg-box { width: 140px; height: 140px; flex-shrink: 0; }
-    .pie-svg { width: 140px; height: 140px; transform: rotate(-90deg); filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.08)); }
+    .pie-svg-box { width: 140px; height: 140px; flex-shrink: 0; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .pie-svg { width: 140px; height: 140px; transform: rotate(-90deg); border-radius: 50%; }
     .pie-legend { display: flex; flex-direction: column; gap: 10px; font-size: 0.9rem; flex: 1; min-width: 240px; }
     .legend-item { display: flex; align-items: center; justify-content: space-between; gap: 15px; background: #fff; padding: 8px 14px; border-radius: 6px; border: 1px solid var(--border-color); }
     .legend-color-box { width: 14px; height: 14px; border-radius: 4px; display: inline-block; flex-shrink: 0; }
@@ -295,7 +295,7 @@
         <div class="sync-badge"><div class="sync-dot"></div>家庭账本与行程云端实时同步中</div>
       </div>
 
-      <!-- 支出总汇卡片 (只显示总额数字) -->
+      <!-- 支出总汇卡片 -->
       <div class="card" style="background:#fffcf7;">
         <div class="card-heading"><span>📊 家庭支出总汇</span></div>
         <div style="display:flex; gap:36px; flex-wrap:wrap;">
@@ -355,7 +355,7 @@
         </div>
       </div>
 
-      <!-- 💡 饼图独立卡片：老老实实呆在页面的最底部 -->
+      <!-- 💡 饼图独立卡片：位于整个账本页面的最底部，且采用真正的纯圆形 SVG 容器 -->
       <div class="pie-card">
         <div class="card-heading"><span>📊 各分类开销占比统计</span></div>
         <div class="pie-container">
@@ -515,7 +515,7 @@
         { name: "心斋桥筋大采购", time: "15:30 - 晚间", transit: "步行向北走即达", desc: "大丸百货、大国药妆扫货。买沉了随时回公寓放行李！", img: "https://images.unsplash.com/photo-1616222629858-69cb4807469a?w=500", mapQuery: "心斎橋筋商店街" }
       ],
       6: [
-        { name: "中崎町复古老街", time: "10:30 - 12:30", transit: "地铁御堂筋线至【梅田站】步行", desc: "躲过轰炸的木质长屋区，文艺手作店与咖啡馆，拍照极其出片。", img: "https://images.unsplash.com/photo-1609945180155-7f28ba24a1e9?w=500", mapQuery: "中崎町" },
+        { name: "中崎町复古老街", time: "10:30 - 12:30", transit: "地铁御堂筋线至【梅田站】步行", desc: "躲过轰炸 the 木质长屋区，文艺手作店与咖啡馆，拍照极其出片。", img: "https://images.unsplash.com/photo-1609945180155-7f28ba24a1e9?w=500", mapQuery: "中崎町" },
         { name: "梅田百货巨头商圈", time: "12:30 - 16:30", transit: "步行回梅田核心区", desc: "聚集阪急、大丸和 LUCUA。高端品牌最全。午餐推荐利久牛舌。", img: "https://images.unsplash.com/photo-1594912952835-15a0c333dfd5?w=500", mapQuery: "梅田" },
         { name: "道顿堀水上观光船", time: "16:30 - 晚间", transit: "地铁返回难波/道顿堀", desc: "乘观光船穿过各桥，仰望霓虹灯初上。大餐推荐叙叙苑烧肉或蟹道乐！", img: "https://images.unsplash.com/photo-1563604593452-f47321e06183?w=500", mapQuery: "とんぼりリバークルーズ" }
       ],
@@ -783,13 +783,13 @@
       window.renderFamilyLedger();
     });
 
-    // 完美比例饼图渲染逻辑
+    // 纯圆形饼图渲染逻辑（完美防止方形切角）
     function renderPieChart(catMap, totalJPY) {
       const svg = document.getElementById('expense-pie-svg');
       const legend = document.getElementById('expense-pie-legend');
       
       if (totalJPY === 0 || Object.keys(catMap).length === 0) {
-        svg.innerHTML = '<circle cx="16" cy="16" r="15.9155" fill="transparent" stroke="#e5ded2" stroke-width="6.5"></circle>';
+        svg.innerHTML = '<circle cx="16" cy="16" r="15.9155" fill="transparent" stroke="#e5ded2" stroke-width="32"></circle>';
         legend.innerHTML = '<span style="color: var(--text-muted); font-size: 0.9rem;">暂无分类开销数据</span>';
         return;
       }
@@ -815,7 +815,8 @@
         const dashArray = `${percent * 100} 100`;
         const dashOffset = -cumulativePercent * 100;
 
-        svgHtml += `<circle cx="16" cy="16" r="15.9155" fill="transparent" stroke="${color}" stroke-width="6.5" stroke-dasharray="${dashArray}" stroke-dashoffset="${dashOffset}"></circle>`;
+        // stroke-width 使用 32 填满整个圆形容器，通过 dasharray 展现完美圆弧切片
+        svgHtml += `<circle cx="16" cy="16" r="15.9155" fill="transparent" stroke="${color}" stroke-width="32" stroke-dasharray="${dashArray}" stroke-dashoffset="${dashOffset}"></circle>`;
         
         legendHtml += `
           <div class="legend-item">
