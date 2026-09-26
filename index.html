@@ -79,7 +79,7 @@
     .tab-pane { display: none; }
     .tab-pane.active { display: block; }
 
-    /* ================= 和风通用控件样式 ================= */
+    /* ================= 和风通用控件 ================= */
     .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 24px; margin-bottom: 22px; box-shadow: 0 1px 4px rgba(0,0,0,0.03); }
     .card-heading { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 700; color: #242220; margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between; }
     input, select, textarea { padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 4px; background: #fff; font-size: 0.9rem; color: var(--text-main); font-family: var(--font-sans); }
@@ -88,6 +88,8 @@
     .btn-red:hover { background: var(--primary-red-hover); }
     .btn-subtle { background: #ede6d8; color: #4a453e; border: 1px solid #d5cbba; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; transition: background 0.2s; }
     .btn-subtle:hover { background: #e2d8c5; }
+    .btn-del-icon { background: none; border: none; color: #b22; cursor: pointer; font-size: 1.1rem; padding: 0 5px; opacity: 0.5; margin-left: auto; transition: opacity 0.2s; font-family: sans-serif; }
+    .btn-del-icon:hover { opacity: 1; }
     
     .table-container { overflow-x: auto; margin-top: 14px; }
     table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
@@ -99,31 +101,53 @@
     .sync-dot { width: 8px; height: 8px; background: #4caf50; border-radius: 50%; animation: pulse 1.5s infinite; }
     @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
 
-    /* 每日行程专用 CSS */
+    /* ================= 每日行程布局 ================= */
+    .itinerary-layout { display: grid; grid-template-columns: 2.2fr 1fr; gap: 24px; }
+    @media (max-width: 900px) { .itinerary-layout { grid-template-columns: 1fr; } }
+    
     .transit-guide-box { background: #fdfaf2; border-left: 4px solid var(--primary-red); padding: 15px 18px; border-radius: 4px; margin-bottom: 22px; font-size: 0.86rem; line-height: 1.7; border: 1px solid var(--border-color); }
     .transit-guide-box b { color: var(--primary-red); }
+    
     .day-pills { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 22px; }
     .day-pill { background: var(--card-inner); border: 1px solid var(--border-color); padding: 7px 18px; border-radius: 20px; cursor: pointer; font-size: 0.88rem; font-weight: 600; color: #555; transition: all 0.2s; }
     .day-pill:hover { border-color: var(--primary-red); color: var(--primary-red); }
     .day-pill.active { background: var(--primary-red); color: #ffffff; border-color: var(--primary-red); }
+    
     .spot-card { display: flex; gap: 18px; background: #fff; border: 1px solid var(--border-color); border-radius: 8px; padding: 18px; margin-bottom: 16px; align-items: flex-start; transition: box-shadow 0.2s; }
     @media (max-width: 600px) { .spot-card { flex-direction: column; } .spot-img { width: 100%; height: 160px; } }
     .spot-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
-    .spot-img { width: 150px; height: 110px; object-fit: cover; border-radius: 6px; background: #eae2d3; flex-shrink: 0; }
+    
+    .spot-img { width: 140px; height: 100px; object-fit: cover; border-radius: 6px; background: #eae2d3; flex-shrink: 0; }
     .spot-info { flex: 1; width: 100%; }
-    .spot-name { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; color: #1a1a1a; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;}
+    
+    .spot-name { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 700; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;}
+    .spot-name a { color: #1a1a1a; text-decoration: none; position: relative; }
+    .spot-name a:hover { color: var(--primary-red); text-decoration: underline; }
+    
     .spot-meta { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 8px; display: flex; flex-wrap: wrap; gap: 14px; }
     .spot-desc { font-size: 0.88rem; color: #4a453f; line-height: 1.5; margin-bottom: 10px; }
-    .spot-links a { color: var(--primary-red); font-size: 0.82rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; background: #fff0f0; padding: 4px 8px; border-radius: 4px; }
-    .spot-links a:hover { background: #ffe0e0; }
 
-    /* 我的旅程复刻 CSS */
+    /* 侧边栏样式 */
+    .sidebar-card { padding: 20px; background: #fffdf9; margin-bottom: 18px; }
+    .sidebar-title { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; color: #242220; margin-bottom: 12px; }
+    
+    .btn-map-route { background-color: #16395b; color: #fff; border: none; padding: 10px 16px; font-size: 0.95rem; font-weight: bold; font-family: var(--font-sans); cursor: pointer; display: inline-block; text-decoration: none; box-shadow: 4px 4px 0px #c19b4e; transition: transform 0.1s, box-shadow 0.1s; width: fit-content; margin-top: 5px;}
+    .btn-map-route:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px #c19b4e; }
+    
+    .weather-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 15px; }
+    .weather-box { background: #f3e9d8; padding: 14px 0; text-align: center; border-radius: 4px; }
+    .weather-box span { display: block; font-size: 0.85rem; color: #4a453e; }
+    .weather-icon { font-size: 1.4rem; margin: 8px 0; color: #16395b; }
+    
+    .tips-text { border-left: 4px solid #c64731; padding-left: 14px; font-size: 0.9rem; color: #444; line-height: 1.6; }
+
+    /* ================= 我的旅程复刻 CSS ================= */
     .trip-top-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-bottom: 22px; }
     @media (max-width: 900px) { .trip-top-row { grid-template-columns: 1fr; } }
     .check-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px dashed #e8e0d2; font-size: 0.9rem; }
     .check-item:last-child { border-bottom: none; }
     .check-item input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--primary-red); cursor: pointer; }
-    .memo-paper { background-color: var(--note-yellow); border: 1px solid #e9deaa; border-radius: 6px; padding: 16px; min-height: 140px; width: 100%; resize: vertical; font-size: 0.9rem; line-height: 1.6; color: #3b352b; box-shadow: 2px 2px 5px rgba(0,0,0,0.02); }
+    .memo-paper { background-color: var(--note-yellow); border: 1px solid #e9deaa; border-radius: 6px; padding: 16px; min-height: 180px; width: 100%; resize: vertical; font-size: 0.9rem; line-height: 1.6; color: #3b352b; box-shadow: 2px 2px 5px rgba(0,0,0,0.02); }
   </style>
 </head>
 <body>
@@ -139,7 +163,6 @@
             <p>OSAKA FAMILY TRAVEL BOOK · FEBRUARY</p>
           </div>
         </div>
-        <!-- 旅の仲間 (全家人) -->
         <div class="companion-box">
           <span class="companion-label">旅の仲間</span>
           <div class="companion-names">
@@ -155,7 +178,7 @@
         <div>
           <div class="hero-subtitle">WINTER JOURNEY / 7 DAYS</div>
           <h2 class="hero-title">在关西，慢慢走</h2>
-          <p class="hero-desc">以【黑门市场】为基地，贯彻随性休闲、不走回头路、美食与古迹兼顾的 5 人同行轻松节奏。</p>
+          <p class="hero-desc">以【黑门市场 b&黒門1号店】为基地，贯彻随性休闲、不走回头路、美食与古迹兼顾的 5 人同行轻松节奏。</p>
         </div>
         <div class="hero-tags">
           <span class="hero-tag">2 月 · 7 天</span>
@@ -187,44 +210,62 @@
 
     <!-- ================= PAGE 1: 每日行程 ================= -->
     <main id="page-itinerary" class="tab-pane active">
-      <div class="transit-guide-box">
-        🚆 <b>关西交通与路线查询提示：</b><br>
-        1. <b>查询神器</b>：手机优先使用 <b>Google Maps</b>，若要看精准发车时刻表请搭配 <b>Yahoo!乗換案内</b>。<br>
-        2. <b>路线直达</b>：点击下方每个景点的「📍查看 Google Maps 路线导航」，已为您设置好了日文地标，手机一键即可带路！
-      </div>
-      <div class="day-pills" id="day-pills-bar"></div>
-      <div class="card">
-        <div class="card-heading">
-          <span id="current-day-label">第 1 天 (Day 1) 行程安排</span>
-          <button class="btn-red" onclick="window.openAddSpotModal()">+ 增加行程点</button>
+      <div class="itinerary-layout">
+        
+        <div class="itinerary-main">
+          <div class="day-pills" id="day-pills-bar"></div>
+          
+          <div class="card" style="padding: 20px;">
+            <div class="card-heading" style="margin-bottom: 12px;">
+              <span id="current-day-label">第 1 天 (Day 1) 行程安排</span>
+              <button class="btn-subtle" onclick="window.openAddSpotModal()" style="font-weight: bold;">+ 新增</button>
+            </div>
+            <div id="spots-list-box"></div>
+          </div>
         </div>
-        <div id="spots-list-box"></div>
+
+        <div class="itinerary-sidebar">
+          <div class="card sidebar-card">
+            <h3 class="sidebar-title">当日路线</h3>
+            <p style="font-size:0.85rem; color:#6e6b64; margin-bottom:15px; line-height: 1.5;">每一个行程标题和以下按钮都可直接打开 Google Maps。</p>
+            <a href="#" id="route-map-btn" target="_blank" class="btn-map-route">在地图查看整日路线 ↗</a>
+          </div>
+
+          <div class="card sidebar-card">
+            <h3 class="sidebar-title">二月天气</h3>
+            <div class="weather-grid">
+              <div class="weather-box">
+                <span>上午</span><div class="weather-icon">☁️</div><span>3-7° C</span>
+              </div>
+              <div class="weather-box">
+                <span>下午</span><div class="weather-icon">☀️</div><span>7-10° C</span>
+              </div>
+              <div class="weather-box">
+                <span>晚上</span><div class="weather-icon">🌙</div><span>2-6° C</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card sidebar-card">
+            <h3 class="sidebar-title">今天的贴士</h3>
+            <div class="tips-text" id="daily-tip-text">抵达日别排太满；先寄行李、买 ICOCA 和暖暖包。</div>
+          </div>
+        </div>
       </div>
     </main>
 
     <!-- ================= PAGE 2: 家庭账本 ================= -->
     <main id="page-family-ledger" class="tab-pane">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
-        <span style="font-size:0.85rem; color:var(--text-muted);">
-          💴 默认换算汇率：<b>1 JPY ≈ 0.031 MYR</b>
-        </span>
-        <div class="sync-badge">
-          <div class="sync-dot"></div>
-          所有家人设备实时同步中
-        </div>
+        <span style="font-size:0.85rem; color:var(--text-muted);">💴 默认换算汇率：<b>1 JPY ≈ 0.031 MYR</b></span>
+        <div class="sync-badge"><div class="sync-dot"></div>所有家人设备实时同步中</div>
       </div>
 
       <div class="card" style="background:#fffcf7;">
         <div class="card-heading"><span>📊 家庭支出总汇与开销比例</span></div>
         <div style="display:flex; gap:36px; flex-wrap:wrap; margin-bottom:16px;">
-          <div>
-            <span style="font-size:0.85rem; color:var(--text-muted);">总支出 (日币)</span>
-            <div id="family-total-jpy" style="font-size:1.8rem; font-weight:800; color:var(--primary-red); font-family:var(--font-serif);">¥ 0</div>
-          </div>
-          <div>
-            <span style="font-size:0.85rem; color:var(--text-muted);">折合总额 (马币)</span>
-            <div id="family-total-myr" style="font-size:1.8rem; font-weight:800; color:var(--primary-red); font-family:var(--font-serif);">RM 0.00</div>
-          </div>
+          <div><span style="font-size:0.85rem; color:var(--text-muted);">总支出 (日币)</span><div id="family-total-jpy" style="font-size:1.8rem; font-weight:800; color:var(--primary-red); font-family:var(--font-serif);">¥ 0</div></div>
+          <div><span style="font-size:0.85rem; color:var(--text-muted);">折合总额 (马币)</span><div id="family-total-myr" style="font-size:1.8rem; font-weight:800; color:var(--primary-red); font-family:var(--font-serif);">RM 0.00</div></div>
         </div>
         <div id="family-category-stats" style="display:flex; flex-wrap:wrap; gap:10px;"></div>
       </div>
@@ -232,62 +273,21 @@
       <div class="card">
         <div class="card-heading"><span>📝 记录公共开销</span></div>
         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) 90px; gap:10px; align-items:flex-end;">
-          <div>
-            <label style="font-size:0.78rem; color:#666;">日程</label>
-            <select id="fl-day" style="width:100%;">
-              <option value="Day 1">Day 1</option><option value="Day 2">Day 2</option>
-              <option value="Day 3">Day 3</option><option value="Day 4">Day 4</option>
-              <option value="Day 5">Day 5</option><option value="Day 6">Day 6</option>
-              <option value="Day 7">Day 7</option>
-            </select>
-          </div>
-          <div>
-            <label style="font-size:0.78rem; color:#666;">开销项目</label>
-            <input type="text" id="fl-item" placeholder="如：家庭晚餐、南海电铁" style="width:100%;">
-          </div>
-          <div>
-            <label style="font-size:0.78rem; color:#666;">消费类别</label>
-            <select id="fl-category" style="width:100%;">
-              <option value="餐饮">餐饮</option><option value="交通">交通/地铁</option>
-              <option value="住宿">住宿</option><option value="门票">门票体验</option>
-              <option value="采购">超市零食</option><option value="其他">其他</option>
-            </select>
-          </div>
-          <div>
-            <label style="font-size:0.78rem; color:#666;">付款人</label>
-            <select id="fl-payer" style="width:100%;">
-              <option value="小英">小英</option><option value="乐缤">乐缤</option>
-              <option value="紫琦">紫琦</option><option value="楷翔">楷翔</option>
-              <option value="楷哲">楷哲</option>
-            </select>
-          </div>
-          <div>
-            <label style="font-size:0.78rem; color:#666;">金额 (JPY)</label>
-            <input type="number" id="fl-amount" placeholder="¥" style="width:100%;">
-          </div>
+          <div><label style="font-size:0.78rem; color:#666;">日程</label><select id="fl-day" style="width:100%;"><option value="Day 1">Day 1</option><option value="Day 2">Day 2</option><option value="Day 3">Day 3</option><option value="Day 4">Day 4</option><option value="Day 5">Day 5</option><option value="Day 6">Day 6</option><option value="Day 7">Day 7</option></select></div>
+          <div><label style="font-size:0.78rem; color:#666;">开销项目</label><input type="text" id="fl-item" placeholder="如：家庭晚餐" style="width:100%;"></div>
+          <div><label style="font-size:0.78rem; color:#666;">消费类别</label><select id="fl-category" style="width:100%;"><option value="餐饮">餐饮</option><option value="交通">交通/地铁</option><option value="住宿">住宿</option><option value="门票">门票体验</option><option value="采购">超市零食</option><option value="其他">其他</option></select></div>
+          <div><label style="font-size:0.78rem; color:#666;">付款人</label><select id="fl-payer" style="width:100%;"><option value="小英">小英</option><option value="乐缤">乐缤</option><option value="紫琦">紫琦</option><option value="楷翔">楷翔</option><option value="楷哲">楷哲</option></select></div>
+          <div><label style="font-size:0.78rem; color:#666;">金额 (JPY)</label><input type="number" id="fl-amount" placeholder="¥" style="width:100%;"></div>
           <button class="btn-red" onclick="window.addFamilyExpense()">记一笔</button>
         </div>
 
         <div style="margin-top:28px;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
             <h4 style="font-size:0.95rem; font-family:var(--font-serif);">支出明细 (所有设备实时同步)</h4>
-            <select id="fl-filter" onchange="window.renderFamilyLedger()" style="font-size:0.8rem; padding:4px 8px;">
-              <option value="ALL">全部日程 (7天)</option>
-              <option value="Day 1">Day 1</option><option value="Day 2">Day 2</option>
-              <option value="Day 3">Day 3</option><option value="Day 4">Day 4</option>
-              <option value="Day 5">Day 5</option><option value="Day 6">Day 6</option>
-              <option value="Day 7">Day 7</option>
-            </select>
+            <select id="fl-filter" onchange="window.renderFamilyLedger()" style="font-size:0.8rem; padding:4px 8px;"><option value="ALL">全部日程</option><option value="Day 1">Day 1</option><option value="Day 2">Day 2</option><option value="Day 3">Day 3</option><option value="Day 4">Day 4</option><option value="Day 5">Day 5</option><option value="Day 6">Day 6</option><option value="Day 7">Day 7</option></select>
           </div>
           <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>日程</th><th>项目</th><th>类别</th><th>付款人</th><th>日币 (JPY)</th><th>折合 (MYR)</th><th>操作</th>
-                </tr>
-              </thead>
-              <tbody id="family-table-body"></tbody>
-            </table>
+            <table><thead><tr><th>日程</th><th>项目</th><th>类别</th><th>付款人</th><th>日币 (JPY)</th><th>折合 (MYR)</th><th>操作</th></tr></thead><tbody id="family-table-body"></tbody></table>
           </div>
         </div>
       </div>
@@ -296,34 +296,25 @@
     <!-- ================= PAGE 3: 我的旅程 ================= -->
     <main id="page-my-trip" class="tab-pane">
       <div class="trip-top-row">
+        <!-- 带有删除按钮的行李清单 -->
         <div class="card" style="margin-bottom:0;">
           <div class="card-heading" style="font-size:1.15rem;">我的行李清单</div>
           <div id="my-pack-list"></div>
-          <div style="display:flex; gap:8px; margin-top:12px;">
-            <input type="text" id="new-pack-input" placeholder="新增行李物品..." style="flex:1;">
-            <button class="btn-subtle" onclick="window.addPackItem()">添加</button>
-          </div>
+          <div style="display:flex; gap:8px; margin-top:12px;"><input type="text" id="new-pack-input" placeholder="新增物品..." style="flex:1;"><button class="btn-subtle" onclick="window.addPackItem()">添加</button></div>
         </div>
 
         <div class="card" style="margin-bottom:0;">
           <div class="card-heading" style="font-size:1.15rem;">我的个人预算</div>
-          <div style="font-family:var(--font-serif); font-size:2.4rem; font-weight:800; color:var(--primary-red); margin:12px 0;">
-            ¥ <span id="my-budget-num">0</span>
-          </div>
-          <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6;">个人购物、咖啡、伴手礼；仅保存在本设备，不会混入家庭账本。</p>
-          <div style="display:flex; gap:8px; margin-top:16px;">
-            <input type="number" id="budget-input-val" placeholder="设定预算 (JPY)" style="flex:1;">
-            <button class="btn-subtle" onclick="window.setPersonalBudget()">保存</button>
-          </div>
+          <div style="font-family:var(--font-serif); font-size:2.4rem; font-weight:800; color:var(--primary-red); margin:12px 0;">¥ <span id="my-budget-num">0</span></div>
+          <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6;">个人购物、伴手礼；仅保存在本设备，不会混入家庭账本。</p>
+          <div style="display:flex; gap:8px; margin-top:16px;"><input type="number" id="budget-input-val" placeholder="设定预算 (JPY)" style="flex:1;"><button class="btn-subtle" onclick="window.setPersonalBudget()">保存</button></div>
         </div>
 
+        <!-- 带有删除按钮的想去清单 -->
         <div class="card" style="margin-bottom:0;">
           <div class="card-heading" style="font-size:1.15rem;">想去清单</div>
           <div id="my-wish-list"></div>
-          <div style="display:flex; gap:8px; margin-top:12px;">
-            <input type="text" id="new-wish-input" placeholder="如：黑门市场草莓、Loft..." style="flex:1;">
-            <button class="btn-subtle" onclick="window.addWishItem()">添加</button>
-          </div>
+          <div style="display:flex; gap:8px; margin-top:12px;"><input type="text" id="new-wish-input" placeholder="如：买草莓..." style="flex:1;"><button class="btn-subtle" onclick="window.addWishItem()">添加</button></div>
         </div>
       </div>
 
@@ -331,27 +322,30 @@
         <div class="card-heading"><span>我的记账 (本机专属)</span></div>
         <div style="display:grid; grid-template-columns: 2fr 1fr 1fr 90px; gap:10px; margin-bottom:15px;">
           <input type="text" id="my-item" placeholder="项目，例如：咖啡">
-          <select id="my-category">
-            <option value="购物">购物</option><option value="零食饮料">零食/饮料</option>
-            <option value="伴手礼">伴手礼</option><option value="个人车资">个人车资</option>
-            <option value="其他">其他</option>
-          </select>
+          <select id="my-category"><option value="购物">购物</option><option value="零食饮料">零食/饮料</option><option value="伴手礼">伴手礼</option><option value="个人车资">个人车资</option><option value="其他">其他</option></select>
           <input type="number" id="my-amount" placeholder="JPY">
           <button class="btn-red" onclick="window.addPersonalExpense()">记一笔</button>
         </div>
         <div class="table-container">
-          <table>
-            <thead>
-              <tr><th>项目</th><th>类别</th><th>金额 (JPY)</th><th>折合 (MYR)</th><th>操作</th></tr>
-            </thead>
-            <tbody id="my-expense-body"></tbody>
-          </table>
+          <table><thead><tr><th>项目</th><th>类别</th><th>金额 (JPY)</th><th>折合 (MYR)</th><th>操作</th></tr></thead><tbody id="my-expense-body"></tbody></table>
         </div>
       </div>
 
-      <div class="card" style="margin-top:22px;">
-        <div class="card-heading"><span>旅途小记</span></div>
-        <textarea id="my-notes" class="memo-paper" placeholder="记录今天逛到的小巷子、好吃的点心、有趣的新发现..." oninput="window.savePersonalNotes()"></textarea>
+      <!-- 升级版：分日记录的旅途小记 -->
+      <div class="card" style="margin-top:22px; background: #faf8f5;">
+        <div class="card-heading" style="display: flex; justify-content: flex-start; gap: 15px;">
+          <span>旅途小记</span>
+          <select id="note-day-selector" onchange="window.changeNoteDay()" style="font-size:0.85rem; padding: 4px 10px; border-radius: 4px;">
+            <option value="1">Day 1 记录</option>
+            <option value="2">Day 2 记录</option>
+            <option value="3">Day 3 记录</option>
+            <option value="4">Day 4 记录</option>
+            <option value="5">Day 5 记录</option>
+            <option value="6">Day 6 记录</option>
+            <option value="7">Day 7 记录</option>
+          </select>
+        </div>
+        <textarea id="my-notes" class="memo-paper" placeholder="记录这一天的见闻、小巷子里的好吃的、或是心情随笔..." oninput="window.savePersonalNotes()"></textarea>
       </div>
     </main>
   </div>
@@ -368,50 +362,61 @@
       document.querySelectorAll('.tab-btn')[tabs.indexOf(pageId)].classList.add('active');
     }
 
-    // 载入您专属规划好的 7天行程数据 (使用 _v2 确保覆盖旧数据)
     const defaultItinerary = {
       1: [
-        { name: "关西机场 ➔ 黑门市场", time: "15:30", transit: "乘【南海电铁特急 Rapi:t】直达难波站(38分)，出站打车3分至黑门市场", desc: "安顿行李，下楼慢逛黑门市场初体验。尝一尝现烤扇贝或黑毛和牛串。", img: "https://images.unsplash.com/photo-1590559899731-a372a14c5688?w=500", mapQuery: "黒門市場" },
-        { name: "道顿堀与戎桥打卡", time: "17:30 - 晚间", transit: "从住处步行 8 分钟即达", desc: "晚餐推荐：一兰拉面道顿堀店别馆，或街头现烤章鱼烧（如元祖章鱼烧）。别忘了与格力高奔跑小人、大螃蟹合影。", img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500", mapQuery: "道頓堀 戎橋" }
+        { name: "关西机场 ➔ b&黒門1号店", time: "抵达后 - 16:00", transit: "【南海电铁特急 Rapi:t】直达难波站，打车或步行入住", desc: "抵达大阪！放好行李后直接下楼吃现烤扇贝或和牛串充饥。", img: "https://images.unsplash.com/photo-1542051812-a42e5668db75?w=500", mapQuery: "b&黒門1号店" },
+        { name: "道顿堀与戎桥打卡", time: "17:30 - 晚间", transit: "步行 8 分钟即达", desc: "晚餐吃一兰拉面，或街头现烤章鱼烧。别忘了与格力高奔跑小人合影。", img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500", mapQuery: "道頓堀 戎橋" }
       ],
       2: [
-        { name: "奈良公园 (喂小鹿)", time: "09:30 - 11:00", transit: "【近铁快速急行】日本桥 ➔ 近铁奈良站 (38分钟/680円)，步行5分钟入园", desc: "路上购买鹿饼。小提示：向小鹿点头鞠躬它会跟着点头；喂完举起双手展示没食物，小鹿会自动离开。", img: "https://images.unsplash.com/photo-1549693578-cbc70b0cc850?w=500", mapQuery: "奈良公園" },
-        { name: "东大寺 (大佛殿)", time: "11:00 - 12:30", transit: "沿奈良公园步行", desc: "世界文化遗产，近距离瞻仰巨大卢舍那大佛。门票600円。午餐推荐附近的「志津香釜饭」。", img: "https://images.unsplash.com/photo-1628172938814-257a07011d61?w=500", mapQuery: "東大寺" },
-        { name: "春日大社 ➔ 奈良町老街", time: "14:00 - 17:30", transit: "步行漫游", desc: "穿过石灯笼参道至春日大社。傍晚回到「饼饭殿商店街」，必买中谷堂现打麻薯！晚餐回大阪吃黑毛和牛烧肉。", img: "https://images.unsplash.com/photo-1615671158671-3312e75e1140?w=500", mapQuery: "春日大社" }
+        { name: "奈良公园 (喂小鹿)", time: "09:30 - 11:00", transit: "【近铁快速急行】日本桥 ➔ 近铁奈良站，步行入园", desc: "向小鹿点头鞠躬它会跟着点头；喂完举起双手展示没食物，小鹿会自动离开。", img: "https://images.unsplash.com/photo-1549693578-cbc70b0cc850?w=500", mapQuery: "奈良公園" },
+        { name: "东大寺", time: "11:00 - 12:30", transit: "沿奈良公园步行", desc: "近距离瞻仰巨大卢舍那大佛。午餐推荐附近的「志津香釜饭」。", img: "https://images.unsplash.com/photo-1628172938814-257a07011d61?w=500", mapQuery: "東大寺" },
+        { name: "春日大社 ➔ 奈良町老街", time: "14:00 - 17:30", transit: "步行漫游", desc: "穿过石灯笼参道至春日大社。回到商店街必买中谷堂现打麻薯！", img: "https://images.unsplash.com/photo-1615671158671-3312e75e1140?w=500", mapQuery: "春日大社" }
       ],
       3: [
-        { name: "伏见稻荷大社", time: "09:00 - 11:30", transit: "地铁至【北浜】转【京阪本线特急】直达伏见稻荷站(约55分/700円)", desc: "震撼的朱红色千本鸟居。长辈同行建议走到“奥社奉拜所”原路折返即可，省力又出片。", img: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=500", mapQuery: "伏見稲荷大社" },
-        { name: "清水寺 ➔ 二三年坂", time: "12:00 - 16:30", transit: "搭京阪电车至【清水五条】，打车(约800円)直达清水寺坡下", desc: "午餐推荐汤豆腐料理。参观清水舞台(门票400円)。慢步下坡逛二三年坂，品尝抹茶与伴手礼。", img: "https://images.unsplash.com/photo-1624253321171-1be53e12f5f4?w=500", mapQuery: "清水寺" },
-        { name: "祇园鸭川散步", time: "17:00 - 18:30", transit: "沿八坂神社顺势逛出", desc: "黄昏时分漫步花见小路与鸭川，感受京都清冽氛围。随后在祇园四条搭京阪特急返回大阪。", img: "https://images.unsplash.com/photo-1492571350019-22de08371fd3?w=500", mapQuery: "鴨川 祇園" }
+        { name: "伏见稻荷大社", time: "09:00 - 11:30", transit: "地铁至【北浜】转【京阪本线特急】直达", desc: "震撼的千本鸟居。长辈同行建议走到“奥社奉拜所”原路折返即可，省力出片。", img: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=500", mapQuery: "伏見稲荷大社" },
+        { name: "清水寺 ➔ 二三年坂", time: "12:00 - 16:30", transit: "搭京阪电车至【清水五条】，打车直达坡下", desc: "参观清水舞台。慢步下坡逛二三年坂，品尝抹茶与伴手礼。", img: "https://images.unsplash.com/photo-1624253321171-1be53e12f5f4?w=500", mapQuery: "清水寺" },
+        { name: "祇园鸭川散步", time: "17:00 - 18:30", transit: "沿八坂神社顺势逛出", desc: "黄昏时分漫步花见小路与鸭川，感受京都清冽氛围。随后搭车返回大阪。", img: "https://images.unsplash.com/photo-1492571350019-22de08371fd3?w=500", mapQuery: "鴨川 祇園" }
       ],
       4: [
-        { name: "四天王寺", time: "10:30 - 12:30", transit: "步行或坐地铁1站", desc: "睡到自然醒的悠闲一朝。参观日本最古老的官寺，感受古朴宁静的白砂庭园(门票300円)。", img: "https://images.unsplash.com/photo-1627918451151-51ee3eeb2de0?w=500", mapQuery: "四天王寺" },
+        { name: "四天王寺", time: "10:30 - 12:30", transit: "步行或坐地铁1站", desc: "睡到自然醒的悠闲一朝。参观日本最古老的官寺，感受白砂庭园。", img: "https://images.unsplash.com/photo-1627918451151-51ee3eeb2de0?w=500", mapQuery: "四天王寺" },
         { name: "新世界与通天阁", time: "12:30 - 15:30", transit: "步行10分钟前往", desc: "感受昭和复古市井气息。午餐必吃「元祖炸串达摩」，外酥里嫩！", img: "https://images.unsplash.com/photo-1588636733221-c19b88f346b9?w=500", mapQuery: "通天閣" },
-        { name: "阿倍野 Harukas 300 展望台", time: "17:00 - 晚间", transit: "穿过天王寺公园进入近铁百货大楼", desc: "关西最震撼的360度玻璃观景台看日落与夜景(门票2000円)。晚餐推荐在百货楼上吃寿喜烧放题。", img: "https://images.unsplash.com/photo-1601072935277-2e5f31895697?w=500", mapQuery: "あべのハルカス" }
+        { name: "阿倍野 Harukas 300", time: "17:00 - 晚间", transit: "步行进入近铁百货", desc: "360度玻璃观景台看日落与夜景。晚餐推荐在百货楼上吃寿喜烧。", img: "https://images.unsplash.com/photo-1601072935277-2e5f31895697?w=500", mapQuery: "あべのハルカス" }
       ],
       5: [
-        { name: "大阪城天守阁", time: "09:30 - 12:30", transit: "乘地铁千日前线转中央线至【谷町四丁目站】", desc: "穿过护城河登天守阁(门票600円)，俯瞰全城并了解丰臣秀吉战国历史。", img: "https://images.unsplash.com/photo-1555359739-16a4959db14d?w=500", mapQuery: "大阪城" },
-        { name: "日本桥电器街 (Denden Town)", time: "12:30 - 15:30", transit: "搭地铁返回【日本桥】", desc: "大阪的秋叶原！遍布 Animate、手办盲盒、中古相机与电子免税店，4人尽情淘好物。", img: "https://images.unsplash.com/photo-1524414139215-35c99f80112d?w=500", mapQuery: "でんでんタウン" },
-        { name: "心斋桥筋大采购", time: "15:30 - 晚间", transit: "逛完顺着向北走即达", desc: "大丸百货(含任天堂/宝可梦中心)、大国药妆扫货。买沉了可随时走回公寓放行李！晚餐推荐今井乌冬面。", img: "https://images.unsplash.com/photo-1616222629858-69cb4807469a?w=500", mapQuery: "心斎橋筋商店街" }
+        { name: "大阪城天守阁", time: "09:30 - 12:30", transit: "乘地铁转中央线至【谷町四丁目站】", desc: "登天守阁俯瞰全城，了解战国历史。", img: "https://images.unsplash.com/photo-1555359739-16a4959db14d?w=500", mapQuery: "大阪城" },
+        { name: "日本桥电器街", time: "12:30 - 15:30", transit: "搭地铁返回【日本桥】", desc: "大阪秋叶原！手办盲盒、中古相机，看中心仪的直接下手。", img: "https://images.unsplash.com/photo-1524414139215-35c99f80112d?w=500", mapQuery: "でんでんタウン" },
+        { name: "心斋桥筋大采购", time: "15:30 - 晚间", transit: "步行向北走即达", desc: "大丸百货、大国药妆扫货。买沉了随时回公寓放行李！", img: "https://images.unsplash.com/photo-1616222629858-69cb4807469a?w=500", mapQuery: "心斎橋筋商店街" }
       ],
       6: [
-        { name: "中崎町复古老街", time: "10:30 - 12:30", transit: "地铁御堂筋线至【梅田站】步行前往", desc: "躲过二战轰炸的木质长屋区，遍布文艺手作店与复古咖啡馆，拍照极其出片。", img: "https://images.unsplash.com/photo-1619864273295-8bd3c22421df?w=500", mapQuery: "中崎町" },
-        { name: "梅田百货巨头商圈", time: "12:30 - 16:30", transit: "步行回梅田核心区", desc: "聚集阪急、大丸和 LUCUA。高端护肤、服饰最全。午餐推荐商场内的利久牛舌或炸猪排。", img: "https://images.unsplash.com/photo-1601072935277-2e5f31895697?w=500", mapQuery: "梅田 阪急百貨店" },
-        { name: "道顿堀水上观光船", time: "16:30 - 晚间", transit: "地铁返回难波/道顿堀", desc: "乘观光船穿过各桥，仰望霓虹灯初上(船票1200円)。最后大餐推荐叙叙苑烧肉或蟹道乐！", img: "https://images.unsplash.com/photo-1613346945084-35cccc812dd5?w=500", mapQuery: "とんぼりリバークルーズ" }
+        { name: "中崎町复古老街", time: "10:30 - 12:30", transit: "地铁御堂筋线至【梅田站】步行", desc: "躲过轰炸的木质长屋区，文艺手作店与咖啡馆，拍照极其出片。", img: "https://images.unsplash.com/photo-1619864273295-8bd3c22421df?w=500", mapQuery: "中崎町" },
+        { name: "梅田百货巨头商圈", time: "12:30 - 16:30", transit: "步行回梅田核心区", desc: "聚集阪急、大丸和 LUCUA。高端品牌最全。午餐推荐利久牛舌。", img: "https://images.unsplash.com/photo-1601072935277-2e5f31895697?w=500", mapQuery: "梅田" },
+        { name: "道顿堀水上观光船", time: "16:30 - 晚间", transit: "地铁返回难波/道顿堀", desc: "乘观光船穿过各桥，仰望霓虹灯初上。大餐推荐叙叙苑烧肉或蟹道乐！", img: "https://images.unsplash.com/photo-1613346945084-35cccc812dd5?w=500", mapQuery: "とんぼりリバークルーズ" }
       ],
       7: [
-        { name: "退房 ➔ 难波八阪神社", time: "09:30 - 11:00", transit: "退房寄存行李，步行6分至神社", desc: "巨大的狮子头神殿！吸走厄运带来好运，祈求旅途平安的绝佳收尾。", img: "https://images.unsplash.com/photo-1620023616238-d6b79c3d4a2a?w=500", mapQuery: "難波八阪神社" },
-        { name: "临空城 Premium Outlets", time: "11:30 - 15:30", transit: "南海电铁机场急行至【临空城站】(780円)", desc: "在车站寄存行李。关西最大的海滨奥特莱斯，包含始祖鸟、Nike、Coach等做最后扫货。", img: "https://images.unsplash.com/photo-1542051812-a42e5668db75?w=500", mapQuery: "りんくうプレミアム・アウトレット" },
-        { name: "关西机场返程", time: "16:00", transit: "乘电车/巴士 1 站直达机场", desc: "提前 3 小时值机出境，在免税店补齐白色恋人、Royce 生巧等伴手礼，满载而归！", img: "https://images.unsplash.com/photo-1529126937667-12ea2119eb8d?w=500", mapQuery: "関西国際空港" }
+        { name: "难波八阪神社", time: "09:30 - 11:00", transit: "退房寄存行李，步行6分至神社", desc: "巨大的狮子头神殿！吸走厄运带来好运，祈求旅途平安的绝佳收尾。", img: "https://images.unsplash.com/photo-1620023616238-d6b79c3d4a2a?w=500", mapQuery: "難波八阪神社" },
+        { name: "临空城 Premium Outlets", time: "11:30 - 15:30", transit: "南海电铁机场急行至【临空城站】", desc: "在车站寄存行李。关西最大的海滨奥特莱斯，做最后扫货。", img: "https://images.unsplash.com/photo-1542051812-a42e5668db75?w=500", mapQuery: "りんくうプレミアム・アウトレット" },
+        { name: "关西机场返程", time: "16:00", transit: "乘电车/巴士 1 站直达机场", desc: "提前办理值机，在免税店补齐白色恋人、Royce 生巧等，满载而归！", img: "https://images.unsplash.com/photo-1529126937667-12ea2119eb8d?w=500", mapQuery: "関西国際空港" }
       ]
     };
 
+    const dailyTips = {
+      1: "抵达日别排太满；先安顿行李、购买充值 ICOCA 和准备暖暖包。",
+      2: "喂鹿时把鹿饼藏进包里，向小鹿鞠躬；东大寺附近步行较多，请穿好走的鞋。",
+      3: "京都坡道多（二年坂/三年坂），穿舒适鞋履；热门餐厅建议避开饭点排队。",
+      4: "新世界炸串店需要排队；阿倍野展望台建议在日落前半小时抵达，可看日落+夜景。",
+      5: "大阪城登阁需爬些楼梯；日本桥电器街手办多，看中心仪的可直接下手。",
+      6: "梅田商圈犹如地下迷宫，请跟紧 Google Maps 导航；晚上游船风大注意保暖。",
+      7: "预留充足时间前往机场；临空城奥特莱斯可先在电车站中心寄存大件行李。"
+    };
+
     let currentDay = 1;
-    let itineraryData = JSON.parse(localStorage.getItem('osaka_family_itinerary_v2'));
+    let itineraryData = JSON.parse(localStorage.getItem('osaka_family_itinerary_v5'));
     if (!itineraryData) {
       itineraryData = defaultItinerary;
-      localStorage.setItem('osaka_family_itinerary_v2', JSON.stringify(itineraryData));
+      localStorage.setItem('osaka_family_itinerary_v5', JSON.stringify(itineraryData));
     }
+
+    const fallbackImg = "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=500&q=80";
 
     window.renderDayPills = function() {
       const container = document.getElementById('day-pills-bar');
@@ -420,7 +425,12 @@
         const btn = document.createElement('button');
         btn.className = `day-pill ${i === currentDay ? 'active' : ''}`;
         btn.innerText = `第 ${i} 天 (Day ${i})`;
-        btn.onclick = () => { currentDay = i; window.renderDayPills(); document.getElementById('current-day-label').innerText = `第 ${i} 天 (Day ${i}) 行程安排`; window.renderSpotList(); };
+        btn.onclick = () => { 
+          currentDay = i; 
+          window.renderDayPills(); 
+          document.getElementById('current-day-label').innerText = `第 ${i} 天 (Day ${i}) 行程安排`; 
+          window.renderSpotList(); 
+        };
         container.appendChild(btn);
       }
     }
@@ -428,28 +438,34 @@
     window.renderSpotList = function() {
       const box = document.getElementById('spots-list-box');
       const spots = itineraryData[currentDay] || [];
+      
+      document.getElementById('daily-tip-text').innerText = dailyTips[currentDay] || "自由发挥，开心最重要！";
+      
+      const mapBtn = document.getElementById('route-map-btn');
+      if (spots.length > 0) {
+        const waypoints = spots.map(s => encodeURIComponent('日本 大阪 ' + (s.mapQuery || s.name))).join('/');
+        mapBtn.href = `https://www.google.com/maps/dir/${waypoints}`;
+      } else {
+        mapBtn.href = "#";
+      }
+
       if (spots.length === 0) {
-        box.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:40px 10px; font-size:0.95rem;">🌸 这一天的行程目前还留白中，点击右上角「+ 增加行程点」添加景点路线吧！</div>`;
+        box.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:40px 10px; font-size:0.95rem;">🌸 这一天的行程目前还留白中，点击右上角「+ 新增」添加景点路线吧！</div>`;
         return;
       }
+
       box.innerHTML = spots.map((s, idx) => {
-        // 如果没有写mapQuery，默认用name作为搜索词
         let query = s.mapQuery ? s.mapQuery : s.name;
         return `
         <div class="spot-card">
-          <img src="${s.img || 'https://images.unsplash.com/photo-1590559899731-a372a14c5688?w=300'}" class="spot-img">
+          <img src="${s.img}" onerror="this.src='${fallbackImg}'" class="spot-img" alt="${s.name}">
           <div class="spot-info">
             <div class="spot-name">
-              <span>${s.name}</span>
-              <button class="btn-subtle" onclick="window.removeSpot(${idx})" style="color:#b22;">删除</button>
+              <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('日本 大阪 ' + query)}" target="_blank" title="在 Google Maps 中查看">📍 ${s.name}</a>
+              <button class="btn-subtle" onclick="window.removeSpot(${idx})" style="color:#b22; font-size:0.75rem; padding:4px 8px;">删除</button>
             </div>
             <div class="spot-meta"><span>⏱ 建议：<b>${s.time||'弹性'}</b></span><span>🚇 交通：<b>${s.transit||'步行/地铁直达'}</b></span></div>
-            <div class="spot-desc">${s.desc||'自由游览与体验'}</div>
-            <div class="spot-links">
-              <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('日本 大阪/京都 ' + query)}" target="_blank">
-                📍 查看 Google Maps 路线导航 &rarr;
-              </a>
-            </div>
+            <div class="spot-desc">${s.desc||''}</div>
           </div>
         </div>
       `}).join('');
@@ -458,38 +474,69 @@
     window.openAddSpotModal = function() {
       const name = prompt('请输入景点或活动名称（如：黑门市场）：'); if (!name) return;
       const time = prompt('建议游玩时间（例如：09:30 - 12:00）：', '10:00');
-      const transit = prompt('前往的交通路线（如：从难波搭千日前线出）：', '');
+      const transit = prompt('前往的交通路线（如：搭千日前线）：', '');
       const desc = prompt('行程详情、必吃推荐或小提醒：', '');
       const img = prompt('景点图片网址（留空将自动匹配默认风景图）：', '');
       if (!itineraryData[currentDay]) itineraryData[currentDay] = [];
       itineraryData[currentDay].push({ name, time, transit, desc, img, mapQuery: name });
-      localStorage.setItem('osaka_family_itinerary_v2', JSON.stringify(itineraryData));
+      localStorage.setItem('osaka_family_itinerary_v5', JSON.stringify(itineraryData));
       window.renderSpotList();
     }
     window.removeSpot = function(idx) {
-      if (confirm('确定要删除这个行程点吗？')) { itineraryData[currentDay].splice(idx, 1); localStorage.setItem('osaka_family_itinerary_v2', JSON.stringify(itineraryData)); window.renderSpotList(); }
+      if (confirm('确定要删除这个行程点吗？')) { itineraryData[currentDay].splice(idx, 1); localStorage.setItem('osaka_family_itinerary_v5', JSON.stringify(itineraryData)); window.renderSpotList(); }
     }
 
-    // ====== 本地个人旅途存储 ======
+    // ====== 本地个人旅途存储（增强清单删除 & 分日小记） ======
     let myPackList = JSON.parse(localStorage.getItem('my_trip_pack')) || [{ text: '护照、IC、保险资料', checked: false }, { text: '现金、Wise / 银行卡', checked: false }, { text: '防风外套与保暖衣', checked: false }, { text: '充电器、行动电源', checked: false }, { text: '常用药、口罩', checked: false }];
     let myWishList = JSON.parse(localStorage.getItem('my_trip_wish')) || [{ text: 'Loft 文具', checked: false }, { text: '黑门市场草莓', checked: false }, { text: '日本桥电器街', checked: false }];
     let myExpenses = JSON.parse(localStorage.getItem('my_trip_expenses')) || [];
+    
+    // 旅途小记分日记录对象
+    let currentNoteDay = "1";
+    let myDailyNotes = JSON.parse(localStorage.getItem('my_trip_notes_daily')) || { "1":"", "2":"", "3":"", "4":"", "5":"", "6":"", "7":"" };
 
     window.renderMyTrip = function() {
-      document.getElementById('my-pack-list').innerHTML = myPackList.map((item, idx) => `<div class="check-item"><input type="checkbox" ${item.checked?'checked':''} onchange="window.togglePack(${idx})"><span style="${item.checked?'text-decoration:line-through;color:var(--text-muted);':''}">${item.text}</span></div>`).join('');
-      document.getElementById('my-budget-num').innerText = Number(localStorage.getItem('my_trip_budget') || '0').toLocaleString();
-      document.getElementById('my-wish-list').innerHTML = myWishList.map((item, idx) => `<div class="check-item"><input type="checkbox" ${item.checked?'checked':''} onchange="window.toggleWish(${idx})"><span style="${item.checked?'text-decoration:line-through;color:var(--text-muted);':''}">${item.text}</span></div>`).join('');
+      // 行李清单 (带独立删除按钮)
+      document.getElementById('my-pack-list').innerHTML = myPackList.map((item, idx) => `
+        <div class="check-item">
+          <input type="checkbox" ${item.checked?'checked':''} onchange="window.togglePack(${idx})">
+          <span style="${item.checked?'text-decoration:line-through;color:var(--text-muted);':''}">${item.text}</span>
+          <button class="btn-del-icon" onclick="window.deletePackItem(${idx})" title="删除此项">✕</button>
+        </div>
+      `).join('');
       
+      document.getElementById('my-budget-num').innerText = Number(localStorage.getItem('my_trip_budget') || '0').toLocaleString();
+      
+      // 想去清单 (带独立删除按钮)
+      document.getElementById('my-wish-list').innerHTML = myWishList.map((item, idx) => `
+        <div class="check-item">
+          <input type="checkbox" ${item.checked?'checked':''} onchange="window.toggleWish(${idx})">
+          <span style="${item.checked?'text-decoration:line-through;color:var(--text-muted);':''}">${item.text}</span>
+          <button class="btn-del-icon" onclick="window.deleteWishItem(${idx})" title="删除此项">✕</button>
+        </div>
+      `).join('');
+      
+      // 个人账本
       const expBody = document.getElementById('my-expense-body');
       if (myExpenses.length === 0) expBody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:16px;">还没有个人开销，抵达后从这里开始记。</td></tr>`;
       else expBody.innerHTML = myExpenses.map((x, idx) => `<tr><td>${x.item}</td><td><span style="background:#f0e9dc; padding:3px 8px; border-radius:4px; font-size:0.8rem;">${x.category}</span></td><td style="font-weight:600;">¥ ${x.amount.toLocaleString()}</td><td style="color:var(--text-muted);">RM ${(x.amount*JPY_TO_MYR).toFixed(2)}</td><td><button class="btn-subtle" onclick="window.deleteMyExpense(${idx})">删除</button></td></tr>`).join('');
-      document.getElementById('my-notes').value = localStorage.getItem('my_trip_notes') || '';
+      
+      // 旅途小记渲染
+      document.getElementById('note-day-selector').value = currentNoteDay;
+      document.getElementById('my-notes').value = myDailyNotes[currentNoteDay] || '';
     }
 
+    // 行李清单交互
     window.togglePack = idx => { myPackList[idx].checked = !myPackList[idx].checked; localStorage.setItem('my_trip_pack', JSON.stringify(myPackList)); window.renderMyTrip(); }
     window.addPackItem = () => { const v = document.getElementById('new-pack-input').value.trim(); if(v){ myPackList.push({text:v, checked:false}); localStorage.setItem('my_trip_pack', JSON.stringify(myPackList)); document.getElementById('new-pack-input').value=''; window.renderMyTrip(); } }
+    window.deletePackItem = idx => { myPackList.splice(idx, 1); localStorage.setItem('my_trip_pack', JSON.stringify(myPackList)); window.renderMyTrip(); } // 新增删除
+
+    // 想去清单交互
     window.toggleWish = idx => { myWishList[idx].checked = !myWishList[idx].checked; localStorage.setItem('my_trip_wish', JSON.stringify(myWishList)); window.renderMyTrip(); }
     window.addWishItem = () => { const v = document.getElementById('new-wish-input').value.trim(); if(v){ myWishList.push({text:v, checked:false}); localStorage.setItem('my_trip_wish', JSON.stringify(myWishList)); document.getElementById('new-wish-input').value=''; window.renderMyTrip(); } }
+    window.deleteWishItem = idx => { myWishList.splice(idx, 1); localStorage.setItem('my_trip_wish', JSON.stringify(myWishList)); window.renderMyTrip(); } // 新增删除
+
+    // 预算与记账
     window.setPersonalBudget = () => { const v = document.getElementById('budget-input-val').value; if(v){ localStorage.setItem('my_trip_budget', v); document.getElementById('budget-input-val').value=''; window.renderMyTrip(); } }
     window.addPersonalExpense = () => {
       const item = document.getElementById('my-item').value.trim(), category = document.getElementById('my-category').value, amount = parseFloat(document.getElementById('my-amount').value);
@@ -498,12 +545,21 @@
       document.getElementById('my-item').value=''; document.getElementById('my-amount').value=''; window.renderMyTrip();
     }
     window.deleteMyExpense = idx => { myExpenses.splice(idx,1); localStorage.setItem('my_trip_expenses', JSON.stringify(myExpenses)); window.renderMyTrip(); }
-    window.savePersonalNotes = () => localStorage.setItem('my_trip_notes', document.getElementById('my-notes').value);
+    
+    // 旅途小记（分日逻辑）
+    window.changeNoteDay = function() {
+      currentNoteDay = document.getElementById('note-day-selector').value;
+      document.getElementById('my-notes').value = myDailyNotes[currentNoteDay] || '';
+    }
+    window.savePersonalNotes = function() {
+      myDailyNotes[currentNoteDay] = document.getElementById('my-notes').value;
+      localStorage.setItem('my_trip_notes_daily', JSON.stringify(myDailyNotes));
+    }
     
     window.onload = function() { window.renderDayPills(); window.renderSpotList(); window.renderMyTrip(); };
   </script>
 
-  <!-- ================= 2. 云端实时数据库接入 (Firebase) ================= -->
+  <!-- ================= 云端实时数据库接入 (Firebase) ================= -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, onValue, push, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -546,7 +602,7 @@
             <td><b>${x.payer}</b></td>
             <td style="font-weight:600;">¥ ${x.amount.toLocaleString()}</td>
             <td style="color:var(--text-muted);">RM ${(x.amount * window.JPY_TO_MYR || 0.031).toFixed(2)}</td>
-            <td><button class="btn-subtle" onclick="window.deleteFamilyExpense('${x.id}')">删除</button></td>
+            <td><button class="btn-subtle" onclick="window.deleteFamilyExpense('${x.id}')" style="color:#b22;">删除</button></td>
           </tr>
         `).join('');
       }
@@ -581,7 +637,7 @@
     };
 
     window.deleteFamilyExpense = function(id) {
-      if (confirm('确定要删除这笔家庭账单吗？其他家人的设备也会同步删除哦。')) {
+      if (confirm('确定要删除这笔家庭账单吗？其他家人的设备也会同步删除。')) {
         remove(ref(db, `osaka_family_ledger/${id}`));
       }
     };
