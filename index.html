@@ -71,6 +71,15 @@
     .weather-text span { font-size: 0.8rem; color: var(--text-muted); }
     .notice-tips { font-size: 0.82rem; color: #4f4c47; line-height: 1.65; background: #faf7f0; padding: 10px 12px; border-radius: 6px; margin-top: 6px; }
 
+    /* ================= 汇率换算工具条 ================= */
+    .currency-converter-bar {
+      background: var(--card-inner); border: 1px solid var(--border-color); border-radius: 8px;
+      padding: 12px 18px; margin-bottom: 22px; display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .converter-group { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; }
+    .converter-group input { width: 100px; padding: 6px 10px; font-weight: bold; color: var(--primary-red); }
+
     /* ================= 3. 主导航 Tabs ================= */
     .nav-tabs { display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 14px; }
     .tab-btn { background: transparent; border: none; padding: 9px 24px; font-size: 0.98rem; font-weight: 600; font-family: var(--font-serif); color: #4a453f; cursor: pointer; border-radius: 4px; transition: all 0.2s ease; letter-spacing: 0.05em; }
@@ -186,6 +195,26 @@
       </div>
     </header>
 
+    <!-- 实时汇率换算工具条 -->
+    <div class="currency-converter-bar">
+      <div style="font-size: 0.85rem; color: var(--text-muted);">
+        💱 <b>实时汇率小工具</b> (可随时修改兑换数值)
+      </div>
+      <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+        <div class="converter-group">
+          <span>¥</span>
+          <input type="number" id="conv-jpy" value="1000" oninput="window.convertFromJpy()">
+          <span>JPY</span>
+        </div>
+        <span>≈</span>
+        <div class="converter-group">
+          <span>RM</span>
+          <input type="number" id="conv-myr" value="31.00" oninput="window.convertFromMyr()">
+          <span>MYR</span>
+        </div>
+      </div>
+    </div>
+
     <section class="hero-grid">
       <div class="hero-banner">
         <div>
@@ -261,7 +290,7 @@
     <!-- PAGE 2: 家庭账本 -->
     <main id="page-family-ledger" class="tab-pane">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
-        <span style="font-size:0.85rem; color:var(--text-muted);">💴 默认换算汇率：<b>1 JPY ≈ 0.031 MYR</b></span>
+        <span style="font-size:0.85rem; color:var(--text-muted);">💴 默认换算汇率：<b>1 JPY ≈ <span id="display-rate">0.031</span> MYR</b></span>
         <div class="sync-badge"><div class="sync-dot"></div>家庭账本与行程云端实时同步中</div>
       </div>
 
@@ -366,7 +395,31 @@
   </div>
 
   <script>
-    const JPY_TO_MYR = 0.031;
+    // 动态汇率逻辑
+    let currentRate = 0.031;
+
+    function convertFromJpy() {
+      const jpy = parseFloat(document.getElementById('conv-jpy').value) || 0;
+      const myr = jpy * currentRate;
+      document.getElementById('conv-myr').value = myr.toFixed(2);
+    }
+
+    function convertFromMyr() {
+      const myr = parseFloat(document.getElementById('conv-myr').value) || 0;
+      const jpy = currentRate > 0 ? myr / currentRate : 0;
+      document.getElementById('conv-jpy').value = Math.round(jpy);
+    }
+
+    // 获取当前汇率计算动态 MYR
+    function getMyr(jpy) {
+      const rateInput = parseFloat(document.getElementById('conv-myr').value);
+      const jpyInput = parseFloat(document.getElementById('conv-jpy').value);
+      if (jpyInput > 0 && rateInput > 0) {
+        currentRate = rateInput / jpyInput;
+      }
+      document.getElementById('display-rate').innerText = currentRate.toFixed(4);
+      return jpy * currentRate;
+    }
 
     function switchPage(pageId) {
       document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
@@ -486,27 +539,22 @@
       `}).join('');
     }
 
-    // 本地缓存同步与云端同步触发
     window.syncItineraryToCloud = function() {
-      if (window.saveCloudItinerary) {
-        window.saveCloudItinerary(itineraryData);
-      }
+      if (window.saveCloudItinerary) { window.saveCloudItinerary(itineraryData); }
     }
 
     window.moveSpotUp = function(idx) {
       if (idx === 0) return;
       const spots = itineraryData[currentDay];
       const temp = spots[idx - 1]; spots[idx - 1] = spots[idx]; spots[idx] = temp;
-      window.renderSpotList();
-      window.syncItineraryToCloud();
+      window.renderSpotList(); window.syncItineraryToCloud();
     }
 
     window.moveSpotDown = function(idx) {
       const spots = itineraryData[currentDay];
       if (idx === spots.length - 1) return;
       const temp = spots[idx + 1]; spots[idx + 1] = spots[idx]; spots[idx] = temp;
-      window.renderSpotList();
-      window.syncItineraryToCloud();
+      window.renderSpotList(); window.syncItineraryToCloud();
     }
 
     window.openAddSpotModal = function() {
@@ -554,20 +602,17 @@
         if (!spot.mapQuery || spot.mapQuery === itineraryData[currentDay][idx].name) { spot.mapQuery = name; }
       }
       
-      window.renderSpotList();
-      window.syncItineraryToCloud();
-      window.closeSpotModal();
+      window.renderSpotList(); window.syncItineraryToCloud(); window.closeSpotModal();
     }
     
     window.removeSpot = function(idx) {
       if (confirm('确定要删除这个行程点吗？')) { 
         itineraryData[currentDay].splice(idx, 1); 
-        window.renderSpotList();
-        window.syncItineraryToCloud();
+        window.renderSpotList(); window.syncItineraryToCloud();
       }
     }
 
-    // 个人旅途本地存储
+    // 个人旅途存储
     let myPackList = JSON.parse(localStorage.getItem('my_trip_pack')) || [{ text: '护照、IC、保险资料', checked: false }, { text: '现金、Wise / 银行卡', checked: false }, { text: '防风外套与保暖衣', checked: false }, { text: '充电器、行动电源', checked: false }, { text: '常用药、口罩', checked: false }];
     let myWishList = JSON.parse(localStorage.getItem('my_trip_wish')) || [{ text: 'Loft 文具', checked: false }, { text: '黑门市场草莓', checked: false }, { text: '日本桥电器街', checked: false }];
     let myExpenses = JSON.parse(localStorage.getItem('my_trip_expenses')) || [];
@@ -584,7 +629,7 @@
       `).join('');
       const expBody = document.getElementById('my-expense-body');
       if (myExpenses.length === 0) expBody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:16px;">还没有个人开销</td></tr>`;
-      else expBody.innerHTML = myExpenses.map((x, idx) => `<tr><td>${x.item}</td><td>${x.category}</td><td>¥ ${x.amount.toLocaleString()}</td><td>RM ${(x.amount*JPY_TO_MYR).toFixed(2)}</td><td><button class="btn-subtle" onclick="window.deleteMyExpense(${idx})">删除</button></td></tr>`).join('');
+      else expBody.innerHTML = myExpenses.map((x, idx) => `<tr><td>${x.item}</td><td>${x.category}</td><td>¥ ${x.amount.toLocaleString()}</td><td>RM ${(x.amount*currentRate).toFixed(2)}</td><td><button class="btn-subtle" onclick="window.deleteMyExpense(${idx})">删除</button></td></tr>`).join('');
       document.getElementById('note-day-selector').value = currentNoteDay;
       document.getElementById('my-notes').value = myDailyNotes[currentNoteDay] || '';
     }
@@ -609,7 +654,7 @@
     window.onload = function() { window.renderDayPills(); window.renderMyTrip(); };
   </script>
 
-  <!-- ================= 云端实时数据库接入 (Firebase: 行程 + 账本全同步) ================= -->
+  <!-- ================= Firebase 云端同步脚本 ================= -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, onValue, push, remove, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -628,14 +673,13 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // 1. 行程云端实时同步监听
+    // 1. 行程云端同步
     const itineraryCloudRef = ref(db, 'osaka_family_itinerary');
     onValue(itineraryCloudRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
         itineraryData = data;
       } else {
-        // 如果云端还没有，初始化写入默认行程
         set(itineraryCloudRef, defaultItinerary);
         itineraryData = defaultItinerary;
       }
@@ -643,12 +687,11 @@
       window.renderSpotList();
     });
 
-    // 暴露给全局的云端保存行程方法
     window.saveCloudItinerary = function(data) {
       set(itineraryCloudRef, data);
     };
 
-    // 2. 家庭账本云端实时同步监听
+    // 2. 家庭账本云端同步
     const ledgerRef = ref(db, 'osaka_family_ledger');
     let familyLedger = []; 
 
@@ -671,7 +714,7 @@
             <td><b>${x.day}</b></td><td>${x.item}</td>
             <td><span style="background:#f0e9dc; padding:3px 8px; border-radius:4px; font-size:0.8rem;">${x.category}</span></td>
             <td><b>${x.payer}</b></td><td style="font-weight:600;">¥ ${x.amount.toLocaleString()}</td>
-            <td style="color:var(--text-muted);">RM ${(x.amount * (window.JPY_TO_MYR || 0.031)).toFixed(2)}</td>
+            <td style="color:var(--text-muted);">RM ${(x.amount * currentRate).toFixed(2)}</td>
             <td><button class="btn-subtle" onclick="window.deleteFamilyExpense('${x.id}')" style="color:#b22;">删除</button></td>
           </tr>
         `).join('');
@@ -679,7 +722,7 @@
 
       const totalJPY = familyLedger.reduce((sum, item) => sum + item.amount, 0);
       document.getElementById('family-total-jpy').innerText = `¥ ${totalJPY.toLocaleString()}`;
-      document.getElementById('family-total-myr').innerText = `RM ${(totalJPY * (window.JPY_TO_MYR || 0.031)).toFixed(2)}`;
+      document.getElementById('family-total-myr').innerText = `RM ${(totalJPY * currentRate).toFixed(2)}`;
 
       const catMap = {};
       familyLedger.forEach(x => { catMap[x.category] = (catMap[x.category] || 0) + x.amount; });
