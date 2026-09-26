@@ -105,9 +105,6 @@
     .itinerary-layout { display: grid; grid-template-columns: 2.2fr 1fr; gap: 24px; }
     @media (max-width: 900px) { .itinerary-layout { grid-template-columns: 1fr; } }
     
-    .transit-guide-box { background: #fdfaf2; border-left: 4px solid var(--primary-red); padding: 15px 18px; border-radius: 4px; margin-bottom: 22px; font-size: 0.86rem; line-height: 1.7; border: 1px solid var(--border-color); }
-    .transit-guide-box b { color: var(--primary-red); }
-    
     .day-pills { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 22px; }
     .day-pill { background: var(--card-inner); border: 1px solid var(--border-color); padding: 7px 18px; border-radius: 20px; cursor: pointer; font-size: 0.88rem; font-weight: 600; color: #555; transition: all 0.2s; }
     .day-pill:hover { border-color: var(--primary-red); color: var(--primary-red); }
@@ -149,7 +146,7 @@
     .check-item input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--primary-red); cursor: pointer; }
     .memo-paper { background-color: var(--note-yellow); border: 1px solid #e9deaa; border-radius: 6px; padding: 16px; min-height: 180px; width: 100%; resize: vertical; font-size: 0.9rem; line-height: 1.6; color: #3b352b; box-shadow: 2px 2px 5px rgba(0,0,0,0.02); }
 
-    /* ================= 编辑/新增 模态框 (Modal) ================= */
+    /* ================= 弹窗 (Modal) ================= */
     .modal-overlay {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(28,54,68,0.7); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(3px);
@@ -171,7 +168,6 @@
 <body>
 
   <div class="main-wrapper">
-    <!-- ================= 顶部 Header ================= -->
     <header>
       <div class="header-top">
         <div class="brand-area">
@@ -190,7 +186,6 @@
       </div>
     </header>
 
-    <!-- ================= Banner ================= -->
     <section class="hero-grid">
       <div class="hero-banner">
         <div>
@@ -219,20 +214,17 @@
       </div>
     </section>
 
-    <!-- ================= 导航 Tabs ================= -->
     <nav class="nav-tabs">
       <button class="tab-btn active" onclick="switchPage('itinerary')">每日行程</button>
       <button class="tab-btn" onclick="switchPage('family-ledger')">家庭账本</button>
       <button class="tab-btn" onclick="switchPage('my-trip')">我的旅程</button>
     </nav>
 
-    <!-- ================= PAGE 1: 每日行程 ================= -->
+    <!-- PAGE 1: 每日行程 -->
     <main id="page-itinerary" class="tab-pane active">
       <div class="itinerary-layout">
-        
         <div class="itinerary-main">
           <div class="day-pills" id="day-pills-bar"></div>
-          
           <div class="card" style="padding: 20px;">
             <div class="card-heading" style="margin-bottom: 12px;">
               <span id="current-day-label">第 1 天 (Day 1) 行程安排</span>
@@ -252,15 +244,9 @@
           <div class="card sidebar-card">
             <h3 class="sidebar-title">二月天气</h3>
             <div class="weather-grid">
-              <div class="weather-box">
-                <span>上午</span><div class="weather-icon">☁️</div><span>3-7° C</span>
-              </div>
-              <div class="weather-box">
-                <span>下午</span><div class="weather-icon">☀️</div><span>7-10° C</span>
-              </div>
-              <div class="weather-box">
-                <span>晚上</span><div class="weather-icon">🌙</div><span>2-6° C</span>
-              </div>
+              <div class="weather-box"><span>上午</span><div class="weather-icon">☁️</div><span>3-7° C</span></div>
+              <div class="weather-box"><span>下午</span><div class="weather-icon">☀️</div><span>7-10° C</span></div>
+              <div class="weather-box"><span>晚上</span><div class="weather-icon">🌙</div><span>2-6° C</span></div>
             </div>
           </div>
 
@@ -272,11 +258,11 @@
       </div>
     </main>
 
-    <!-- ================= PAGE 2: 家庭账本 ================= -->
+    <!-- PAGE 2: 家庭账本 -->
     <main id="page-family-ledger" class="tab-pane">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
         <span style="font-size:0.85rem; color:var(--text-muted);">💴 默认换算汇率：<b>1 JPY ≈ 0.031 MYR</b></span>
-        <div class="sync-badge"><div class="sync-dot"></div>所有家人设备实时同步中</div>
+        <div class="sync-badge"><div class="sync-dot"></div>家庭账本与行程云端实时同步中</div>
       </div>
 
       <div class="card" style="background:#fffcf7;">
@@ -311,10 +297,9 @@
       </div>
     </main>
 
-    <!-- ================= PAGE 3: 我的旅程 ================= -->
+    <!-- PAGE 3: 我的旅程 -->
     <main id="page-my-trip" class="tab-pane">
       <div class="trip-top-row">
-        <!-- 带有删除按钮的行李清单 -->
         <div class="card" style="margin-bottom:0;">
           <div class="card-heading" style="font-size:1.15rem;">我的行李清单</div>
           <div id="my-pack-list"></div>
@@ -328,7 +313,6 @@
           <div style="display:flex; gap:8px; margin-top:16px;"><input type="number" id="budget-input-val" placeholder="设定预算 (JPY)" style="flex:1;"><button class="btn-subtle" onclick="window.setPersonalBudget()">保存</button></div>
         </div>
 
-        <!-- 带有删除按钮的想去清单 -->
         <div class="card" style="margin-bottom:0;">
           <div class="card-heading" style="font-size:1.15rem;">想去清单</div>
           <div id="my-wish-list"></div>
@@ -349,18 +333,11 @@
         </div>
       </div>
 
-      <!-- 分日记录的旅途小记 -->
       <div class="card" style="margin-top:22px; background: #faf8f5;">
         <div class="card-heading" style="display: flex; justify-content: flex-start; gap: 15px;">
           <span>旅途小记</span>
           <select id="note-day-selector" onchange="window.changeNoteDay()" style="font-size:0.85rem; padding: 4px 10px; border-radius: 4px;">
-            <option value="1">Day 1 记录</option>
-            <option value="2">Day 2 记录</option>
-            <option value="3">Day 3 记录</option>
-            <option value="4">Day 4 记录</option>
-            <option value="5">Day 5 记录</option>
-            <option value="6">Day 6 记录</option>
-            <option value="7">Day 7 记录</option>
+            <option value="1">Day 1 记录</option><option value="2">Day 2 记录</option><option value="3">Day 3 记录</option><option value="4">Day 4 记录</option><option value="5">Day 5 记录</option><option value="6">Day 6 记录</option><option value="7">Day 7 记录</option>
           </select>
         </div>
         <textarea id="my-notes" class="memo-paper" placeholder="记录这一天的见闻、小巷子里的好吃的、或是心情随笔..." oninput="window.savePersonalNotes()"></textarea>
@@ -368,7 +345,7 @@
     </main>
   </div>
 
-  <!-- ================= 可视化行程编辑弹窗 (Modal) ================= -->
+  <!-- 编辑弹窗 -->
   <div id="spot-modal" class="modal-overlay">
     <div class="modal-content">
       <div class="modal-header">
@@ -376,28 +353,11 @@
         <button class="modal-close" onclick="window.closeSpotModal()">✕</button>
       </div>
       <input type="hidden" id="modal-spot-idx" value="-1">
-      
-      <div class="modal-form-group">
-        <label>📍 景点/活动名称</label>
-        <input type="text" id="modal-spot-name" placeholder="如：黑门市场、环球影城...">
-      </div>
-      <div class="modal-form-group">
-        <label>⏱ 建议游玩时间</label>
-        <input type="text" id="modal-spot-time" placeholder="如：09:30 - 12:00">
-      </div>
-      <div class="modal-form-group">
-        <label>🚇 交通路线</label>
-        <input type="text" id="modal-spot-transit" placeholder="如：搭乘千日前线至日本桥站...">
-      </div>
-      <div class="modal-form-group">
-        <label>📝 行程详情、小贴士或必吃推荐</label>
-        <textarea id="modal-spot-desc" placeholder="可以在这里随意添加任意文字，记录下要买的东西或好吃的店！"></textarea>
-      </div>
-      <div class="modal-form-group">
-        <label>🖼️ 景点照片网址 (随意替换真实的网图链接)</label>
-        <input type="text" id="modal-spot-img" placeholder="https://...">
-      </div>
-      
+      <div class="modal-form-group"><label>📍 景点/活动名称</label><input type="text" id="modal-spot-name" placeholder="如：黑门市场..."></div>
+      <div class="modal-form-group"><label>⏱ 建议游玩时间</label><input type="text" id="modal-spot-time" placeholder="如：09:30 - 12:00"></div>
+      <div class="modal-form-group"><label>🚇 交通路线</label><input type="text" id="modal-spot-transit" placeholder="如：搭乘千日前线..."></div>
+      <div class="modal-form-group"><label>📝 行程详情、小贴士</label><textarea id="modal-spot-desc" placeholder="详情描述..."></textarea></div>
+      <div class="modal-form-group"><label>🖼️ 景点照片网址</label><input type="text" id="modal-spot-img" placeholder="https://..."></div>
       <div style="text-align: right; margin-top: 24px;">
         <button class="btn-subtle" onclick="window.closeSpotModal()" style="margin-right: 10px; padding: 8px 18px;">取消</button>
         <button class="btn-red" onclick="window.saveSpotModal()">保存行程</button>
@@ -405,7 +365,6 @@
     </div>
   </div>
 
-  <!-- ================= 基础逻辑与行程数据载入 ================= -->
   <script>
     const JPY_TO_MYR = 0.031;
 
@@ -466,13 +425,7 @@
     };
 
     let currentDay = 1;
-    // 数据升级至 _v11 彻底解锁上下排序功能
-    let itineraryData = JSON.parse(localStorage.getItem('osaka_family_itinerary_v11'));
-    if (!itineraryData) {
-      itineraryData = defaultItinerary;
-      localStorage.setItem('osaka_family_itinerary_v11', JSON.stringify(itineraryData));
-    }
-
+    let itineraryData = JSON.parse(JSON.stringify(defaultItinerary));
     const fallbackImg = "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=500&q=80";
 
     window.renderDayPills = function() {
@@ -511,7 +464,6 @@
         return;
       }
 
-      // 新增了上下移动排序按钮 ▲ ▼
       box.innerHTML = spots.map((s, idx) => {
         let query = s.mapQuery ? s.mapQuery : s.name;
         return `
@@ -534,25 +486,27 @@
       `}).join('');
     }
 
-    // --- 上下移动排序功能 ---
+    // 本地缓存同步与云端同步触发
+    window.syncItineraryToCloud = function() {
+      if (window.saveCloudItinerary) {
+        window.saveCloudItinerary(itineraryData);
+      }
+    }
+
     window.moveSpotUp = function(idx) {
       if (idx === 0) return;
       const spots = itineraryData[currentDay];
-      const temp = spots[idx - 1];
-      spots[idx - 1] = spots[idx];
-      spots[idx] = temp;
-      localStorage.setItem('osaka_family_itinerary_v11', JSON.stringify(itineraryData));
+      const temp = spots[idx - 1]; spots[idx - 1] = spots[idx]; spots[idx] = temp;
       window.renderSpotList();
+      window.syncItineraryToCloud();
     }
 
     window.moveSpotDown = function(idx) {
       const spots = itineraryData[currentDay];
       if (idx === spots.length - 1) return;
-      const temp = spots[idx + 1];
-      spots[idx + 1] = spots[idx];
-      spots[idx] = temp;
-      localStorage.setItem('osaka_family_itinerary_v11', JSON.stringify(itineraryData));
+      const temp = spots[idx + 1]; spots[idx + 1] = spots[idx]; spots[idx] = temp;
       window.renderSpotList();
+      window.syncItineraryToCloud();
     }
 
     window.openAddSpotModal = function() {
@@ -578,9 +532,7 @@
       document.getElementById('spot-modal').classList.add('active');
     }
 
-    window.closeSpotModal = function() {
-      document.getElementById('spot-modal').classList.remove('active');
-    }
+    window.closeSpotModal = function() { document.getElementById('spot-modal').classList.remove('active'); }
 
     window.saveSpotModal = function() {
       const idx = parseInt(document.getElementById('modal-spot-idx').value);
@@ -590,7 +542,7 @@
       const time = document.getElementById('modal-spot-time').value.trim();
       const transit = document.getElementById('modal-spot-transit').value.trim();
       const desc = document.getElementById('modal-spot-desc').value.trim();
-      const img = document.getElementById('modal-spot-img').value.trim();
+      const img = document.getElementById('modal-spot-img').value.trim() || fallbackImg;
 
       if (!itineraryData[currentDay]) itineraryData[currentDay] = [];
 
@@ -599,55 +551,40 @@
       } else {
         const spot = itineraryData[currentDay][idx];
         spot.name = name; spot.time = time; spot.transit = transit; spot.desc = desc; spot.img = img;
-        if (!spot.mapQuery || spot.mapQuery === itineraryData[currentDay][idx].name) {
-           spot.mapQuery = name;
-        }
+        if (!spot.mapQuery || spot.mapQuery === itineraryData[currentDay][idx].name) { spot.mapQuery = name; }
       }
       
-      localStorage.setItem('osaka_family_itinerary_v11', JSON.stringify(itineraryData));
       window.renderSpotList();
+      window.syncItineraryToCloud();
       window.closeSpotModal();
     }
     
     window.removeSpot = function(idx) {
       if (confirm('确定要删除这个行程点吗？')) { 
         itineraryData[currentDay].splice(idx, 1); 
-        localStorage.setItem('osaka_family_itinerary_v11', JSON.stringify(itineraryData)); 
-        window.renderSpotList(); 
+        window.renderSpotList();
+        window.syncItineraryToCloud();
       }
     }
 
-    // ====== 本地个人旅途存储 ======
+    // 个人旅途本地存储
     let myPackList = JSON.parse(localStorage.getItem('my_trip_pack')) || [{ text: '护照、IC、保险资料', checked: false }, { text: '现金、Wise / 银行卡', checked: false }, { text: '防风外套与保暖衣', checked: false }, { text: '充电器、行动电源', checked: false }, { text: '常用药、口罩', checked: false }];
     let myWishList = JSON.parse(localStorage.getItem('my_trip_wish')) || [{ text: 'Loft 文具', checked: false }, { text: '黑门市场草莓', checked: false }, { text: '日本桥电器街', checked: false }];
     let myExpenses = JSON.parse(localStorage.getItem('my_trip_expenses')) || [];
-    
     let currentNoteDay = "1";
     let myDailyNotes = JSON.parse(localStorage.getItem('my_trip_notes_daily')) || { "1":"", "2":"", "3":"", "4":"", "5":"", "6":"", "7":"" };
 
     window.renderMyTrip = function() {
       document.getElementById('my-pack-list').innerHTML = myPackList.map((item, idx) => `
-        <div class="check-item">
-          <input type="checkbox" ${item.checked?'checked':''} onchange="window.togglePack(${idx})">
-          <span style="${item.checked?'text-decoration:line-through;color:var(--text-muted);':''}">${item.text}</span>
-          <button class="btn-del-icon" onclick="window.deletePackItem(${idx})" title="删除此项">✕</button>
-        </div>
+        <div class="check-item"><input type="checkbox" ${item.checked?'checked':''} onchange="window.togglePack(${idx})"><span style="${item.checked?'text-decoration:line-through;color:var(--text-muted);':''}">${item.text}</span><button class="btn-del-icon" onclick="window.deletePackItem(${idx})">✕</button></div>
       `).join('');
-      
       document.getElementById('my-budget-num').innerText = Number(localStorage.getItem('my_trip_budget') || '0').toLocaleString();
-      
       document.getElementById('my-wish-list').innerHTML = myWishList.map((item, idx) => `
-        <div class="check-item">
-          <input type="checkbox" ${item.checked?'checked':''} onchange="window.toggleWish(${idx})">
-          <span style="${item.checked?'text-decoration:line-through;color:var(--text-muted);':''}">${item.text}</span>
-          <button class="btn-del-icon" onclick="window.deleteWishItem(${idx})" title="删除此项">✕</button>
-        </div>
+        <div class="check-item"><input type="checkbox" ${item.checked?'checked':''} onchange="window.toggleWish(${idx})"><span style="${item.checked?'text-decoration:line-through;color:var(--text-muted);':''}">${item.text}</span><button class="btn-del-icon" onclick="window.deleteWishItem(${idx})">✕</button></div>
       `).join('');
-      
       const expBody = document.getElementById('my-expense-body');
-      if (myExpenses.length === 0) expBody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:16px;">还没有个人开销，抵达后从这里开始记。</td></tr>`;
-      else expBody.innerHTML = myExpenses.map((x, idx) => `<tr><td>${x.item}</td><td><span style="background:#f0e9dc; padding:3px 8px; border-radius:4px; font-size:0.8rem;">${x.category}</span></td><td style="font-weight:600;">¥ ${x.amount.toLocaleString()}</td><td style="color:var(--text-muted);">RM ${(x.amount*JPY_TO_MYR).toFixed(2)}</td><td><button class="btn-subtle" onclick="window.deleteMyExpense(${idx})">删除</button></td></tr>`).join('');
-      
+      if (myExpenses.length === 0) expBody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:16px;">还没有个人开销</td></tr>`;
+      else expBody.innerHTML = myExpenses.map((x, idx) => `<tr><td>${x.item}</td><td>${x.category}</td><td>¥ ${x.amount.toLocaleString()}</td><td>RM ${(x.amount*JPY_TO_MYR).toFixed(2)}</td><td><button class="btn-subtle" onclick="window.deleteMyExpense(${idx})">删除</button></td></tr>`).join('');
       document.getElementById('note-day-selector').value = currentNoteDay;
       document.getElementById('my-notes').value = myDailyNotes[currentNoteDay] || '';
     }
@@ -655,11 +592,9 @@
     window.togglePack = idx => { myPackList[idx].checked = !myPackList[idx].checked; localStorage.setItem('my_trip_pack', JSON.stringify(myPackList)); window.renderMyTrip(); }
     window.addPackItem = () => { const v = document.getElementById('new-pack-input').value.trim(); if(v){ myPackList.push({text:v, checked:false}); localStorage.setItem('my_trip_pack', JSON.stringify(myPackList)); document.getElementById('new-pack-input').value=''; window.renderMyTrip(); } }
     window.deletePackItem = idx => { myPackList.splice(idx, 1); localStorage.setItem('my_trip_pack', JSON.stringify(myPackList)); window.renderMyTrip(); }
-
     window.toggleWish = idx => { myWishList[idx].checked = !myWishList[idx].checked; localStorage.setItem('my_trip_wish', JSON.stringify(myWishList)); window.renderMyTrip(); }
     window.addWishItem = () => { const v = document.getElementById('new-wish-input').value.trim(); if(v){ myWishList.push({text:v, checked:false}); localStorage.setItem('my_trip_wish', JSON.stringify(myWishList)); document.getElementById('new-wish-input').value=''; window.renderMyTrip(); } }
     window.deleteWishItem = idx => { myWishList.splice(idx, 1); localStorage.setItem('my_trip_wish', JSON.stringify(myWishList)); window.renderMyTrip(); }
-
     window.setPersonalBudget = () => { const v = document.getElementById('budget-input-val').value; if(v){ localStorage.setItem('my_trip_budget', v); document.getElementById('budget-input-val').value=''; window.renderMyTrip(); } }
     window.addPersonalExpense = () => {
       const item = document.getElementById('my-item').value.trim(), category = document.getElementById('my-category').value, amount = parseFloat(document.getElementById('my-amount').value);
@@ -668,23 +603,16 @@
       document.getElementById('my-item').value=''; document.getElementById('my-amount').value=''; window.renderMyTrip();
     }
     window.deleteMyExpense = idx => { myExpenses.splice(idx,1); localStorage.setItem('my_trip_expenses', JSON.stringify(myExpenses)); window.renderMyTrip(); }
+    window.changeNoteDay = function() { currentNoteDay = document.getElementById('note-day-selector').value; document.getElementById('my-notes').value = myDailyNotes[currentNoteDay] || ''; }
+    window.savePersonalNotes = function() { myDailyNotes[currentNoteDay] = document.getElementById('my-notes').value; localStorage.setItem('my_trip_notes_daily', JSON.stringify(myDailyNotes)); }
     
-    window.changeNoteDay = function() {
-      currentNoteDay = document.getElementById('note-day-selector').value;
-      document.getElementById('my-notes').value = myDailyNotes[currentNoteDay] || '';
-    }
-    window.savePersonalNotes = function() {
-      myDailyNotes[currentNoteDay] = document.getElementById('my-notes').value;
-      localStorage.setItem('my_trip_notes_daily', JSON.stringify(myDailyNotes));
-    }
-    
-    window.onload = function() { window.renderDayPills(); window.renderSpotList(); window.renderMyTrip(); };
+    window.onload = function() { window.renderDayPills(); window.renderMyTrip(); };
   </script>
 
-  <!-- ================= 云端实时数据库接入 (Firebase) ================= -->
+  <!-- ================= 云端实时数据库接入 (Firebase: 行程 + 账本全同步) ================= -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue, push, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, onValue, push, remove, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCJ7BohSIrhWs74bBz1_wn8r7MoKDf8ANc",
@@ -699,6 +627,28 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
+
+    // 1. 行程云端实时同步监听
+    const itineraryCloudRef = ref(db, 'osaka_family_itinerary');
+    onValue(itineraryCloudRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        itineraryData = data;
+      } else {
+        // 如果云端还没有，初始化写入默认行程
+        set(itineraryCloudRef, defaultItinerary);
+        itineraryData = defaultItinerary;
+      }
+      window.renderDayPills();
+      window.renderSpotList();
+    });
+
+    // 暴露给全局的云端保存行程方法
+    window.saveCloudItinerary = function(data) {
+      set(itineraryCloudRef, data);
+    };
+
+    // 2. 家庭账本云端实时同步监听
     const ledgerRef = ref(db, 'osaka_family_ledger');
     let familyLedger = []; 
 
@@ -718,12 +668,10 @@
       } else {
         tbody.innerHTML = list.map(x => `
           <tr>
-            <td><b>${x.day}</b></td>
-            <td>${x.item}</td>
+            <td><b>${x.day}</b></td><td>${x.item}</td>
             <td><span style="background:#f0e9dc; padding:3px 8px; border-radius:4px; font-size:0.8rem;">${x.category}</span></td>
-            <td><b>${x.payer}</b></td>
-            <td style="font-weight:600;">¥ ${x.amount.toLocaleString()}</td>
-            <td style="color:var(--text-muted);">RM ${(x.amount * window.JPY_TO_MYR || 0.031).toFixed(2)}</td>
+            <td><b>${x.payer}</b></td><td style="font-weight:600;">¥ ${x.amount.toLocaleString()}</td>
+            <td style="color:var(--text-muted);">RM ${(x.amount * (window.JPY_TO_MYR || 0.031)).toFixed(2)}</td>
             <td><button class="btn-subtle" onclick="window.deleteFamilyExpense('${x.id}')" style="color:#b22;">删除</button></td>
           </tr>
         `).join('');
@@ -751,9 +699,7 @@
       const amount = parseFloat(document.getElementById('fl-amount').value);
 
       if (!item || isNaN(amount) || amount <= 0) return alert('请填入完整的项目名称与有效金额');
-      
       push(ledgerRef, { day, item, category, payer, amount });
-
       document.getElementById('fl-item').value = '';
       document.getElementById('fl-amount').value = '';
     };
