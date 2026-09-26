@@ -107,14 +107,15 @@
     .day-pill:hover { border-color: var(--primary-red); color: var(--primary-red); }
     .day-pill.active { background: var(--primary-red); color: #ffffff; border-color: var(--primary-red); }
     .spot-card { display: flex; gap: 18px; background: #fff; border: 1px solid var(--border-color); border-radius: 8px; padding: 18px; margin-bottom: 16px; align-items: flex-start; transition: box-shadow 0.2s; }
+    @media (max-width: 600px) { .spot-card { flex-direction: column; } .spot-img { width: 100%; height: 160px; } }
     .spot-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
-    .spot-img { width: 130px; height: 95px; object-fit: cover; border-radius: 6px; background: #eae2d3; flex-shrink: 0; }
-    .spot-info { flex: 1; }
-    .spot-name { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; color: #1a1a1a; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; }
+    .spot-img { width: 150px; height: 110px; object-fit: cover; border-radius: 6px; background: #eae2d3; flex-shrink: 0; }
+    .spot-info { flex: 1; width: 100%; }
+    .spot-name { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; color: #1a1a1a; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;}
     .spot-meta { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 8px; display: flex; flex-wrap: wrap; gap: 14px; }
     .spot-desc { font-size: 0.88rem; color: #4a453f; line-height: 1.5; margin-bottom: 10px; }
-    .spot-links a { color: var(--primary-red); font-size: 0.82rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
-    .spot-links a:hover { text-decoration: underline; }
+    .spot-links a { color: var(--primary-red); font-size: 0.82rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; background: #fff0f0; padding: 4px 8px; border-radius: 4px; }
+    .spot-links a:hover { background: #ffe0e0; }
 
     /* 我的旅程复刻 CSS */
     .trip-top-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-bottom: 22px; }
@@ -154,11 +155,11 @@
         <div>
           <div class="hero-subtitle">WINTER JOURNEY / 7 DAYS</div>
           <h2 class="hero-title">在关西，慢慢走</h2>
-          <p class="hero-desc">为一家人整理的轻松节奏：每天只安排一个重点区域，留足吃饭、休息和临时发现的时间。</p>
+          <p class="hero-desc">以【黑门市场】为基地，贯彻随性休闲、不走回头路、美食与古迹兼顾的 5 人同行轻松节奏。</p>
         </div>
         <div class="hero-tags">
           <span class="hero-tag">2 月 · 7 天</span>
-          <span class="hero-tag">大阪为主</span>
+          <span class="hero-tag">大阪基地</span>
           <span class="hero-tag">日常温度 3-10°C</span>
         </div>
       </div>
@@ -187,9 +188,9 @@
     <!-- ================= PAGE 1: 每日行程 ================= -->
     <main id="page-itinerary" class="tab-pane active">
       <div class="transit-guide-box">
-        🚆 <b>交通乘车与路线查询推荐：</b><br>
-        1. <b>推荐 App</b>：手机首选 <b>Google Maps</b>（查询步行去最近地铁站、出入口编号最精准）配合 <b>Yahoo!乗換案内</b>（查日本地下铁精准发车站台与时刻表）。<br>
-        2. <b>全家乘车提示</b>：点击下方每个景点的「查看地图路线」，可直接手机导航规划！
+        🚆 <b>关西交通与路线查询提示：</b><br>
+        1. <b>查询神器</b>：手机优先使用 <b>Google Maps</b>，若要看精准发车时刻表请搭配 <b>Yahoo!乗換案内</b>。<br>
+        2. <b>路线直达</b>：点击下方每个景点的「📍查看 Google Maps 路线导航」，已为您设置好了日文地标，手机一键即可带路！
       </div>
       <div class="day-pills" id="day-pills-bar"></div>
       <div class="card">
@@ -255,10 +256,8 @@
           <div>
             <label style="font-size:0.78rem; color:#666;">付款人</label>
             <select id="fl-payer" style="width:100%;">
-              <option value="小英">小英</option>
-              <option value="乐缤">乐缤</option>
-              <option value="紫琦">紫琦</option>
-              <option value="楷翔">楷翔</option>
+              <option value="小英">小英</option><option value="乐缤">乐缤</option>
+              <option value="紫琦">紫琦</option><option value="楷翔">楷翔</option>
               <option value="楷哲">楷哲</option>
             </select>
           </div>
@@ -357,7 +356,7 @@
     </main>
   </div>
 
-  <!-- ================= 基础逻辑 (处理页面切换与本地存储) ================= -->
+  <!-- ================= 基础逻辑与行程数据载入 ================= -->
   <script>
     const JPY_TO_MYR = 0.031;
 
@@ -369,8 +368,50 @@
       document.querySelectorAll('.tab-btn')[tabs.indexOf(pageId)].classList.add('active');
     }
 
+    // 载入您专属规划好的 7天行程数据 (使用 _v2 确保覆盖旧数据)
+    const defaultItinerary = {
+      1: [
+        { name: "关西机场 ➔ 黑门市场", time: "15:30", transit: "乘【南海电铁特急 Rapi:t】直达难波站(38分)，出站打车3分至黑门市场", desc: "安顿行李，下楼慢逛黑门市场初体验。尝一尝现烤扇贝或黑毛和牛串。", img: "https://images.unsplash.com/photo-1590559899731-a372a14c5688?w=500", mapQuery: "黒門市場" },
+        { name: "道顿堀与戎桥打卡", time: "17:30 - 晚间", transit: "从住处步行 8 分钟即达", desc: "晚餐推荐：一兰拉面道顿堀店别馆，或街头现烤章鱼烧（如元祖章鱼烧）。别忘了与格力高奔跑小人、大螃蟹合影。", img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500", mapQuery: "道頓堀 戎橋" }
+      ],
+      2: [
+        { name: "奈良公园 (喂小鹿)", time: "09:30 - 11:00", transit: "【近铁快速急行】日本桥 ➔ 近铁奈良站 (38分钟/680円)，步行5分钟入园", desc: "路上购买鹿饼。小提示：向小鹿点头鞠躬它会跟着点头；喂完举起双手展示没食物，小鹿会自动离开。", img: "https://images.unsplash.com/photo-1549693578-cbc70b0cc850?w=500", mapQuery: "奈良公園" },
+        { name: "东大寺 (大佛殿)", time: "11:00 - 12:30", transit: "沿奈良公园步行", desc: "世界文化遗产，近距离瞻仰巨大卢舍那大佛。门票600円。午餐推荐附近的「志津香釜饭」。", img: "https://images.unsplash.com/photo-1628172938814-257a07011d61?w=500", mapQuery: "東大寺" },
+        { name: "春日大社 ➔ 奈良町老街", time: "14:00 - 17:30", transit: "步行漫游", desc: "穿过石灯笼参道至春日大社。傍晚回到「饼饭殿商店街」，必买中谷堂现打麻薯！晚餐回大阪吃黑毛和牛烧肉。", img: "https://images.unsplash.com/photo-1615671158671-3312e75e1140?w=500", mapQuery: "春日大社" }
+      ],
+      3: [
+        { name: "伏见稻荷大社", time: "09:00 - 11:30", transit: "地铁至【北浜】转【京阪本线特急】直达伏见稻荷站(约55分/700円)", desc: "震撼的朱红色千本鸟居。长辈同行建议走到“奥社奉拜所”原路折返即可，省力又出片。", img: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=500", mapQuery: "伏見稲荷大社" },
+        { name: "清水寺 ➔ 二三年坂", time: "12:00 - 16:30", transit: "搭京阪电车至【清水五条】，打车(约800円)直达清水寺坡下", desc: "午餐推荐汤豆腐料理。参观清水舞台(门票400円)。慢步下坡逛二三年坂，品尝抹茶与伴手礼。", img: "https://images.unsplash.com/photo-1624253321171-1be53e12f5f4?w=500", mapQuery: "清水寺" },
+        { name: "祇园鸭川散步", time: "17:00 - 18:30", transit: "沿八坂神社顺势逛出", desc: "黄昏时分漫步花见小路与鸭川，感受京都清冽氛围。随后在祇园四条搭京阪特急返回大阪。", img: "https://images.unsplash.com/photo-1492571350019-22de08371fd3?w=500", mapQuery: "鴨川 祇園" }
+      ],
+      4: [
+        { name: "四天王寺", time: "10:30 - 12:30", transit: "步行或坐地铁1站", desc: "睡到自然醒的悠闲一朝。参观日本最古老的官寺，感受古朴宁静的白砂庭园(门票300円)。", img: "https://images.unsplash.com/photo-1627918451151-51ee3eeb2de0?w=500", mapQuery: "四天王寺" },
+        { name: "新世界与通天阁", time: "12:30 - 15:30", transit: "步行10分钟前往", desc: "感受昭和复古市井气息。午餐必吃「元祖炸串达摩」，外酥里嫩！", img: "https://images.unsplash.com/photo-1588636733221-c19b88f346b9?w=500", mapQuery: "通天閣" },
+        { name: "阿倍野 Harukas 300 展望台", time: "17:00 - 晚间", transit: "穿过天王寺公园进入近铁百货大楼", desc: "关西最震撼的360度玻璃观景台看日落与夜景(门票2000円)。晚餐推荐在百货楼上吃寿喜烧放题。", img: "https://images.unsplash.com/photo-1601072935277-2e5f31895697?w=500", mapQuery: "あべのハルカス" }
+      ],
+      5: [
+        { name: "大阪城天守阁", time: "09:30 - 12:30", transit: "乘地铁千日前线转中央线至【谷町四丁目站】", desc: "穿过护城河登天守阁(门票600円)，俯瞰全城并了解丰臣秀吉战国历史。", img: "https://images.unsplash.com/photo-1555359739-16a4959db14d?w=500", mapQuery: "大阪城" },
+        { name: "日本桥电器街 (Denden Town)", time: "12:30 - 15:30", transit: "搭地铁返回【日本桥】", desc: "大阪的秋叶原！遍布 Animate、手办盲盒、中古相机与电子免税店，4人尽情淘好物。", img: "https://images.unsplash.com/photo-1524414139215-35c99f80112d?w=500", mapQuery: "でんでんタウン" },
+        { name: "心斋桥筋大采购", time: "15:30 - 晚间", transit: "逛完顺着向北走即达", desc: "大丸百货(含任天堂/宝可梦中心)、大国药妆扫货。买沉了可随时走回公寓放行李！晚餐推荐今井乌冬面。", img: "https://images.unsplash.com/photo-1616222629858-69cb4807469a?w=500", mapQuery: "心斎橋筋商店街" }
+      ],
+      6: [
+        { name: "中崎町复古老街", time: "10:30 - 12:30", transit: "地铁御堂筋线至【梅田站】步行前往", desc: "躲过二战轰炸的木质长屋区，遍布文艺手作店与复古咖啡馆，拍照极其出片。", img: "https://images.unsplash.com/photo-1619864273295-8bd3c22421df?w=500", mapQuery: "中崎町" },
+        { name: "梅田百货巨头商圈", time: "12:30 - 16:30", transit: "步行回梅田核心区", desc: "聚集阪急、大丸和 LUCUA。高端护肤、服饰最全。午餐推荐商场内的利久牛舌或炸猪排。", img: "https://images.unsplash.com/photo-1601072935277-2e5f31895697?w=500", mapQuery: "梅田 阪急百貨店" },
+        { name: "道顿堀水上观光船", time: "16:30 - 晚间", transit: "地铁返回难波/道顿堀", desc: "乘观光船穿过各桥，仰望霓虹灯初上(船票1200円)。最后大餐推荐叙叙苑烧肉或蟹道乐！", img: "https://images.unsplash.com/photo-1613346945084-35cccc812dd5?w=500", mapQuery: "とんぼりリバークルーズ" }
+      ],
+      7: [
+        { name: "退房 ➔ 难波八阪神社", time: "09:30 - 11:00", transit: "退房寄存行李，步行6分至神社", desc: "巨大的狮子头神殿！吸走厄运带来好运，祈求旅途平安的绝佳收尾。", img: "https://images.unsplash.com/photo-1620023616238-d6b79c3d4a2a?w=500", mapQuery: "難波八阪神社" },
+        { name: "临空城 Premium Outlets", time: "11:30 - 15:30", transit: "南海电铁机场急行至【临空城站】(780円)", desc: "在车站寄存行李。关西最大的海滨奥特莱斯，包含始祖鸟、Nike、Coach等做最后扫货。", img: "https://images.unsplash.com/photo-1542051812-a42e5668db75?w=500", mapQuery: "りんくうプレミアム・アウトレット" },
+        { name: "关西机场返程", time: "16:00", transit: "乘电车/巴士 1 站直达机场", desc: "提前 3 小时值机出境，在免税店补齐白色恋人、Royce 生巧等伴手礼，满载而归！", img: "https://images.unsplash.com/photo-1529126937667-12ea2119eb8d?w=500", mapQuery: "関西国際空港" }
+      ]
+    };
+
     let currentDay = 1;
-    let itineraryData = JSON.parse(localStorage.getItem('osaka_family_itinerary')) || { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [] };
+    let itineraryData = JSON.parse(localStorage.getItem('osaka_family_itinerary_v2'));
+    if (!itineraryData) {
+      itineraryData = defaultItinerary;
+      localStorage.setItem('osaka_family_itinerary_v2', JSON.stringify(itineraryData));
+    }
 
     window.renderDayPills = function() {
       const container = document.getElementById('day-pills-bar');
@@ -391,34 +432,45 @@
         box.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:40px 10px; font-size:0.95rem;">🌸 这一天的行程目前还留白中，点击右上角「+ 增加行程点」添加景点路线吧！</div>`;
         return;
       }
-      box.innerHTML = spots.map((s, idx) => `
+      box.innerHTML = spots.map((s, idx) => {
+        // 如果没有写mapQuery，默认用name作为搜索词
+        let query = s.mapQuery ? s.mapQuery : s.name;
+        return `
         <div class="spot-card">
           <img src="${s.img || 'https://images.unsplash.com/photo-1590559899731-a372a14c5688?w=300'}" class="spot-img">
           <div class="spot-info">
-            <div class="spot-name"><span>${s.name}</span><button class="btn-subtle" onclick="window.removeSpot(${idx})" style="color:#b22;">删除</button></div>
+            <div class="spot-name">
+              <span>${s.name}</span>
+              <button class="btn-subtle" onclick="window.removeSpot(${idx})" style="color:#b22;">删除</button>
+            </div>
             <div class="spot-meta"><span>⏱ 建议：<b>${s.time||'弹性'}</b></span><span>🚇 交通：<b>${s.transit||'步行/地铁直达'}</b></span></div>
             <div class="spot-desc">${s.desc||'自由游览与体验'}</div>
-            <div class="spot-links"><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('大阪 '+s.name)}" target="_blank">📍 打开 Google Maps 路线导航 &rarr;</a></div>
+            <div class="spot-links">
+              <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('日本 大阪/京都 ' + query)}" target="_blank">
+                📍 查看 Google Maps 路线导航 &rarr;
+              </a>
+            </div>
           </div>
         </div>
-      `).join('');
+      `}).join('');
     }
 
     window.openAddSpotModal = function() {
-      const name = prompt('请输入景点或活动名称（如：黑门市场、道顿堀）：'); if (!name) return;
+      const name = prompt('请输入景点或活动名称（如：黑门市场）：'); if (!name) return;
       const time = prompt('建议游玩时间（例如：09:30 - 12:00）：', '10:00');
-      const transit = prompt('前往的交通路线（如：从难波站搭千日前线至日本桥站 10号口出）：', '');
+      const transit = prompt('前往的交通路线（如：从难波搭千日前线出）：', '');
       const desc = prompt('行程详情、必吃推荐或小提醒：', '');
-      const img = prompt('景点图片网址（留空将自动匹配默认和风风景图）：', '');
+      const img = prompt('景点图片网址（留空将自动匹配默认风景图）：', '');
       if (!itineraryData[currentDay]) itineraryData[currentDay] = [];
-      itineraryData[currentDay].push({ name, time, transit, desc, img });
-      localStorage.setItem('osaka_family_itinerary', JSON.stringify(itineraryData));
+      itineraryData[currentDay].push({ name, time, transit, desc, img, mapQuery: name });
+      localStorage.setItem('osaka_family_itinerary_v2', JSON.stringify(itineraryData));
       window.renderSpotList();
     }
     window.removeSpot = function(idx) {
-      if (confirm('确定要删除这个行程点吗？')) { itineraryData[currentDay].splice(idx, 1); localStorage.setItem('osaka_family_itinerary', JSON.stringify(itineraryData)); window.renderSpotList(); }
+      if (confirm('确定要删除这个行程点吗？')) { itineraryData[currentDay].splice(idx, 1); localStorage.setItem('osaka_family_itinerary_v2', JSON.stringify(itineraryData)); window.renderSpotList(); }
     }
 
+    // ====== 本地个人旅途存储 ======
     let myPackList = JSON.parse(localStorage.getItem('my_trip_pack')) || [{ text: '护照、IC、保险资料', checked: false }, { text: '现金、Wise / 银行卡', checked: false }, { text: '防风外套与保暖衣', checked: false }, { text: '充电器、行动电源', checked: false }, { text: '常用药、口罩', checked: false }];
     let myWishList = JSON.parse(localStorage.getItem('my_trip_wish')) || [{ text: 'Loft 文具', checked: false }, { text: '黑门市场草莓', checked: false }, { text: '日本桥电器街', checked: false }];
     let myExpenses = JSON.parse(localStorage.getItem('my_trip_expenses')) || [];
@@ -456,7 +508,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, onValue, push, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    // ✅ 完全整合了您的完整配置，可以直接在全家人的设备上运行了！
     const firebaseConfig = {
       apiKey: "AIzaSyCJ7BohSIrhWs74bBz1_wn8r7MoKDf8ANc",
       authDomain: "osakafamilytrip-8ae5d.firebaseapp.com",
