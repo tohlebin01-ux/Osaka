@@ -74,11 +74,11 @@
     /* 实时汇率换算工具条 */
     .currency-converter-bar {
       background: var(--card-inner); border: 1px solid var(--border-color); border-radius: 8px;
-      padding: 12px 18px; margin-bottom: 22px; display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      padding: 10px 16px; margin-bottom: 22px; display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: nowrap; overflow-x: auto; gap: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.02);
     }
-    .converter-group { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; }
-    .converter-group input { width: 110px; padding: 6px 10px; font-weight: bold; color: var(--primary-red); }
+    .converter-group { display: flex; align-items: center; gap: 4px; font-size: 0.88rem; font-weight: 600; white-space: nowrap; }
+    .converter-group input { width: 85px; padding: 4px 8px; font-weight: bold; color: var(--primary-red); }
 
     .nav-tabs { display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 14px; flex-wrap: wrap; }
     .tab-btn { background: transparent; border: none; padding: 9px 20px; font-size: 0.95rem; font-weight: 600; font-family: var(--font-serif); color: #4a453f; cursor: pointer; border-radius: 4px; transition: all 0.2s ease; letter-spacing: 0.05em; }
@@ -111,34 +111,26 @@
     .itinerary-layout { display: grid; grid-template-columns: 2.2fr 1fr; gap: 24px; }
     @media (max-width: 900px) { .itinerary-layout { grid-template-columns: 1fr; } }
     
-    /* 手机端横向滑动日期导航条 */
-    .day-pills { display: flex; flex-wrap: nowrap; gap: 8px; margin-bottom: 18px; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
-    .day-pill { background: var(--card-inner); border: 1px solid var(--border-color); padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 0.82rem; font-weight: 600; color: #555; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
+    .day-pills { display: flex; flex-wrap: nowrap; gap: 9px; margin-bottom: 22px; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+    .day-pill { background: var(--card-inner); border: 1px solid var(--border-color); padding: 7px 18px; border-radius: 20px; cursor: pointer; font-size: 0.88rem; font-weight: 600; color: #555; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
     .day-pill:hover { border-color: var(--primary-red); color: var(--primary-red); }
     .day-pill.active { background: var(--primary-red); color: #ffffff; border-color: var(--primary-red); }
     
-    /* 优化手机端的行程卡片尺寸与内边距，避免太大或太小 */
-    .spot-card { display: flex; gap: 14px; background: #fff; border: 1px solid var(--border-color); border-radius: 8px; padding: 14px; margin-bottom: 14px; align-items: flex-start; transition: box-shadow 0.2s; }
-    @media (max-width: 600px) { 
-      .spot-card { flex-direction: row; padding: 10px; gap: 10px; } 
-      .spot-img { width: 95px !important; height: 75px !important; }
-      .spot-name { font-size: 1.02rem !important; }
-      .spot-meta { font-size: 0.75rem !important; gap: 8px !important; margin-bottom: 6px !important; }
-      .spot-desc { font-size: 0.82rem !important; line-height: 1.45 !important; margin-bottom: 6px !important; }
-    }
+    .spot-card { display: flex; gap: 18px; background: #fff; border: 1px solid var(--border-color); border-radius: 8px; padding: 18px; margin-bottom: 16px; align-items: flex-start; transition: box-shadow 0.2s; }
+    @media (max-width: 600px) { .spot-card { flex-direction: column; } .spot-img { width: 100%; height: 160px; } }
     .spot-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
     
-    .spot-img { width: 120px; height: 90px; object-fit: cover; border-radius: 6px; background: #eae2d3; flex-shrink: 0; border: 1px solid var(--border-color); }
-    .spot-info { flex: 1; width: 100%; min-width: 0; }
+    .spot-img { width: 140px; height: 100px; object-fit: cover; border-radius: 6px; background: #eae2d3; flex-shrink: 0; border: 1px solid var(--border-color); }
+    .spot-info { flex: 1; width: 100%; }
     
-    .spot-name { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;}
+    .spot-name { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 700; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;}
     .spot-name a { color: #1a1a1a; text-decoration: none; position: relative; }
     .spot-name a:hover { color: var(--primary-red); text-decoration: underline; }
     
-    .spot-meta { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; display: flex; flex-wrap: wrap; gap: 12px; }
-    .spot-desc { font-size: 0.85rem; color: #4a453f; line-height: 1.5; margin-bottom: 8px; word-break: break-all; }
+    .spot-meta { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 8px; display: flex; flex-wrap: wrap; gap: 14px; }
+    .spot-desc { font-size: 0.88rem; color: #4a453f; line-height: 1.5; margin-bottom: 10px; }
 
-    .btn-xiaohongshu { background-color: #ff2442; color: #fff; border: none; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: background 0.2s; margin-top: 2px; margin-right: 4px; }
+    .btn-xiaohongshu { background-color: #ff2442; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: background 0.2s; margin-top: 4px; margin-right: 6px; }
     .btn-xiaohongshu:hover { background-color: #e01d38; }
 
     .sidebar-card { padding: 20px; background: #fffdf9; margin-bottom: 18px; }
@@ -210,31 +202,30 @@
 
     <!-- 实时汇率换算工具条 -->
     <div class="currency-converter-bar">
-      <div style="font-size: 0.85rem; color: var(--text-muted);">
-        <b>实时汇率小工具</b> (1 MYR = 38 JPY)
+      <div style="font-size: 0.8rem; color: var(--text-muted); white-space: nowrap;">
+        <b>实时汇率</b> (1:38)
       </div>
-      <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+      <div style="display: flex; gap: 12px; align-items: center;">
         <div class="converter-group">
           <span>¥</span>
           <input type="number" id="conv-jpy" value="3800" oninput="window.calcFromJpy()">
-          <span>JPY</span>
+          <span style="font-size:0.75rem; color:#666;">JPY</span>
         </div>
-        <span>≈</span>
+        <span style="color:#888;">=</span>
         <div class="converter-group">
           <span>RM</span>
           <input type="number" id="conv-myr" value="100" oninput="window.calcFromMyr()">
-          <span>MYR</span>
+          <span style="font-size:0.75rem; color:#666;">MYR</span>
         </div>
       </div>
     </div>
 
-    <!-- 经典版大横幅与天气卡片 -->
     <section class="hero-grid">
       <div class="hero-banner">
         <div>
           <div class="hero-subtitle">WINTER JOURNEY / 7 DAYS</div>
           <h2 class="hero-title">在关西，慢慢走</h2>
-          <p class="hero-desc">以【<a href="https://maps.app.goo.gl/M19UyH9m8bhifnZi8" target="_blank" title="点击打开 Google Maps 导航" style="color:#f3e9d8; font-weight:bold;">Apartment Hotel 11 Kuromon 5</a>】为基地，贯彻随性休闲、不走回头路、美食与古迹兼顾的 4 人同行轻松节奏。</p>
+          <p class="hero-desc">以【<a href="https://maps.app.goo.gl/M19UyH9m8bhifnZi8" target="_blank" title="点击打开 Google Maps 导航">Apartment Hotel 11 Kuromon 5</a>】为基地，贯彻随性休闲、不走回头路、美食与古迹兼顾的 4 人同行轻松节奏。</p>
         </div>
         <div class="hero-tags">
           <span class="hero-tag">2 月 · 7 天</span>
@@ -270,7 +261,6 @@
     <main id="page-itinerary" class="tab-pane active">
       <div class="itinerary-layout">
         <div class="itinerary-main">
-          <!-- 支持横向滑动的日期按钮条 -->
           <div class="day-pills" id="day-pills-bar"></div>
           <div class="card" style="padding: 20px;">
             <div class="card-heading" style="margin-bottom: 12px;">
@@ -699,7 +689,7 @@
     let defaultDailyTips = {
       1: { text: "抵达日别排太满；先安顿行李、购买充值 ICOCA 和准备暖暖包。傍晚可安排道顿堀水上观光船。", links: [{ title: "查看攻略", url: "" }] },
       2: { text: "从近铁日本桥站出发直达奈良！懒人下坡流：坐车直达春日大社后一路往下走（若草山➔东大寺➔奈良公园➔奈良町），不费腿超轻松！", links: [{ title: "大佛布丁", url: "" }, { title: "东大寺&二月堂", url: "" }, { title: "步行路线", url: "" }] },
-      3: { text: "京都坡道多（二年坂/三年坂），穿舒适鞋履;热门餐厅建议避开饭点排队。", links: [{ title: "查看攻略", url: "" }] },
+      3: { text: "京都坡道多（二年坂/三年坂），穿舒适鞋履；热门餐厅建议避开饭点排队。", links: [{ title: "查看攻略", url: "" }] },
       4: { text: "天王寺动物园门票划算且离四天王寺极近，步行即可串联，非常充实的一天。", links: [{ title: "查看攻略", url: "" }] },
       5: { text: "大阪城登阁需爬些楼梯；日本桥电器街手办多，看中心仪的可直接下手。", links: [{ title: "查看攻略", url: "" }] },
       6: { text: "梅田商圈犹如地下迷宫，请跟紧 Google Maps 导航；晚上享受美食与最后采购。", links: [{ title: "查看攻略", url: "" }] },
