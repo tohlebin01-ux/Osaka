@@ -246,7 +246,7 @@
       </div>
     </section>
 
-    <!-- 导航标签页：新增了 4. 预算看板 5. 共同提醒 -->
+    <!-- 导航标签页 -->
     <nav class="nav-tabs">
       <button class="tab-btn active" onclick="switchPage('itinerary')">每日行程</button>
       <button class="tab-btn" onclick="switchPage('family-ledger')">家庭账本</button>
@@ -307,7 +307,6 @@
         <div class="sync-badge"><div class="sync-dot"></div>家庭账本与行程云端实时同步中</div>
       </div>
 
-      <!-- 支出总汇卡片 -->
       <div class="card" style="background:#fffcf7;">
         <div class="card-heading"><span>📊 家庭支出总汇</span></div>
         <div style="display:flex; gap:36px; flex-wrap:wrap;">
@@ -367,14 +366,11 @@
         </div>
       </div>
 
-      <!-- 💡 饼图独立卡片：位于整个账本页面的最底部 -->
       <div class="pie-card">
         <div class="card-heading"><span>📊 各分类开销占比统计</span></div>
         <div class="pie-container">
           <div class="pie-svg-box">
-            <svg class="pie-svg" id="expense-pie-svg" viewBox="0 0 32 32">
-              <!-- 动态生成扇区 -->
-            </svg>
+            <svg class="pie-svg" id="expense-pie-svg" viewBox="0 0 32 32"></svg>
           </div>
           <div class="pie-legend" id="expense-pie-legend">
             <span style="color: var(--text-muted); font-size: 0.9rem;">暂无分类开销数据</span>
@@ -383,57 +379,52 @@
       </div>
     </main>
 
-    <!-- PAGE 4: 预算看板 (云端实时同步、关联账本剩余、可自由增删分类和设定预算) -->
+    <!-- PAGE 4: 预算看板 (马币显示、支持修改与新增分类、实时联动家庭账本) -->
     <main id="page-family-budget" class="tab-pane">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
-        <span style="font-size:0.85rem; color:var(--text-muted);">💰 <b>设定各分类总预算</b>（数据实时同步至全体成员）</span>
+        <span style="font-size:0.85rem; color:var(--text-muted);">💰 <b>设定各分类总预算（以马币 RM 计）</b>（数据实时同步至全体成员）</span>
         <div class="sync-badge"><div class="sync-dot"></div>预算看板云端实时同步中</div>
       </div>
 
-      <!-- 整体预算概览卡片 -->
       <div class="card" style="background:#fffcf7;">
-        <div class="card-heading"><span>🎯 整体家庭预算总览</span></div>
+        <div class="card-heading"><span>🎯 整体家庭预算总览 (MYR)</span></div>
         <div style="display:flex; gap:36px; flex-wrap:wrap; align-items:center;">
-          <div><span style="font-size:0.85rem; color:var(--text-muted);">总预算 (JPY)</span><div id="budget-overview-total" style="font-size:1.8rem; font-weight:800; color:#16395b; font-family:var(--font-serif);">¥ 0</div></div>
-          <div><span style="font-size:0.85rem; color:var(--text-muted);">已花总额 (JPY)</span><div id="budget-overview-spent" style="font-size:1.8rem; font-weight:800; color:var(--primary-red); font-family:var(--font-serif);">¥ 0</div></div>
-          <div><span style="font-size:0.85rem; color:var(--text-muted);">剩余总额 (JPY)</span><div id="budget-overview-left" style="font-size:1.8rem; font-weight:800; color:#2e7d32; font-family:var(--font-serif);">¥ 0</div></div>
+          <div><span style="font-size:0.85rem; color:var(--text-muted);">总预算</span><div id="budget-overview-total" style="font-size:1.8rem; font-weight:800; color:#16395b; font-family:var(--font-serif);">RM 0.00</div></div>
+          <div><span style="font-size:0.85rem; color:var(--text-muted);">已花总额</span><div id="budget-overview-spent" style="font-size:1.8rem; font-weight:800; color:var(--primary-red); font-family:var(--font-serif);">RM 0.00</div></div>
+          <div><span style="font-size:0.85rem; color:var(--text-muted);">剩余总额</span><div id="budget-overview-left" style="font-size:1.8rem; font-weight:800; color:#2e7d32; font-family:var(--font-serif);">RM 0.00</div></div>
         </div>
       </div>
 
-      <!-- 添加或编辑预算分类 -->
       <div class="card">
-        <div class="card-heading"><span>➕ 新增或管理预算分类</span></div>
+        <div class="card-heading"><span>➕ 新增预算分类</span></div>
         <div style="display:grid; grid-template-columns: 2fr 1fr 100px; gap:10px; align-items:flex-end;">
-          <div><label style="font-size:0.78rem; color:#666;">分类名称（如：餐饮、住宿、门票等）</label><input type="text" id="new-budget-cat" placeholder="分类名称" style="width:100%;"></div>
-          <div><label style="font-size:0.78rem; color:#666;">预算金额 (JPY)</label><input type="number" id="new-budget-limit" placeholder="预算金额" style="width:100%;"></div>
-          <button class="btn-red" onclick="window.addOrUpdateBudgetCategory()">保存分类</button>
+          <div><label style="font-size:0.78rem; color:#666;">分类名称（如：餐饮、住宿等）</label><input type="text" id="new-budget-cat" placeholder="分类名称" style="width:100%;"></div>
+          <div><label style="font-size:0.78rem; color:#666;">预算金额 (RM)</label><input type="number" id="new-budget-limit" placeholder="金额 (马币)" style="width:100%;"></div>
+          <button class="btn-red" onclick="window.addOrUpdateBudgetCategory()">添加分类</button>
         </div>
       </div>
 
-      <!-- 各分类预算消耗明细表 -->
       <div class="card">
-        <div class="card-heading"><span>📋 各分类预算剩余对照表</span></div>
+        <div class="card-heading"><span>📋 各分类预算剩余对照表 (MYR)</span></div>
         <div class="table-container">
           <table>
             <thead>
               <tr>
                 <th>分类</th>
-                <th>设定总预算 (JPY)</th>
-                <th>已花金额 (JPY)</th>
-                <th>剩余预算 (JPY)</th>
+                <th>设定总预算 (RM)</th>
+                <th>已花金额 (RM)</th>
+                <th>剩余预算 (RM)</th>
                 <th>消耗进度</th>
                 <th>操作</th>
               </tr>
             </thead>
-            <tbody id="budget-table-body">
-              <!-- 动态渲染 -->
-            </tbody>
+            <tbody id="budget-table-body"></tbody>
           </table>
         </div>
       </div>
     </main>
 
-    <!-- PAGE 5: 共同提醒事项 (全员同步、可勾选完成、可自定义增删) -->
+    <!-- PAGE 5: 共同提醒事项 -->
     <main id="page-family-reminders" class="tab-pane">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
         <span style="font-size:0.85rem; color:var(--text-muted);">📌 <b>出行前与旅途中共同注意事项</b>（全员实时同步与勾选）</span>
@@ -445,7 +436,7 @@
         <div style="display:flex; gap:10px; align-items:flex-end; flex-wrap:wrap;">
           <div style="flex:1; min-width:240px;">
             <label style="font-size:0.78rem; color:#666;">提醒内容</label>
-            <input type="text" id="new-reminder-input" placeholder="如：记得提前买好转换插头..." style="width:100%;">
+            <input type="text" id="new-reminder-input" placeholder="如：记得带转换插头..." style="width:100%;">
           </div>
           <div style="width:140px;">
             <label style="font-size:0.78rem; color:#666;">紧急/重要程度</label>
@@ -461,9 +452,7 @@
 
       <div class="card">
         <div class="card-heading"><span>📋 待办与注意事项清单</span></div>
-        <div id="reminders-list-box">
-          <!-- 动态渲染 -->
-        </div>
+        <div id="reminders-list-box"></div>
       </div>
     </main>
 
@@ -546,6 +535,25 @@
       <div style="text-align: right; margin-top: 24px;">
         <button class="btn-subtle" onclick="window.closeSpotModal()" style="margin-right: 10px; padding: 8px 18px;">取消</button>
         <button class="btn-red" onclick="window.saveSpotModal()">保存行程</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 修改预算弹窗 -->
+  <div id="budget-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span>修改分类预算: <span id="budget-modal-cat-name" style="color:var(--primary-red);"></span></span>
+        <button class="modal-close" onclick="window.closeBudgetModal()">✕</button>
+      </div>
+      <input type="hidden" id="budget-modal-cat-key" value="">
+      <div class="modal-form-group">
+        <label>💰 新的预算总额 (RM 马币)</label>
+        <input type="number" id="budget-modal-input-val" placeholder="输入马币金额...">
+      </div>
+      <div style="text-align: right; margin-top: 24px;">
+        <button class="btn-subtle" onclick="window.closeBudgetModal()" style="margin-right: 10px; padding: 8px 18px;">取消</button>
+        <button class="btn-red" onclick="window.saveBudgetModal()">保存修改</button>
       </div>
     </div>
   </div>
@@ -672,7 +680,7 @@
     let dailyTips = {
       1: { text: "抵达日别排太满；先安顿行李、购买充值 ICOCA 和准备暖暖包。", links: [{ title: "查看小红书攻略", url: "" }] },
       2: { text: "从近铁日本桥站出发直达奈良！懒人下坡流：坐车直达春日大社后一路往下走（若草山➔东大寺➔奈良公园➔奈良町），不费腿超轻松！", links: [{ title: "🦌 奈良懒人下坡流攻略", url: "" }] },
-      3: { text: "京都坡道多（二年坂/三年坂），穿舒适鞋履;热门餐厅建议避开饭点排队。", links: [{ title: "查看小红书攻略", url: "" }] },
+      3: { text: "京都坡道多（二年坂/三年坂），穿舒适鞋履；热门餐厅建议避开饭点排队。", links: [{ title: "查看小红书攻略", url: "" }] },
       4: { text: "天王寺动物园门票划算且离四天王寺极近，步行即可串联，非常充实的一天。", links: [{ title: "查看小红书攻略", url: "" }] },
       5: { text: "大阪城登阁需爬些楼梯；日本桥电器街手办多，看中心仪的可直接下手。", links: [{ title: "查看小红书攻略", url: "" }] },
       6: { text: "梅田商圈犹如地下迷宫，请跟紧 Google Maps 导航；晚上游船风大注意保暖。", links: [{ title: "查看小红书攻略", url: "" }] },
@@ -681,7 +689,6 @@
 
     let customMapLinks = { 1: "", 2: "", 3: "", 4: "", 5: "", 6: "", 7: "" };
 
-    // 默认预置的共同提醒事项（包含交通卡、现金、保暖等重要事项）
     let defaultReminders = [
       { id: "r1", text: "【iPhone 3人】在 Apple Wallet 钱包中提前开通 Suica 交通卡并绑定信用卡充值", tag: "🔴 核心必办", done: false },
       { id: "r2", text: "【Android 2人】抵达关西机场后，人工/自动售票机处购买实体 ICOCA 卡", tag: "🔴 核心必办", done: false },
@@ -691,14 +698,14 @@
       { id: "r6", text: "提前下载 Google Maps 离线地图并收藏民宿“b&黒門1号店”位置", tag: "🔵 实用小贴士", done: false }
     ];
 
-    // 默认预置的预算分类
+    // 默认预算分类（以马币 RM 计存入云端）
     let defaultBudgetCategories = {
-      "餐饮": 150000,
-      "交通": 60000,
-      "住宿": 200000,
-      "门票": 50000,
-      "采购": 80000,
-      "其他": 40000
+      "餐饮": 4000,   // 约 15万日元
+      "交通": 1600,   // 约 6万日元
+      "住宿": 5300,   // 约 20万日元
+      "门票": 1300,   // 约 5万日元
+      "采购": 2100,   // 约 8万日元
+      "其他": 1000    // 约 4万日元
     };
 
     let currentDay = 1;
@@ -725,15 +732,12 @@
     window.renderSpotList = function() {
       const box = document.getElementById('spots-list-box');
       const spots = itineraryData[currentDay] || [];
-      
       const tipData = dailyTips[currentDay] || { text: "自由发挥，开心最重要！", links: [] };
       document.getElementById('daily-tip-text').innerText = tipData.text;
       
       const xhsBox = document.getElementById('daily-tip-xhs-box');
       let linksArr = tipData.links || [];
-      if (typeof tipData.xhs === 'string' && tipData.xhs.trim() !== '') {
-        linksArr = [{ title: "查看小红书攻略", url: tipData.xhs }];
-      }
+      if (typeof tipData.xhs === 'string' && tipData.xhs.trim() !== '') { linksArr = [{ title: "查看小红书攻略", url: tipData.xhs }]; }
       
       xhsBox.innerHTML = linksArr.map(l => {
         if (!l.url || l.url.trim() === '') return '';
@@ -781,9 +785,7 @@
       `}).join('');
     }
 
-    window.syncItineraryToCloud = function(data) {
-      if (window.saveCloudItinerary) { window.saveCloudItinerary(data); }
-    }
+    window.syncItineraryToCloud = function(data) { if (window.saveCloudItinerary) { window.saveCloudItinerary(data); } }
 
     window.moveSpotUp = function(idx) {
       if (idx === 0) return;
@@ -830,15 +832,12 @@
       const idx = parseInt(document.getElementById('modal-spot-idx').value);
       const name = document.getElementById('modal-spot-name').value.trim();
       if (!name) { alert('请输入景点/活动名称！'); return; }
-      
       const time = document.getElementById('modal-spot-time').value.trim();
       const transit = document.getElementById('modal-spot-transit').value.trim();
       const desc = document.getElementById('modal-spot-desc').value.trim();
       const img = document.getElementById('modal-spot-img').value.trim() || fallbackImg;
       const xhs = document.getElementById('modal-spot-xhs').value.trim();
-
       if (!itineraryData[currentDay]) itineraryData[currentDay] = [];
-
       if (idx === -1) {
         itineraryData[currentDay].push({ name, time, transit, desc, img, xhs, mapQuery: name });
       } else {
@@ -846,7 +845,6 @@
         spot.name = name; spot.time = time; spot.transit = transit; spot.desc = desc; spot.img = img; spot.xhs = xhs;
         if (!spot.mapQuery || spot.mapQuery === itineraryData[currentDay][idx].name) { spot.mapQuery = name; }
       }
-      
       window.renderSpotList(); window.syncItineraryToCloud(itineraryData); window.closeSpotModal();
     }
     
@@ -1029,11 +1027,11 @@
       const data = snapshot.val();
       familyLedger = data ? Object.entries(data).map(([id, val]) => ({ id, ...val })) : [];
       window.renderFamilyLedger();
-      window.renderFamilyBudget(); // 账本变动时同步更新预算看板
+      window.renderFamilyBudget(); 
     });
 
-    // 3. 预算分类云端同步
-    const budgetCloudRef = ref(db, 'osaka_family_budget_categories');
+    // 3. 预算分类云端同步（单位：RM 马币）
+    const budgetCloudRef = ref(db, 'osaka_family_budget_myr_v2');
     let cloudBudgetCategories = {};
     onValue(budgetCloudRef, (snapshot) => {
       const data = snapshot.val();
@@ -1045,7 +1043,7 @@
     window.addOrUpdateBudgetCategory = function() {
       const cat = document.getElementById('new-budget-cat').value.trim();
       const limit = parseFloat(document.getElementById('new-budget-limit').value);
-      if(!cat || isNaN(limit) || limit < 0) return alert('请输入有效的分类名称与预算金额！');
+      if(!cat || isNaN(limit) || limit < 0) return alert('请输入有效的分类名称与马币预算金额！');
       cloudBudgetCategories[cat] = limit;
       set(budgetCloudRef, cloudBudgetCategories);
       document.getElementById('new-budget-cat').value = '';
@@ -1059,17 +1057,38 @@
       }
     }
 
+    // 弹窗修改预算逻辑
+    window.openEditBudgetModal = function(cat, currentLimit) {
+      document.getElementById('budget-modal-cat-name').innerText = cat;
+      document.getElementById('budget-modal-cat-key').value = cat;
+      document.getElementById('budget-modal-input-val').value = currentLimit;
+      document.getElementById('budget-modal').classList.add('active');
+    }
+
+    window.closeBudgetModal = function() {
+      document.getElementById('budget-modal').classList.remove('active');
+    }
+
+    window.saveBudgetModal = function() {
+      const cat = document.getElementById('budget-modal-cat-key').value;
+      const newLimit = parseFloat(document.getElementById('budget-modal-input-val').value);
+      if (isNaN(newLimit) || newLimit < 0) return alert('请输入有效的马币金额！');
+      cloudBudgetCategories[cat] = newLimit;
+      set(budgetCloudRef, cloudBudgetCategories);
+      window.closeBudgetModal();
+    }
+
     window.renderFamilyBudget = function() {
       const tbody = document.getElementById('budget-table-body');
       let totalBudgetLimit = 0;
-      let totalSpent = 0;
+      let totalSpentMYR = 0;
 
-      // 计算已花销按分类归集 (转换成 JPY)
-      let spentMap = {};
+      // 计算已花销按分类归集 (转换为 MYR)
+      let spentMapMYR = {};
       familyLedger.forEach(item => {
-        const jpy = getJpyAmount(item.amount, item.currency);
-        spentMap[item.category] = (spentMap[item.category] || 0) + jpy;
-        totalSpent += jpy;
+        const myr = getMyrAmount(item.amount, item.currency);
+        spentMapMYR[item.category] = (spentMapMYR[item.category] || 0) + myr;
+        totalSpentMYR += myr;
       });
 
       const categories = Object.keys(cloudBudgetCategories);
@@ -1077,35 +1096,47 @@
         tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--text-muted); padding:18px;">还没有设定预算分类，请在上方向上添加！</td></tr>`;
       } else {
         tbody.innerHTML = categories.map(cat => {
-          const limit = cloudBudgetCategories[cat] || 0;
-          const spent = spentMap[cat] || 0;
-          const left = limit - spent;
-          totalBudgetLimit += limit;
-          const percent = limit > 0 ? Math.min(Math.round((spent / limit) * 100), 100) : 0;
-          const isOver = spent > limit;
+          const limitMYR = cloudBudgetCategories[cat] || 0;
+          const spentMYR = spentMapMYR[cat] || 0;
+          const leftMYR = limitMYR - spentMYR;
+          totalBudgetLimit += limitMYR;
+          const percent = limitMYR > 0 ? Math.min(Math.round((spentMYR / limitMYR) * 100), 100) : 0;
+          const isOver = spentMYR > limitMYR;
+
+          const limitJPY = Math.round(limitMYR * 38);
+          const spentJPY = Math.round(spentMYR * 38);
+          const leftJPY = Math.round(leftMYR * 38);
 
           return `
             <tr>
               <td><b>${cat}</b></td>
-              <td>¥ ${limit.toLocaleString()}</td>
-              <td style="color:var(--primary-red); font-weight:600;">¥ ${Math.round(spent).toLocaleString()}</td>
-              <td style="color:${isOver ? '#b22' : '#2e7d32'}; font-weight:600;">¥ ${Math.round(left).toLocaleString()} ${isOver ? '(超支)' : ''}</td>
+              <td><b>RM ${limitMYR.toLocaleString()}</b> <span style="font-size:0.75rem; color:#888; display:block;">(¥${limitJPY.toLocaleString()})</span></td>
+              <td style="color:var(--primary-red); font-weight:600;">RM ${spentMYR.toFixed(2)} <span style="font-size:0.75rem; color:#888; display:block;">(¥${spentJPY.toLocaleString()})</span></td>
+              <td style="color:${isOver ? '#b22' : '#2e7d32'}; font-weight:600;">RM ${leftMYR.toFixed(2)} ${isOver ? '(超支)' : ''} <span style="font-size:0.75rem; color:#888; display:block;">(¥${leftJPY.toLocaleString()})</span></td>
               <td>
                 <div style="background:#e5ded2; border-radius:4px; width:100px; height:10px; overflow:hidden; display:inline-block; vertical-align:middle; margin-right:6px;">
                   <div style="background:${isOver ? '#b22' : '#16395b'}; width:${percent}%; height:100%;"></div>
                 </div>
                 <span style="font-size:0.8rem; color:#666;">${percent}%</span>
               </td>
-              <td><button class="btn-subtle" onclick="window.deleteBudgetCategory('${cat}')" style="color:#b22;">删除</button></td>
+              <td>
+                <div style="display:flex; gap:6px;">
+                  <button class="btn-subtle" onclick="window.openEditBudgetModal('${cat}', ${limitMYR})" style="color:#0056b3; font-size:0.75rem; padding:3px 8px; border:1px solid #0056b3; background:#f0f8ff;">✏️ 修改</button>
+                  <button class="btn-subtle" onclick="window.deleteBudgetCategory('${cat}')" style="color:#b22; font-size:0.75rem; padding:3px 8px;">删除</button>
+                </div>
+              </td>
             </tr>
           `;
         }).join('');
       }
 
-      const totalLeft = totalBudgetLimit - totalSpent;
-      document.getElementById('budget-overview-total').innerText = `¥ ${totalBudgetLimit.toLocaleString()}`;
-      document.getElementById('budget-overview-spent').innerText = `¥ ${Math.round(totalSpent).toLocaleString()}`;
-      document.getElementById('budget-overview-left').innerText = `¥ ${Math.round(totalLeft).toLocaleString()}`;
+      const totalLeftMYR = totalBudgetLimit - totalSpentMYR;
+      const totalSpentJPY = Math.round(totalSpentMYR * 38);
+      const totalLeftJPY = Math.round(totalLeftMYR * 38);
+
+      document.getElementById('budget-overview-total').innerText = `RM ${totalBudgetLimit.toLocaleString()} (¥${Math.round(totalBudgetLimit * 38).toLocaleString()})`;
+      document.getElementById('budget-overview-spent').innerText = `RM ${totalSpentMYR.toFixed(2)} (¥${totalSpentJPY.toLocaleString()})`;
+      document.getElementById('budget-overview-left').innerText = `RM ${totalLeftMYR.toFixed(2)} (¥${totalLeftJPY.toLocaleString()})`;
     };
 
     // 4. 共同提醒事项云端同步
@@ -1116,7 +1147,6 @@
       if (data) {
         cloudReminders = Object.entries(data).map(([id, val]) => ({ id, ...val }));
       } else {
-        // 初始化预置数据
         defaultReminders.forEach(r => push(remindersCloudRef, { text: r.text, tag: r.tag, done: r.done }));
       }
       window.renderReminders();
