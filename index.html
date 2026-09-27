@@ -58,8 +58,6 @@
     .hero-subtitle { font-size: 0.72rem; letter-spacing: 0.22em; color: #9eb5c4; text-transform: uppercase; font-weight: 600; margin-bottom: 12px; }
     .hero-title { font-family: var(--font-serif); font-size: 2.3rem; font-weight: 800; letter-spacing: 0.08em; margin-bottom: 10px; }
     .hero-desc { font-size: 0.88rem; color: #d6e2e8; line-height: 1.6; max-width: 90%; margin-bottom: 20px; font-weight: 300; }
-    .hero-desc a { color: #f3e9d8; text-decoration: underline; font-weight: bold; }
-    .hero-desc a:hover { color: #ffffff; }
     .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
     .hero-tag { background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.4); padding: 4px 10px; font-size: 0.76rem; border-radius: 4px; letter-spacing: 0.05em; }
     
@@ -71,7 +69,6 @@
     .weather-text span { font-size: 0.8rem; color: var(--text-muted); }
     .notice-tips { font-size: 0.82rem; color: #4f4c47; line-height: 1.65; background: #faf7f0; padding: 10px 12px; border-radius: 6px; margin-top: 6px; }
 
-    /* 实时汇率换算工具条 */
     .currency-converter-bar {
       background: var(--card-inner); border: 1px solid var(--border-color); border-radius: 8px;
       padding: 12px 18px; margin-bottom: 22px; display: flex; align-items: center; justify-content: space-between;
@@ -111,9 +108,8 @@
     .itinerary-layout { display: grid; grid-template-columns: 2.2fr 1fr; gap: 24px; }
     @media (max-width: 900px) { .itinerary-layout { grid-template-columns: 1fr; } }
     
-    /* 恢复经典按钮样式，并支持手机端横向平滑滚动 */
-    .day-pills { display: flex; flex-wrap: nowrap; gap: 9px; margin-bottom: 22px; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
-    .day-pill { background: var(--card-inner); border: 1px solid var(--border-color); padding: 7px 18px; border-radius: 20px; cursor: pointer; font-size: 0.88rem; font-weight: 600; font-family: var(--font-serif); color: #555; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
+    .day-pills { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 22px; }
+    .day-pill { background: var(--card-inner); border: 1px solid var(--border-color); padding: 7px 18px; border-radius: 20px; cursor: pointer; font-size: 0.88rem; font-weight: 600; color: #555; transition: all 0.2s; }
     .day-pill:hover { border-color: var(--primary-red); color: var(--primary-red); }
     .day-pill.active { background: var(--primary-red); color: #ffffff; border-color: var(--primary-red); }
     
@@ -221,13 +217,12 @@
       </div>
     </div>
 
-    <!-- 经典大横幅与天气卡片 -->
     <section class="hero-grid">
       <div class="hero-banner">
         <div>
           <div class="hero-subtitle">WINTER JOURNEY / 7 DAYS</div>
           <h2 class="hero-title">在关西，慢慢走</h2>
-          <p class="hero-desc">以【<a href="https://maps.app.goo.gl/M19UyH9m8bhifnZi8" target="_blank" title="点击打开 Google Maps 导航" style="color:#f3e9d8; font-weight:bold;">Apartment Hotel 11 Kuromon 5</a>】为基地，贯彻随性休闲、不走回头路、美食与古迹兼顾的 4 人同行轻松节奏。</p>
+          <p class="hero-desc">以【黑门市场 b&黒門1号店】为基地，贯彻随性休闲、不走回头路、美食与古迹兼顾的 4 人同行轻松节奏。</p>
         </div>
         <div class="hero-tags">
           <span class="hero-tag">2 月 · 7 天</span>
@@ -263,7 +258,6 @@
     <main id="page-itinerary" class="tab-pane active">
       <div class="itinerary-layout">
         <div class="itinerary-main">
-          <!-- 支持横向滑动的日期按钮条 -->
           <div class="day-pills" id="day-pills-bar"></div>
           <div class="card" style="padding: 20px;">
             <div class="card-heading" style="margin-bottom: 12px;">
@@ -472,11 +466,11 @@
 
         <div class="card" style="margin-bottom:0;">
           <div class="card-heading" style="font-size:1.15rem;">我的个人预算</div>
-          <div style="font-family:var(--font-serif); font-size:2.4rem; font-weight:800; color:var(--primary-red); margin:12px 0;">
+          <div style="font-family:var(--font-serif); font-size:2.2rem; font-weight:800; color:var(--primary-red); margin:12px 0;">
             RM <span id="my-budget-myr">0.00</span>
             <div style="font-size:0.9rem; color:var(--text-muted); font-weight:normal; margin-top:4px;">(折合约 ¥ <span id="my-budget-jpy">0</span>)</div>
           </div>
-          <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6;">个人购物、伴手礼；仅保存在本设备，不会混入家庭账本。</p>
+          <p style="font-size:0.82rem; color:var(--text-muted); line-height:1.6;">个人购物、伴手礼；仅保存在本设备，不会混入家庭账本。</p>
           <div style="display:flex; gap:8px; margin-top:16px;">
             <input type="number" id="budget-input-val" placeholder="设定预算 (RM 马币)" style="flex:1;">
             <button class="btn-subtle" onclick="window.setPersonalBudget()">保存</button>
@@ -649,7 +643,7 @@
 
     const defaultItinerary = {
       1: [
-        { name: "关西机场 ➔ 入住 Apartment Hotel 11 Kuromon 5", time: "抵达后 - 15:30", transit: "【南海电铁特急 Rapi:t】直达难波站，打车或步行入住", desc: "抵达大阪！出站后直接前往民宿安顿好大件行李，轻装上阵。", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=500", mapQuery: "Apartment Hotel 11 Kuromon 5", xhs: "" },
+        { name: "关西机场 ➔ 入住 b&黒門1号店", time: "抵达后 - 15:30", transit: "【南海电铁特急 Rapi:t】直达难波站，打车或步行入住", desc: "抵达大阪！出站后直接前往民宿安顿好大件行李，轻装上阵。", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=500", mapQuery: "b&黒門1号店", xhs: "" },
         { name: "黑门市场 (关西的厨房)", time: "15:30 - 17:00", transit: "民宿下楼即达", desc: "近水楼台先得月！开启第一顿美食狂欢：现烤海鲜、黑毛和牛串、海胆、淡雪草莓，边逛边吃。", img: "https://images.unsplash.com/photo-1590559899731-a372a14c5688?w=500", mapQuery: "黒門市場", xhs: "" },
         { name: "道顿堀与戎桥打卡", time: "17:00 - 18:30", transit: "步行 8 分钟即达", desc: "晚餐吃一兰拉面，或街头现烤章鱼烧。别忘了与格力高奔跑小人合影。", img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500", mapQuery: "道頓堀 戎橋", xhs: "" },
         { name: "道顿堀水上观光船", time: "18:30 - 19:30", transit: "唐吉诃德河畔码头登船", desc: "乘观光船穿过各桥，仰望霓虹灯初上，夜景氛围感极佳！【票价：约 1000 円/人】", img: "https://images.unsplash.com/photo-1563604593452-f47321e06183?w=500", mapQuery: "とんぼりリバークルーズ", xhs: "" }
@@ -708,7 +702,7 @@
       { id: "r3", text: "备好适量日元现金（日常吃饭、寺庙门票及奈良公交很多只收现金）", tag: "核心必办", done: false },
       { id: "r4", text: "准备好防风外套、保暖衣层与轻便好走的运动鞋（2月大阪3-10°C）", tag: "行李准备", done: false },
       { id: "r5", text: "随身携带暖暖包、行动电源、护照与 eSIM / 手机漫游", tag: "行李准备", done: false },
-      { id: "r6", text: "提前下载 Google Maps 离线地图并收藏民宿位置", tag: "实用小贴士", done: false }
+      { id: "r6", text: "提前下载 Google Maps 离线地图并收藏民宿“b&黒門1号店”位置", tag: "实用小贴士", done: false }
     ];
 
     let defaultBudgetCategories = {
@@ -885,7 +879,7 @@
         const row = document.createElement('div');
         row.style.cssText = "display: flex; gap: 8px; align-items: center; background: #fffdf9; padding: 8px; border: 1px solid var(--border-color); border-radius: 6px;";
         row.innerHTML = `
-          <input type="text" placeholder="按钮标题（如：奈良路线）" value="${item.title || ''}" class="xhs-title-input" style="flex: 1;">
+          <input type="text" placeholder="按钮标题（如：大佛布丁）" value="${item.title || ''}" class="xhs-title-input" style="flex: 1;">
           <input type="text" placeholder="链接 URL" value="${item.url || ''}" class="xhs-url-input" style="flex: 2;">
           <button type="button" class="btn-subtle" onclick="this.parentElement.remove()" style="color:#b22; padding:4px 8px;">✕</button>
         `;
@@ -921,6 +915,7 @@
       window.renderSpotList();
       window.closeTipModal();
       
+      // 同步到云端
       if (window.saveCloudTips) { window.saveCloudTips(dailyTips); }
     }
 
