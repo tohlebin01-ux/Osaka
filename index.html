@@ -52,6 +52,7 @@
     .companion-names { border: 1px solid var(--border-color); background: #fffdf9; padding: 4px 12px; border-radius: 4px; font-weight: 500; }
     .companion-names span { color: var(--primary-red); font-weight: 600; }
 
+    /* 实时汇率换算工具条：更紧凑的单行化设计 */
     .currency-converter-bar {
       background: var(--card-inner); border: 1px solid var(--border-color); border-radius: 8px;
       padding: 10px 16px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;
@@ -60,6 +61,7 @@
     .converter-group { display: flex; align-items: center; gap: 4px; font-size: 0.85rem; font-weight: 600; white-space: nowrap; }
     .converter-group input { width: 85px; padding: 4px 8px; font-weight: bold; color: var(--primary-red); }
 
+    /* 折叠面板样式 */
     .collapsible-container {
       max-height: 0;
       overflow: hidden;
@@ -104,7 +106,7 @@
     .weather-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .cloud-icon { font-size: 1.3rem; color: #cb533d; }
     .weather-text b { font-size: 0.95rem; display: block; color: #2b2b2b; }
-    .weather-text span { font-size: 0.8; color: var(--text-muted); }
+    .weather-text span { font-size: 0.8rem; color: var(--text-muted); }
     .notice-tips { font-size: 0.82rem; color: #4f4c47; line-height: 1.65; background: #faf7f0; padding: 10px 12px; border-radius: 6px; margin-top: 6px; }
 
     .nav-tabs { display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 14px; flex-wrap: wrap; }
@@ -138,9 +140,8 @@
     .itinerary-layout { display: grid; grid-template-columns: 2.2fr 1fr; gap: 24px; }
     @media (max-width: 900px) { .itinerary-layout { grid-template-columns: 1fr; } }
     
-    /* 手机端横向滚动日期按钮条 */
-    .day-pills { display: flex; flex-wrap: nowrap; gap: 9px; margin-bottom: 22px; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
-    .day-pill { background: var(--card-inner); border: 1px solid var(--border-color); padding: 7px 16px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: #555; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
+    .day-pills { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 22px; }
+    .day-pill { background: var(--card-inner); border: 1px solid var(--border-color); padding: 7px 18px; border-radius: 20px; cursor: pointer; font-size: 0.88rem; font-weight: 600; color: #555; transition: all 0.2s; }
     .day-pill:hover { border-color: var(--primary-red); color: var(--primary-red); }
     .day-pill.active { background: var(--primary-red); color: #ffffff; border-color: var(--primary-red); }
     
@@ -158,7 +159,7 @@
     .spot-meta { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 8px; display: flex; flex-wrap: wrap; gap: 14px; }
     .spot-desc { font-size: 0.88rem; color: #4a453f; line-height: 1.5; margin-bottom: 10px; }
 
-    .btn-xiaohongshu { background-color: #ff2442; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 0.80rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: background 0.2s; margin-top: 4px; margin-right: 6px; }
+    .btn-xiaohongshu { background-color: #ff2442; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: background 0.2s; margin-top: 4px; margin-right: 6px; }
     .btn-xiaohongshu:hover { background-color: #e01d38; }
 
     .sidebar-card { padding: 20px; background: #fffdf9; margin-bottom: 18px; }
@@ -228,7 +229,7 @@
       </div>
     </header>
 
-    <!-- 实时汇率换算工具条：更紧凑的单行排列 -->
+    <!-- 实时汇率换算工具条：改为更紧凑的单行排列 -->
     <div class="currency-converter-bar">
       <div style="font-size: 0.8rem; color: var(--text-muted); white-space: nowrap;">
         <b>实时汇率小工具</b> (1:38)
@@ -297,11 +298,10 @@
     <main id="page-itinerary" class="tab-pane active">
       <div class="itinerary-layout">
         <div class="itinerary-main">
-          <!-- 确切日期导航条（2月9日 - 2月15日） -->
           <div class="day-pills" id="day-pills-bar"></div>
           <div class="card" style="padding: 20px;">
             <div class="card-heading" style="margin-bottom: 12px;">
-              <span id="current-day-label">2月9日 (Day 1) 行程安排</span>
+              <span id="current-day-label">第 1 天 (Day 1) 行程安排</span>
               <button class="btn-subtle" onclick="window.openAddSpotModal()" style="font-weight: bold; background: #e5d8c3; border-color: #c8bead;">+ 新增景点</button>
             </div>
             <div id="spots-list-box"></div>
@@ -361,8 +361,8 @@
             <label style="font-size:0.78rem; color:#666;">日程</label>
             <select id="fl-day" style="width:100%;">
               <option value="行前">行前</option>
-              <option value="2月9日">2月9日</option><option value="2月10日">2月10日</option><option value="2月11日">2月11日</option>
-              <option value="2月12日">2月12日</option><option value="2月13日">2月13日</option><option value="2月14日">2月14日</option><option value="2月15日">2月15日</option>
+              <option value="Day 1">Day 1</option><option value="Day 2">Day 2</option><option value="Day 3">Day 3</option>
+              <option value="Day 4">Day 4</option><option value="Day 5">Day 5</option><option value="Day 6">Day 6</option><option value="Day 7">Day 7</option>
             </select>
           </div>
           <div><label style="font-size:0.78rem; color:#666;">项目</label><input type="text" id="fl-item" placeholder="如：机票" style="width:100%;"></div>
@@ -395,8 +395,8 @@
             <select id="fl-filter" onchange="window.renderFamilyLedger()" style="font-size:0.80rem; padding:4px 8px;">
               <option value="ALL">全部日程</option>
               <option value="行前">行前</option>
-              <option value="2月9日">2月9日</option><option value="2月10日">2月10日</option><option value="2月11日">2月11日</option>
-              <option value="2月12日">2月12日</option><option value="2月13日">2月13日</option><option value="2月14日">2月14日</option><option value="2月15日">2月15日</option>
+              <option value="Day 1">Day 1</option><option value="Day 2">Day 2</option><option value="Day 3">Day 3</option>
+              <option value="Day 4">Day 4</option><option value="Day 5">Day 5</option><option value="Day 6">Day 6</option><option value="Day 7">Day 7</option>
             </select>
           </div>
           <div class="table-container">
@@ -540,6 +540,7 @@
           </div>
           <div>
             <label style="font-size:0.78rem; color:#666;">币种</label>
+            <!-- 默认币种设为日币 (JPY) -->
             <select id="my-currency" style="width:100%;">
               <option value="JPY" selected>JPY (日币)</option>
               <option value="MYR">MYR (马币)</option>
@@ -558,8 +559,8 @@
           <span>旅途小记</span>
           <select id="note-day-selector" onchange="window.changeNoteDay()" style="font-size:0.85rem; padding: 4px 10px; border-radius: 4px;">
             <option value="行前">行前记录</option>
-            <option value="2月9日">2月9日记录</option><option value="2月10日">2月10日记录</option><option value="2月11日">2月11日记录</option>
-            <option value="2月12日">2月12日记录</option><option value="2月13日">2月13日记录</option><option value="2月14日">2月14日记录</option><option value="2月15日">2月15日记录</option>
+            <option value="1">Day 1 记录</option><option value="2">Day 2 记录</option><option value="3">Day 3 记录</option>
+            <option value="4">Day 4 记录</option><option value="5">Day 5 记录</option><option value="6">Day 6 记录</option><option value="7">Day 7 记录</option>
           </select>
         </div>
         <textarea id="my-notes" class="memo-paper" placeholder="记录这一天的见闻、小巷子里的好吃的、或是心情随笔..." oninput="window.savePersonalNotes()"></textarea>
@@ -611,7 +612,7 @@
   <div id="tip-modal" class="modal-overlay">
     <div class="modal-content">
       <div class="modal-header">
-        <span>修改当日贴士与攻略</span>
+        <span>修改第 <span id="tip-modal-day-num">1</span> 天贴士与攻略</span>
         <button class="modal-close" onclick="window.closeTipModal()">✕</button>
       </div>
       <div class="modal-form-group">
@@ -636,7 +637,7 @@
   <div id="map-modal" class="modal-overlay">
     <div class="modal-content">
       <div class="modal-header">
-        <span>修改当日路线地图链接</span>
+        <span>修改第 <span id="map-modal-day-num">1</span> 天整日路线地图链接</span>
         <button class="modal-close" onclick="window.closeMapModal()">✕</button>
       </div>
       <div class="modal-form-group">
@@ -696,53 +697,42 @@
       document.querySelectorAll('.tab-btn')[tabs.indexOf(pageId)].classList.add('active');
     }
 
-    // 确切日期映射 (2月9日 到 2月15日)
-    const tripDays = [
-      { key: "2月9日", label: "2月9日 (Day 1)" },
-      { key: "2月10日", label: "2月10日 (Day 2)" },
-      { key: "2月11日", label: "2月11日 (Day 3)" },
-      { key: "2月12日", label: "2月12日 (Day 4)" },
-      { key: "2月13日", label: "2月13日 (Day 5)" },
-      { key: "2月14日", label: "2月14日 (Day 6)" },
-      { key: "2月15日", label: "2月15日 (Day 7)" }
-    ];
-
     const defaultItinerary = {
-      "2月9日": [
+      1: [
         { name: "关西机场 ➔ 入住 Apartment Hotel 11 Kuromon 5", time: "抵达后 - 15:30", transit: "【南海电铁特急 Rapi:t】直达难波站，打车或步行入住", desc: "抵达大阪！出站后直接前往民宿安顿好大件行李，轻装上阵。", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=500", mapQuery: "Apartment Hotel 11 Kuromon 5", xhs: "" },
         { name: "黑门市场 (关西的厨房)", time: "15:30 - 17:00", transit: "民宿下楼即达", desc: "近水楼台先得月！开启第一顿美食狂欢：现烤海鲜、黑毛和牛串、海胆、淡雪草莓，边逛边吃。", img: "https://images.unsplash.com/photo-1590559899731-a372a14c5688?w=500", mapQuery: "黒門市場", xhs: "" },
         { name: "道顿堀与戎桥打卡", time: "17:00 - 18:30", transit: "步行 8 分钟即达", desc: "晚餐吃一兰拉面，或街头现烤章鱼烧。别忘了与格力高奔跑小人合影。", img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500", mapQuery: "道頓堀 戎橋", xhs: "" },
         { name: "道顿堀水上观光船", time: "18:30 - 19:30", transit: "唐吉诃德河畔码头登船", desc: "乘观光船穿过各桥，仰望霓虹灯初上，夜景氛围感极佳！【票价：约 1000 円/人】", img: "https://images.unsplash.com/photo-1563604593452-f47321e06183?w=500", mapQuery: "とんぼりリバークルーズ", xhs: "" }
       ],
-      "2月10日": [
+      2: [
         { name: "近铁日本桥 ➔ 近铁奈良站", time: "08:30 - 09:30", transit: "从住所步行 5 分钟至【近铁日本桥站】乘近铁奈良线直达（约 39 分钟，单程约 570円）", desc: "从日本桥直接出发，无需转车，一站式直达奈良！", img: "https://images.unsplash.com/photo-1549693578-cbc70b0cc850?w=500", mapQuery: "近鉄日本橋駅", xhs: "" },
         { name: "春日大社站 (公交上山)", time: "09:30 - 10:00", transit: "奈良站门口乘坐 7 路公交 ➔ 春日大社站下车", desc: "直接坐车上山，完美避开上坡路，零体力负担开启行程！", img: "https://images.unsplash.com/photo-1615671158671-3312e75e1140?w=500", mapQuery: "春日大社", xhs: "" },
         { name: "若草山", time: "10:00 - 11:30", transit: "导航至若草山休憩所，走步行道登顶", desc: "山坡覆盖柔软草坪，鹿群散落其间，登顶可俯瞰奈良盆地全景，随手一拍都是日系童话大片！【门票：150円】", img: "https://images.unsplash.com/photo-1615671158671-3312e75e1140?w=500", mapQuery: "若草山", xhs: "" },
         { name: "东大寺 & 奈良公园 (一路下坡)", time: "11:30 - 13:30", transit: "顺着坡道往下漫步", desc: "开启全程下坡神仙路线！参观世界文化遗产东大寺大佛殿【门票：800円】，并在奈良公园与超多温顺小鹿互动【鹿仙贝 200円/盒】。", img: "https://images.unsplash.com/photo-1604928156637-29ec3e5f2cfc?w=500", mapQuery: "東大寺", xhs: "" },
         { name: "奈良町老街 (中谷堂麻薯)", time: "14:00 - 16:00", transit: "沿下坡路步行返回车站方向", desc: "逛奈良商业街与传统老街。强推艾草红豆麻薯店（中谷堂），现打现做人气超旺！随后乘车直接返回日本桥。", img: "https://images.unsplash.com/photo-1615671158671-3312e75e1140?w=500", mapQuery: "奈良町", xhs: "" }
       ],
-      "2月11日": [
+      3: [
         { name: "伏见稻荷大社", time: "09:00 - 11:30", transit: "地铁至【北浜】转【京阪本线特急】直达", desc: "震撼的千本鸟居（免费参拜）。长辈同行建议走到“奥社奉拜所”原路折返即可，省力出片。", img: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=500", mapQuery: "伏見稲荷大社", xhs: "" },
         { name: "清水寺 ➔ 二三年坂", time: "12:00 - 16:30", transit: "搭京阪电车至【清水五条】，打车直达坡下", desc: "参观清水舞台。【门票：约 400 日元/人】。慢步下坡逛二三年坂，品尝抹茶与伴手礼。", img: "https://images.unsplash.com/photo-1624253321171-1be53e12f5f4?w=500", mapQuery: "清水寺", xhs: "" },
         { name: "祇园鸭川散步", time: "17:00 - 18:30", transit: "沿八坂神社顺势逛出", desc: "黄昏时分漫步花见小路与鸭川，感受京都清冽氛围。随后搭车返回大阪。", img: "https://images.unsplash.com/photo-1551044439-d3e75bc7bdf5?w=500", mapQuery: "鴨川 祇園", xhs: "" }
       ],
-      "2月12日": [
+      4: [
         { name: "四天王寺", time: "09:30 - 11:30", transit: "步行或坐地铁1站", desc: "参观日本最古老的官寺，感受白砂庭园与历史底蕴。【中心伽蓝门票：约 300 日元/人】", img: "https://images.unsplash.com/photo-1627918451151-51ee3eeb2de0?w=500", mapQuery: "四天王寺", xhs: "" },
         { name: "大阪天王寺动物园", time: "11:30 - 14:00", transit: "从四天王寺步行约 15-20 分钟", desc: "历史悠久的市区动物园，可以看到可爱的北极熊、大象等。【门票：成人约 800 日元/人】", img: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?w=500", mapQuery: "天王寺動物園", xhs: "" },
-        { name: "新世界与通天阁", time: "14:00 - 17:00", transit: "步行即达", desc: "感受昭和复古市井气息。必吃【元祖炸串达摩】，外酥里嫩！", img: "https://images.unsplash.com/photo-1588636733221-c19b88f346b9?w=500", mapQuery: "通天閣", xhs: "" },
+        { name: "新世界与通天阁", time: "14:00 - 17:00", transit: "步行即达", desc: "感受昭和复古市井气息。必吃「元祖炸串达摩」，外酥里嫩！", img: "https://images.unsplash.com/photo-1588636733221-c19b88f346b9?w=500", mapQuery: "通天閣", xhs: "" },
         { name: "阿倍野 Harukas 300", time: "17:30 - 晚间", transit: "步行 10 分钟", desc: "360度玻璃观景台看日落与夜景。【门票：约 1500 日元/人】", img: "https://images.unsplash.com/photo-1590442345511-b0db43d4c3f5?w=500", mapQuery: "あべのハルカス", xhs: "" }
       ],
-      "2月13日": [
+      5: [
         { name: "大阪城天守阁", time: "09:30 - 12:30", transit: "乘地铁转中央线至【谷町四丁目站】", desc: "登天守阁俯瞰全城，了解战国历史。【门票：约 1200 日元/人】", img: "https://images.unsplash.com/photo-1555359739-16a4959db14d?w=500", mapQuery: "大阪城", xhs: "" },
         { name: "日本桥电器街", time: "12:30 - 15:30", transit: "搭地铁返回【日本桥】", desc: "大阪秋叶原！手办盲盒、数码产品，看中心仪的直接下手。", img: "https://images.unsplash.com/photo-1544413660-299165566b1d?w=500", mapQuery: "でんでんタウン", xhs: "" },
         { name: "心斋桥筋大采购", time: "15:30 - 晚间", transit: "步行向北走即达", desc: "大丸百货、大国药妆扫货。买沉了随时回公寓放行李！", img: "https://images.unsplash.com/photo-1616222629858-69cb4807469a?w=500", mapQuery: "心斎橋筋商店街", xhs: "" }
       ],
-      "2月14日": [
+      6: [
         { name: "中崎町复古老街", time: "10:30 - 12:30", transit: "地铁御堂筋线至【梅田站】步行", desc: "躲过轰炸的木质长屋区，文艺手作店与咖啡馆，拍照极其出片。", img: "https://images.unsplash.com/photo-1609945180155-7f28ba24a1e9?w=500", mapQuery: "中崎町", xhs: "" },
         { name: "梅田百货巨头商圈", time: "12:30 - 16:30", transit: "步行回梅田核心区", desc: "聚集阪急、大丸和 LUCUA。高端品牌最全。午餐推荐利久牛舌。", img: "https://images.unsplash.com/photo-1594912952835-15a0c333dfd5?w=500", mapQuery: "梅田", xhs: "" },
         { name: "心斋桥/道顿堀大餐", time: "16:30 - 晚间", transit: "地铁返回难波/道顿堀", desc: "自由活动与大采购。大餐推荐叙叙苑烧肉或蟹道乐！", img: "https://images.unsplash.com/photo-1551044439-d3e75bc7bdf5?w=500", mapQuery: "道頓堀", xhs: "" }
       ],
-      "2月15日": [
+      7: [
         { name: "难波八阪神社", time: "09:30 - 11:00", transit: "退房寄存行李，步行6分至神社", desc: "巨大的狮子头神殿！吸走厄运带来好运，祈求旅途平安的绝佳收尾。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Namba_Yasaka_Shrine_01.jpg/500px-Namba_Yasaka_Shrine_01.jpg", mapQuery: "難波八阪神社", xhs: "" },
         { name: "临空城 Premium Outlets", time: "11:30 - 15:30", transit: "南海电铁机场急行至【临空城站】", desc: "在车站寄存行李。关西最大的海滨奥特莱斯，做最后扫货。", img: "https://images.unsplash.com/photo-1555529733-0e67056058ab?w=500", mapQuery: "りんくうプレミアム・アウトレット", xhs: "" },
         { name: "关西机场返程", time: "16:00", transit: "乘电车/巴士 1 站直达机场", desc: "提前办理值机，在免税店补齐白色恋人、Royce 生巧等，满载而归！", img: "https://images.unsplash.com/photo-1578330752528-9844ba74044c?w=500", mapQuery: "関西国際空港", xhs: "" }
@@ -750,17 +740,17 @@
     };
 
     let defaultDailyTips = {
-      "2月9日": { text: "抵达日别排太满；先安顿行李、购买充值 ICOCA 和准备暖暖包。傍晚可安排道顿堀水上观光船。", links: [{ title: "查看攻略", url: "" }] },
-      "2月10日": { text: "从近铁日本桥站出发直达奈良！懒人下坡流：坐车直达春日大社后一路往下走（若草山➔东大寺➔奈良公园➔奈良町），不费腿超轻松！", links: [{ title: "大佛布丁", url: "" }, { title: "东大寺&二月堂", url: "" }, { title: "步行路线", url: "" }] },
-      "2月11日": { text: "京都坡道多（二年坂/三年坂），穿舒适鞋履；热门餐厅建议避开饭点排队。", links: [{ title: "查看攻略", url: "" }] },
-      "2月12日": { text: "天王寺动物园门票划算且离四天王寺极近，步行即可串联，非常充实的一天。", links: [{ title: "查看攻略", url: "" }] },
-      "2月13日": { text: "大阪城登阁需爬些楼梯；日本桥电器街手办多，看中心仪的可直接下手。", links: [{ title: "查看攻略", url: "" }] },
-      "2月14日": { text: "梅田商圈犹如地下迷宫，请跟紧 Google Maps 导航；晚上享受美食与最后采购。", links: [{ title: "查看攻略", url: "" }] },
-      "2月15日": { text: "预留充足时间前往机场；临空城奥特莱斯可先在电车站中心寄存大件行李。", links: [{ title: "查看攻略", url: "" }] }
+      1: { text: "抵达日别排太满；先安顿行李、购买充值 ICOCA 和准备暖暖包。傍晚可安排道顿堀水上观光船。", links: [{ title: "查看攻略", url: "" }] },
+      2: { text: "从近铁日本桥站出发直达奈良！懒人下坡流：坐车直达春日大社后一路往下走（若草山➔东大寺➔奈良公园➔奈良町），不费腿超轻松！", links: [{ title: "大佛布丁", url: "" }, { title: "东大寺&二月堂", url: "" }, { title: "步行路线", url: "" }] },
+      3: { text: "京都坡道多（二年坂/三年坂），穿舒适鞋履；热门餐厅建议避开饭点排队。", links: [{ title: "查看攻略", url: "" }] },
+      4: { text: "天王寺动物园门票划算且离四天王寺极近，步行即可串联，非常充实的一天。", links: [{ title: "查看攻略", url: "" }] },
+      5: { text: "大阪城登阁需爬些楼梯；日本桥电器街手办多，看中心仪的可直接下手。", links: [{ title: "查看攻略", url: "" }] },
+      6: { text: "梅田商圈犹如地下迷宫，请跟紧 Google Maps 导航；晚上享受美食与最后采购。", links: [{ title: "查看攻略", url: "" }] },
+      7: { text: "预留充足时间前往机场；临空城奥特莱斯可先在电车站中心寄存大件行李。", links: [{ title: "查看攻略", url: "" }] }
     };
 
     let dailyTips = JSON.parse(JSON.stringify(defaultDailyTips));
-    let customMapLinks = { "2月9日": "", "2月10日": "", "2月11日": "", "2月12日": "", "2月13日": "", "2月14日": "", "2月15日": "" };
+    let customMapLinks = { 1: "", 2: "", 3: "", 4: "", 5: "", 6: "", 7: "" };
 
     let defaultReminders = [
       { id: "r1", text: "【iPhone 3人】在 Apple Wallet 钱包中提前开通 Suica 交通卡并绑定信用卡充值", tag: "核心必办", done: false },
@@ -780,37 +770,25 @@
       "其他": 1000
     };
 
-    // 智能获取今天是行程中的哪一天 (2月9日 到 2月15日)
-    function getTodayKey() {
-      const now = new Date();
-      const m = now.getMonth() + 1;
-      const d = now.getDate();
-      // 如果当前是 2027年2月 且日期在 9号到15号之间
-      if (m === 2 && d >= 9 && d <= 15) {
-        return `${m}月${d}日`;
-      }
-      return "2月9日"; // 默认第一天
-    }
-
-    let currentDay = getTodayKey();
+    let currentDay = 1;
     let itineraryData = JSON.parse(JSON.stringify(defaultItinerary));
     const fallbackImg = "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=500&q=80";
 
     window.renderDayPills = function() {
       const container = document.getElementById('day-pills-bar');
       container.innerHTML = '';
-      tripDays.forEach(dayObj => {
+      for (let i = 1; i <= 7; i++) {
         const btn = document.createElement('button');
-        btn.className = `day-pill ${dayObj.key === currentDay ? 'active' : ''}`;
-        btn.innerText = dayObj.label;
+        btn.className = `day-pill ${i === currentDay ? 'active' : ''}`;
+        btn.innerText = `第 ${i} 天 (Day ${i})`;
         btn.onclick = () => { 
-          currentDay = dayObj.key; 
+          currentDay = i; 
           window.renderDayPills(); 
-          document.getElementById('current-day-label').innerText = `${dayObj.key} (${dayObj.label.split(' ')[1]}) 行程安排`; 
+          document.getElementById('current-day-label').innerText = `第 ${i} 天 (Day ${i}) 行程安排`; 
           window.renderSpotList(); 
         };
         container.appendChild(btn);
-      });
+      }
     }
 
     window.renderSpotList = function() {
@@ -957,7 +935,7 @@
         const row = document.createElement('div');
         row.style.cssText = "display: flex; gap: 8px; align-items: center; background: #fffdf9; padding: 8px; border: 1px solid var(--border-color); border-radius: 6px;";
         row.innerHTML = `
-          <input type="text" placeholder="按钮标题（如：大佛布丁）" value="${item.title || ''}" class="xhs-title-input" style="flex: 1;">
+          <input type="text" placeholder="按钮标题（如：奈良路线）" value="${item.title || ''}" class="xhs-title-input" style="flex: 1;">
           <input type="text" placeholder="链接 URL" value="${item.url || ''}" class="xhs-url-input" style="flex: 2;">
           <button type="button" class="btn-subtle" onclick="this.parentElement.remove()" style="color:#b22; padding:4px 8px;">✕</button>
         `;
@@ -1016,7 +994,7 @@
     let myWishList = JSON.parse(localStorage.getItem('my_trip_wish')) || [{ text: 'Loft 文具', checked: false }, { text: '黑门市场草莓', checked: false }, { text: '日本桥电器街', checked: false }];
     let myExpenses = JSON.parse(localStorage.getItem('my_trip_expenses')) || [];
     let currentNoteDay = "行前";
-    let myDailyNotes = JSON.parse(localStorage.getItem('my_trip_notes_daily')) || { "行前":"", "2月9日":"", "2月10日":"", "2月11日":"", "2月12日":"", "2月13日":"", "2月14日":"", "2月15日":"" };
+    let myDailyNotes = JSON.parse(localStorage.getItem('my_trip_notes_daily')) || { "行前":"", "1":"", "2":"", "3":"", "4":"", "5":"", "6":"", "7":"" };
 
     window.renderMyTrip = function() {
       document.getElementById('my-pack-list').innerHTML = myPackList.map((item, idx) => `
@@ -1024,26 +1002,8 @@
       `).join('');
       
       const myrBudget = parseFloat(localStorage.getItem('my_trip_budget_myr') || '0');
-      
-      let totalSpentMyr = 0;
-      myExpenses.forEach(x => {
-        totalSpentMyr += getMyrAmount(x.amount, x.currency);
-      });
-      const totalSpentJpy = Math.round(totalSpentMyr * 38);
-      
-      const leftMyr = myrBudget - totalSpentMyr;
-      const leftJpy = Math.round(leftMyr * 38);
-
       document.getElementById('my-budget-myr').innerText = myrBudget.toFixed(2);
       document.getElementById('my-budget-jpy').innerText = Math.round(myrBudget * 38).toLocaleString();
-
-      document.getElementById('my-spent-myr').innerText = `RM ${totalSpentMyr.toFixed(2)}`;
-      document.getElementById('my-spent-jpy').innerText = totalSpentJpy.toLocaleString();
-
-      const leftElMyr = document.getElementById('my-left-myr');
-      leftElMyr.innerText = `RM ${leftMyr.toFixed(2)}`;
-      leftElMyr.style.color = leftMyr < 0 ? '#b22' : '#2e7d32';
-      document.getElementById('my-left-jpy').innerText = leftJpy.toLocaleString();
 
       document.getElementById('my-wish-list').innerHTML = myWishList.map((item, idx) => `
         <div class="check-item"><input type="checkbox" ${item.checked?'checked':''} onchange="window.toggleWish(${idx})"><span style="${item.checked?'text-decoration:line-through;color:var(--text-muted);':''}">${item.text}</span><button class="btn-del-icon" onclick="window.deleteWishItem(${idx})">✕</button></div>
@@ -1101,16 +1061,7 @@
     window.changeNoteDay = function() { currentNoteDay = document.getElementById('note-day-selector').value; document.getElementById('my-notes').value = myDailyNotes[currentNoteDay] || ''; }
     window.savePersonalNotes = function() { myDailyNotes[currentNoteDay] = document.getElementById('my-notes').value; localStorage.setItem('my_trip_notes_daily', JSON.stringify(myDailyNotes)); }
     
-    window.onload = function() { 
-      // 页面加载时自动应用当天日期
-      currentDay = getTodayKey();
-      const found = tripDays.find(d => d.key === currentDay);
-      if (found) {
-        document.getElementById('current-day-label').innerText = `${found.key} (${found.label.split(' ')[1]}) 行程安排`;
-      }
-      window.renderDayPills(); 
-      window.renderMyTrip(); 
-    };
+    window.onload = function() { window.renderDayPills(); window.renderMyTrip(); };
   </script>
 
   <!-- ================= Firebase 云端同步 ================= -->
