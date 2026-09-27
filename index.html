@@ -69,7 +69,6 @@
     .weather-text span { font-size: 0.8rem; color: var(--text-muted); }
     .notice-tips { font-size: 0.82rem; color: #4f4c47; line-height: 1.65; background: #faf7f0; padding: 10px 12px; border-radius: 6px; margin-top: 6px; }
 
-    /* 实时汇率换算工具条 */
     .currency-converter-bar {
       background: var(--card-inner); border: 1px solid var(--border-color); border-radius: 8px;
       padding: 12px 18px; margin-bottom: 22px; display: flex; align-items: center; justify-content: space-between;
@@ -684,9 +683,9 @@
       ]
     };
 
-    let dailyTips = {
+    let defaultDailyTips = {
       1: { text: "抵达日别排太满；先安顿行李、购买充值 ICOCA 和准备暖暖包。傍晚可安排道顿堀水上观光船。", links: [{ title: "查看攻略", url: "" }] },
-      2: { text: "从近铁日本桥站出发直达奈良！懒人下坡流：坐车直达春日大社后一路往下走（若草山➔东大寺➔奈良公园➔奈良町），不费腿超轻松！", links: [{ title: "奈良下坡流攻略", url: "" }] },
+      2: { text: "从近铁日本桥站出发直达奈良！懒人下坡流：坐车直达春日大社后一路往下走（若草山➔东大寺➔奈良公园➔奈良町），不费腿超轻松！", links: [{ title: "大佛布丁", url: "" }, { title: "东大寺&二月堂", url: "" }, { title: "步行路线", url: "" }] },
       3: { text: "京都坡道多（二年坂/三年坂），穿舒适鞋履；热门餐厅建议避开饭点排队。", links: [{ title: "查看攻略", url: "" }] },
       4: { text: "天王寺动物园门票划算且离四天王寺极近，步行即可串联，非常充实的一天。", links: [{ title: "查看攻略", url: "" }] },
       5: { text: "大阪城登阁需爬些楼梯；日本桥电器街手办多，看中心仪的可直接下手。", links: [{ title: "查看攻略", url: "" }] },
@@ -694,6 +693,7 @@
       7: { text: "预留充足时间前往机场；临空城奥特莱斯可先在电车站中心寄存大件行李。", links: [{ title: "查看攻略", url: "" }] }
     };
 
+    let dailyTips = JSON.parse(JSON.stringify(defaultDailyTips));
     let customMapLinks = { 1: "", 2: "", 3: "", 4: "", 5: "", 6: "", 7: "" };
 
     let defaultReminders = [
@@ -879,7 +879,7 @@
         const row = document.createElement('div');
         row.style.cssText = "display: flex; gap: 8px; align-items: center; background: #fffdf9; padding: 8px; border: 1px solid var(--border-color); border-radius: 6px;";
         row.innerHTML = `
-          <input type="text" placeholder="按钮标题（如：奈良路线）" value="${item.title || ''}" class="xhs-title-input" style="flex: 1;">
+          <input type="text" placeholder="按钮标题（如：大佛布丁）" value="${item.title || ''}" class="xhs-title-input" style="flex: 1;">
           <input type="text" placeholder="链接 URL" value="${item.url || ''}" class="xhs-url-input" style="flex: 2;">
           <button type="button" class="btn-subtle" onclick="this.parentElement.remove()" style="color:#b22; padding:4px 8px;">✕</button>
         `;
@@ -914,7 +914,9 @@
       dailyTips[currentDay] = { text, links };
       window.renderSpotList();
       window.closeTipModal();
-      localStorage.setItem('osaka_daily_tips_v3', JSON.stringify(dailyTips));
+      
+      // 同步到云端
+      if (window.saveCloudTips) { window.saveCloudTips(dailyTips); }
     }
 
     window.openEditMapModal = function() {
@@ -930,8 +932,6 @@
       localStorage.setItem('osaka_custom_map_links', JSON.stringify(customMapLinks));
     }
 
-    const savedTips = localStorage.getItem('osaka_daily_tips_v3');
-    if (savedTips) { try { dailyTips = JSON.parse(savedTips); } catch(e){} }
     const savedMapLinks = localStorage.getItem('osaka_custom_map_links');
     if (savedMapLinks) { try { customMapLinks = JSON.parse(savedMapLinks); } catch(e){} }
 
@@ -1028,6 +1028,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
+    // 1. 行程云端同步
     const itineraryCloudRef = ref(db, 'osaka_family_itinerary');
     onValue(itineraryCloudRef, (snapshot) => {
       const data = snapshot.val();
@@ -1037,6 +1038,17 @@
     });
     window.saveCloudItinerary = function(data) { set(itineraryCloudRef, data); };
 
+    // 2. 每日贴士与攻略链接云端同步
+    const tipsCloudRef = ref(db, 'osaka_family_daily_tips');
+    onValue(tipsCloudRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) { dailyTips = data; }
+      else { set(tipsCloudRef, defaultDailyTips); dailyTips = defaultDailyTips; }
+      window.renderSpotList();
+    });
+    window.saveCloudTips = function(data) { set(tipsCloudRef, data); };
+
+    // 3. 家庭账本云端同步
     const ledgerRef = ref(db, 'osaka_family_ledger');
     let familyLedger = []; 
     onValue(ledgerRef, (snapshot) => {
@@ -1046,6 +1058,7 @@
       window.renderFamilyBudget(); 
     });
 
+    // 4. 预算分类云端同步
     const budgetCloudRef = ref(db, 'osaka_family_budget_myr_v2');
     let cloudBudgetCategories = {};
     onValue(budgetCloudRef, (snapshot) => {
@@ -1152,6 +1165,7 @@
       document.getElementById('budget-overview-left').innerText = `RM ${totalLeftMYR.toFixed(2)} (¥${totalLeftJPY.toLocaleString()})`;
     };
 
+    // 5. 共同提醒事项云端同步
     const remindersCloudRef = ref(db, 'osaka_family_reminders');
     let cloudReminders = [];
     onValue(remindersCloudRef, (snapshot) => {
