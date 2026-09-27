@@ -201,7 +201,7 @@
     <!-- 实时汇率换算工具条 -->
     <div class="currency-converter-bar">
       <div style="font-size: 0.85rem; color: var(--text-muted);">
-        💱 <b>实时汇率小工具</b> (1 MYR = 38 JPY)
+        <b>实时汇率小工具</b> (1 MYR = 38 JPY)
       </div>
       <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
         <div class="converter-group">
@@ -250,8 +250,8 @@
     <nav class="nav-tabs">
       <button class="tab-btn active" onclick="switchPage('itinerary')">每日行程</button>
       <button class="tab-btn" onclick="switchPage('family-ledger')">家庭账本</button>
-      <button class="tab-btn" onclick="switchPage('family-budget')">💰 预算看板</button>
-      <button class="tab-btn" onclick="switchPage('family-reminders')">📌 共同提醒</button>
+      <button class="tab-btn" onclick="switchPage('family-budget')">预算看板</button>
+      <button class="tab-btn" onclick="switchPage('family-reminders')">共同提醒</button>
       <button class="tab-btn" onclick="switchPage('my-trip')">我的旅程</button>
     </nav>
 
@@ -273,7 +273,7 @@
           <div class="card sidebar-card">
             <h3 class="sidebar-title">
               <span>当日路线</span>
-              <button class="btn-subtle" onclick="window.openEditMapModal()" style="font-size:0.75rem; padding:3px 8px;">✏️ 修改地图链接</button>
+              <button class="btn-subtle" onclick="window.openEditMapModal()" style="font-size:0.75rem; padding:3px 8px;">修改地图链接</button>
             </h3>
             <p style="font-size:0.85rem; color:#6e6b64; margin-bottom:15px; line-height: 1.5;">每一个行程标题和下方按钮都可直接打开导航。</p>
             <a href="#" id="route-map-btn" target="_blank" class="btn-map-route">在地图查看整日路线 ↗</a>
@@ -291,7 +291,7 @@
           <div class="card sidebar-card">
             <h3 class="sidebar-title">
               <span>今天的贴士</span>
-              <button class="btn-subtle" onclick="window.openEditTipModal()" style="font-size:0.75rem; padding:3px 8px;">✏️ 修改贴士与小红书</button>
+              <button class="btn-subtle" onclick="window.openEditTipModal()" style="font-size:0.75rem; padding:3px 8px;">修改贴士与攻略</button>
             </h3>
             <div class="tips-text" id="daily-tip-text">抵达日别排太满；先安顿行李、买 ICOCA 和暖暖包。</div>
             <div id="daily-tip-xhs-box" style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;"></div>
@@ -303,12 +303,12 @@
     <!-- PAGE 2: 家庭账本 -->
     <main id="page-family-ledger" class="tab-pane">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
-        <span style="font-size:0.85rem; color:var(--text-muted);">💴 当前汇率：<b>1 MYR = 38 JPY</b></span>
+        <span style="font-size:0.85rem; color:var(--text-muted);">当前汇率：<b>1 MYR = 38 JPY</b></span>
         <div class="sync-badge"><div class="sync-dot"></div>家庭账本与行程云端实时同步中</div>
       </div>
 
       <div class="card" style="background:#fffcf7;">
-        <div class="card-heading"><span>📊 家庭支出总汇</span></div>
+        <div class="card-heading"><span>家庭支出总汇</span></div>
         <div style="display:flex; gap:36px; flex-wrap:wrap;">
           <div><span style="font-size:0.85rem; color:var(--text-muted);">总支出 (日币)</span><div id="family-total-jpy" style="font-size:1.8rem; font-weight:800; color:var(--primary-red); font-family:var(--font-serif);">¥ 0</div></div>
           <div><span style="font-size:0.85rem; color:var(--text-muted);">折合总额 (马币)</span><div id="family-total-myr" style="font-size:1.8rem; font-weight:800; color:var(--primary-red); font-family:var(--font-serif);">RM 0.00</div></div>
@@ -316,7 +316,7 @@
       </div>
 
       <div class="card">
-        <div class="card-heading"><span>📝 记录公共开销</span></div>
+        <div class="card-heading"><span>记录公共开销</span></div>
         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)) 85px 85px 90px; gap:8px; align-items:flex-end;">
           <div>
             <label style="font-size:0.78rem; color:#666;">日程</label>
@@ -367,7 +367,7 @@
       </div>
 
       <div class="pie-card">
-        <div class="card-heading"><span>📊 各分类开销占比统计</span></div>
+        <div class="card-heading"><span>各分类开销占比统计</span></div>
         <div class="pie-container">
           <div class="pie-svg-box">
             <svg class="pie-svg" id="expense-pie-svg" viewBox="0 0 32 32"></svg>
@@ -379,15 +379,15 @@
       </div>
     </main>
 
-    <!-- PAGE 4: 预算看板 (马币显示、支持修改与新增分类、实时联动家庭账本) -->
+    <!-- PAGE 4: 预算看板 -->
     <main id="page-family-budget" class="tab-pane">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
-        <span style="font-size:0.85rem; color:var(--text-muted);">💰 <b>设定各分类总预算（以马币 RM 计）</b>（数据实时同步至全体成员）</span>
+        <span style="font-size:0.85rem; color:var(--text-muted);"><b>设定各分类总预算（以马币 RM 计）</b>（数据实时同步至全体成员）</span>
         <div class="sync-badge"><div class="sync-dot"></div>预算看板云端实时同步中</div>
       </div>
 
       <div class="card" style="background:#fffcf7;">
-        <div class="card-heading"><span>🎯 整体家庭预算总览 (MYR)</span></div>
+        <div class="card-heading"><span>整体家庭预算总览 (MYR)</span></div>
         <div style="display:flex; gap:36px; flex-wrap:wrap; align-items:center;">
           <div><span style="font-size:0.85rem; color:var(--text-muted);">总预算</span><div id="budget-overview-total" style="font-size:1.8rem; font-weight:800; color:#16395b; font-family:var(--font-serif);">RM 0.00</div></div>
           <div><span style="font-size:0.85rem; color:var(--text-muted);">已花总额</span><div id="budget-overview-spent" style="font-size:1.8rem; font-weight:800; color:var(--primary-red); font-family:var(--font-serif);">RM 0.00</div></div>
@@ -396,7 +396,7 @@
       </div>
 
       <div class="card">
-        <div class="card-heading"><span>➕ 新增预算分类</span></div>
+        <div class="card-heading"><span>新增预算分类</span></div>
         <div style="display:grid; grid-template-columns: 2fr 1fr 100px; gap:10px; align-items:flex-end;">
           <div><label style="font-size:0.78rem; color:#666;">分类名称（如：餐饮、住宿等）</label><input type="text" id="new-budget-cat" placeholder="分类名称" style="width:100%;"></div>
           <div><label style="font-size:0.78rem; color:#666;">预算金额 (RM)</label><input type="number" id="new-budget-limit" placeholder="金额 (马币)" style="width:100%;"></div>
@@ -405,7 +405,7 @@
       </div>
 
       <div class="card">
-        <div class="card-heading"><span>📋 各分类预算剩余对照表 (MYR)</span></div>
+        <div class="card-heading"><span>各分类预算剩余对照表 (MYR)</span></div>
         <div class="table-container">
           <table>
             <thead>
@@ -427,12 +427,12 @@
     <!-- PAGE 5: 共同提醒事项 -->
     <main id="page-family-reminders" class="tab-pane">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
-        <span style="font-size:0.85rem; color:var(--text-muted);">📌 <b>出行前与旅途中共同注意事项</b>（全员实时同步与勾选）</span>
+        <span style="font-size:0.85rem; color:var(--text-muted);"><b>出行前与旅途中共同注意事项</b>（全员实时同步与勾选）</span>
         <div class="sync-badge"><div class="sync-dot"></div>提醒事项云端实时同步中</div>
       </div>
 
       <div class="card">
-        <div class="card-heading"><span>➕ 新增共同提醒事项</span></div>
+        <div class="card-heading"><span>新增共同提醒事项</span></div>
         <div style="display:flex; gap:10px; align-items:flex-end; flex-wrap:wrap;">
           <div style="flex:1; min-width:240px;">
             <label style="font-size:0.78rem; color:#666;">提醒内容</label>
@@ -441,9 +441,9 @@
           <div style="width:140px;">
             <label style="font-size:0.78rem; color:#666;">紧急/重要程度</label>
             <select id="new-reminder-tag" style="width:100%;">
-              <option value="🔴 核心必办">🔴 核心必办</option>
-              <option value="🟡 行李准备">🟡 行李准备</option>
-              <option value="🔵 实用小贴士">🔵 实用小贴士</option>
+              <option value="核心必办">核心必办</option>
+              <option value="行李准备">行李准备</option>
+              <option value="实用小贴士">实用小贴士</option>
             </select>
           </div>
           <button class="btn-red" onclick="window.addReminderItem()">添加提醒</button>
@@ -451,12 +451,12 @@
       </div>
 
       <div class="card">
-        <div class="card-heading"><span>📋 待办与注意事项清单</span></div>
+        <div class="card-heading"><span>待办与注意事项清单</span></div>
         <div id="reminders-list-box"></div>
       </div>
     </main>
 
-    <!-- PAGE 3 原始：我的旅程 -->
+    <!-- PAGE 3: 我的旅程 -->
     <main id="page-my-trip" class="tab-pane">
       <div class="trip-top-row">
         <div class="card" style="margin-bottom:0;">
@@ -467,9 +467,15 @@
 
         <div class="card" style="margin-bottom:0;">
           <div class="card-heading" style="font-size:1.15rem;">我的个人预算</div>
-          <div style="font-family:var(--font-serif); font-size:2.4rem; font-weight:800; color:var(--primary-red); margin:12px 0;">¥ <span id="my-budget-num">0</span></div>
-          <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6;">个人购物、伴手礼；仅保存在本设备，不会混入家庭账本。</p>
-          <div style="display:flex; gap:8px; margin-top:16px;"><input type="number" id="budget-input-val" placeholder="设定预算 (JPY)" style="flex:1;"><button class="btn-subtle" onclick="window.setPersonalBudget()">保存</button></div>
+          <div style="font-family:var(--font-serif); font-size:2.2rem; font-weight:800; color:var(--primary-red); margin:12px 0;">
+            RM <span id="my-budget-myr">0.00</span>
+            <div style="font-size:0.9rem; color:var(--text-muted); font-weight:normal; margin-top:4px;">(折合约 ¥ <span id="my-budget-jpy">0</span>)</div>
+          </div>
+          <p style="font-size:0.82rem; color:var(--text-muted); line-height:1.6;">个人购物、伴手礼；仅保存在本设备，不会混入家庭账本。</p>
+          <div style="display:flex; gap:8px; margin-top:16px;">
+            <input type="number" id="budget-input-val" placeholder="设定预算 (RM 马币)" style="flex:1;">
+            <button class="btn-subtle" onclick="window.setPersonalBudget()">保存</button>
+          </div>
         </div>
 
         <div class="card" style="margin-bottom:0;">
@@ -492,8 +498,8 @@
           <div>
             <label style="font-size:0.78rem; color:#666;">币种</label>
             <select id="my-currency" style="width:100%;">
-              <option value="JPY">JPY (日币)</option>
               <option value="MYR">MYR (马币)</option>
+              <option value="JPY">JPY (日币)</option>
             </select>
           </div>
           <div><label style="font-size:0.78rem; color:#666;">金额</label><input type="number" id="my-amount" placeholder="金额" style="width:100%;"></div>
@@ -526,12 +532,12 @@
         <button class="modal-close" onclick="window.closeSpotModal()">✕</button>
       </div>
       <input type="hidden" id="modal-spot-idx" value="-1">
-      <div class="modal-form-group"><label>📍 景点/活动名称</label><input type="text" id="modal-spot-name" placeholder="如：黑门市场..."></div>
-      <div class="modal-form-group"><label>⏱ 建议游玩时间</label><input type="text" id="modal-spot-time" placeholder="如：09:30 - 12:00"></div>
-      <div class="modal-form-group"><label>🚇 交通路线</label><input type="text" id="modal-spot-transit" placeholder="如：搭乘千日前线..."></div>
-      <div class="modal-form-group"><label>📝 行程详情、小贴士</label><textarea id="modal-spot-desc" placeholder="详情描述..."></textarea></div>
-      <div class="modal-form-group"><label>🖼️ 景点照片网址</label><input type="text" id="modal-spot-img" placeholder="https://..."></div>
-      <div class="modal-form-group"><label>📖 小红书攻略链接 (可选)</label><input type="text" id="modal-spot-xhs" placeholder="https://www.xiaohongshu.com/discovery/item/..."></div>
+      <div class="modal-form-group"><label>景点/活动名称</label><input type="text" id="modal-spot-name" placeholder="如：黑门市场..."></div>
+      <div class="modal-form-group"><label>建议游玩时间</label><input type="text" id="modal-spot-time" placeholder="如：09:30 - 12:00"></div>
+      <div class="modal-form-group"><label>交通路线</label><input type="text" id="modal-spot-transit" placeholder="如：搭乘千日前线..."></div>
+      <div class="modal-form-group"><label>行程详情、小贴士</label><textarea id="modal-spot-desc" placeholder="详情描述..."></textarea></div>
+      <div class="modal-form-group"><label>景点照片网址</label><input type="text" id="modal-spot-img" placeholder="https://..."></div>
+      <div class="modal-form-group"><label>攻略链接 (可选)</label><input type="text" id="modal-spot-xhs" placeholder="https://www.xiaohongshu.com/discovery/item/..."></div>
       <div style="text-align: right; margin-top: 24px;">
         <button class="btn-subtle" onclick="window.closeSpotModal()" style="margin-right: 10px; padding: 8px 18px;">取消</button>
         <button class="btn-red" onclick="window.saveSpotModal()">保存行程</button>
@@ -548,7 +554,7 @@
       </div>
       <input type="hidden" id="budget-modal-cat-key" value="">
       <div class="modal-form-group">
-        <label>💰 新的预算总额 (RM 马币)</label>
+        <label>新的预算总额 (RM 马币)</label>
         <input type="number" id="budget-modal-input-val" placeholder="输入马币金额...">
       </div>
       <div style="text-align: right; margin-top: 24px;">
@@ -562,16 +568,16 @@
   <div id="tip-modal" class="modal-overlay">
     <div class="modal-content">
       <div class="modal-header">
-        <span>修改第 <span id="tip-modal-day-num">1</span> 天贴士与小红书攻略</span>
+        <span>修改第 <span id="tip-modal-day-num">1</span> 天贴士与攻略</span>
         <button class="modal-close" onclick="window.closeTipModal()">✕</button>
       </div>
       <div class="modal-form-group">
-        <label>💡 今日贴士说明</label>
+        <label>今日贴士说明</label>
         <textarea id="modal-tip-text" placeholder="输入今天的温馨提醒..."></textarea>
       </div>
       <div class="modal-form-group">
         <label style="display:flex; justify-content:space-between; align-items:center;">
-          <span>📖 小红书攻略链接管理</span>
+          <span>攻略链接管理</span>
           <button class="btn-subtle" onclick="window.addXhsField()" style="font-size:0.75rem; padding:2px 8px;">+ 增加一个链接</button>
         </label>
         <div id="modal-xhs-container" style="display:flex; flex-direction:column; gap:10px; margin-top:6px;"></div>
@@ -591,7 +597,7 @@
         <button class="modal-close" onclick="window.closeMapModal()">✕</button>
       </div>
       <div class="modal-form-group">
-        <label>🗺️ 自定义 Google Maps 或网页链接</label>
+        <label>自定义 Google Maps 或网页链接</label>
         <input type="text" id="modal-map-url" placeholder="https://maps.app.goo.gl/... 或留空自动生成">
       </div>
       <div style="text-align: right; margin-top: 24px;">
@@ -640,7 +646,8 @@
       1: [
         { name: "关西机场 ➔ 入住 b&黒門1号店", time: "抵达后 - 15:30", transit: "【南海电铁特急 Rapi:t】直达难波站，打车或步行入住", desc: "抵达大阪！出站后直接前往民宿安顿好大件行李，轻装上阵。", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=500", mapQuery: "b&黒門1号店", xhs: "" },
         { name: "黑门市场 (关西的厨房)", time: "15:30 - 17:00", transit: "民宿下楼即达", desc: "近水楼台先得月！开启第一顿美食狂欢：现烤海鲜、黑毛和牛串、海胆、淡雪草莓，边逛边吃。", img: "https://images.unsplash.com/photo-1590559899731-a372a14c5688?w=500", mapQuery: "黒門市場", xhs: "" },
-        { name: "道顿堀与戎桥打卡", time: "17:30 - 晚间", transit: "步行 8 分钟即达", desc: "晚餐吃一兰拉面，或街头现烤章鱼烧。别忘了与格力高奔跑小人合影。", img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500", mapQuery: "道頓堀 戎橋", xhs: "" }
+        { name: "道顿堀与戎桥打卡", time: "17:00 - 18:30", transit: "步行 8 分钟即达", desc: "晚餐吃一兰拉面，或街头现烤章鱼烧。别忘了与格力高奔跑小人合影。", img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500", mapQuery: "道頓堀 戎橋", xhs: "" },
+        { name: "道顿堀水上观光船", time: "18:30 - 19:30", transit: "唐吉诃德河畔码头登船", desc: "乘观光船穿过各桥，仰望霓虹灯初上，夜景氛围感极佳！【票价：约 1000 円/人】", img: "https://images.unsplash.com/photo-1563604593452-f47321e06183?w=500", mapQuery: "とんぼりリバークルーズ", xhs: "" }
       ],
       2: [
         { name: "近铁日本桥 ➔ 近铁奈良站", time: "08:30 - 09:30", transit: "从住所步行 5 分钟至【近铁日本桥站】乘近铁奈良线直达（约 39 分钟，单程约 570円）", desc: "从日本桥直接出发，无需转车，一站式直达奈良！", img: "https://images.unsplash.com/photo-1549693578-cbc70b0cc850?w=500", mapQuery: "近鉄日本橋駅", xhs: "" },
@@ -668,7 +675,7 @@
       6: [
         { name: "中崎町复古老街", time: "10:30 - 12:30", transit: "地铁御堂筋线至【梅田站】步行", desc: "躲过轰炸的木质长屋区，文艺手作店与咖啡馆，拍照极其出片。", img: "https://images.unsplash.com/photo-1609945180155-7f28ba24a1e9?w=500", mapQuery: "中崎町", xhs: "" },
         { name: "梅田百货巨头商圈", time: "12:30 - 16:30", transit: "步行回梅田核心区", desc: "聚集阪急、大丸和 LUCUA。高端品牌最全。午餐推荐利久牛舌。", img: "https://images.unsplash.com/photo-1594912952835-15a0c333dfd5?w=500", mapQuery: "梅田", xhs: "" },
-        { name: "道顿堀水上观光船", time: "16:30 - 晚间", transit: "地铁返回难波/道顿堀", desc: "乘观光船穿过各桥，仰望霓虹灯初上。大餐推荐叙叙苑烧肉或蟹道乐！", img: "https://images.unsplash.com/photo-1563604593452-f47321e06183?w=500", mapQuery: "とんぼりリバークルーズ", xhs: "" }
+        { name: "心斋桥/道顿堀大餐", time: "16:30 - 晚间", transit: "地铁返回难波/道顿堀", desc: "自由活动与大采购。大餐推荐叙叙苑烧肉或蟹道乐！", img: "https://images.unsplash.com/photo-1551044439-d3e75bc7bdf5?w=500", mapQuery: "道頓堀", xhs: "" }
       ],
       7: [
         { name: "难波八阪神社", time: "09:30 - 11:00", transit: "退房寄存行李，步行6分至神社", desc: "巨大的狮子头神殿！吸走厄运带来好运，祈求旅途平安的绝佳收尾。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Namba_Yasaka_Shrine_01.jpg/500px-Namba_Yasaka_Shrine_01.jpg", mapQuery: "難波八阪神社", xhs: "" },
@@ -678,34 +685,33 @@
     };
 
     let dailyTips = {
-      1: { text: "抵达日别排太满；先安顿行李、购买充值 ICOCA 和准备暖暖包。", links: [{ title: "查看小红书攻略", url: "" }] },
-      2: { text: "从近铁日本桥站出发直达奈良！懒人下坡流：坐车直达春日大社后一路往下走（若草山➔东大寺➔奈良公园➔奈良町），不费腿超轻松！", links: [{ title: "🦌 奈良懒人下坡流攻略", url: "" }] },
-      3: { text: "京都坡道多（二年坂/三年坂），穿舒适鞋履；热门餐厅建议避开饭点排队。", links: [{ title: "查看小红书攻略", url: "" }] },
-      4: { text: "天王寺动物园门票划算且离四天王寺极近，步行即可串联，非常充实的一天。", links: [{ title: "查看小红书攻略", url: "" }] },
-      5: { text: "大阪城登阁需爬些楼梯；日本桥电器街手办多，看中心仪的可直接下手。", links: [{ title: "查看小红书攻略", url: "" }] },
-      6: { text: "梅田商圈犹如地下迷宫，请跟紧 Google Maps 导航；晚上游船风大注意保暖。", links: [{ title: "查看小红书攻略", url: "" }] },
-      7: { text: "预留充足时间前往机场；临空城奥特莱斯可先在电车站中心寄存大件行李。", links: [{ title: "查看小红书攻略", url: "" }] }
+      1: { text: "抵达日别排太满；先安顿行李、购买充值 ICOCA 和准备暖暖包。傍晚可安排道顿堀水上观光船。", links: [{ title: "查看攻略", url: "" }] },
+      2: { text: "从近铁日本桥站出发直达奈良！懒人下坡流：坐车直达春日大社后一路往下走（若草山➔东大寺➔奈良公园➔奈良町），不费腿超轻松！", links: [{ title: "奈良下坡流攻略", url: "" }] },
+      3: { text: "京都坡道多（二年坂/三年坂），穿舒适鞋履；热门餐厅建议避开饭点排队。", links: [{ title: "查看攻略", url: "" }] },
+      4: { text: "天王寺动物园门票划算且离四天王寺极近，步行即可串联，非常充实的一天。", links: [{ title: "查看攻略", url: "" }] },
+      5: { text: "大阪城登阁需爬些楼梯；日本桥电器街手办多，看中心仪的可直接下手。", links: [{ title: "查看攻略", url: "" }] },
+      6: { text: "梅田商圈犹如地下迷宫，请跟紧 Google Maps 导航；晚上享受美食与最后采购。", links: [{ title: "查看攻略", url: "" }] },
+      7: { text: "预留充足时间前往机场；临空城奥特莱斯可先在电车站中心寄存大件行李。", links: [{ title: "查看攻略", url: "" }] }
     };
 
     let customMapLinks = { 1: "", 2: "", 3: "", 4: "", 5: "", 6: "", 7: "" };
 
     let defaultReminders = [
-      { id: "r1", text: "【iPhone 3人】在 Apple Wallet 钱包中提前开通 Suica 交通卡并绑定信用卡充值", tag: "🔴 核心必办", done: false },
-      { id: "r2", text: "【Android 2人】抵达关西机场后，人工/自动售票机处购买实体 ICOCA 卡", tag: "🔴 核心必办", done: false },
-      { id: "r3", text: "备好适量日元现金（日常吃饭、寺庙门票及奈良公交很多只收现金）", tag: "🔴 核心必办", done: false },
-      { id: "r4", text: "准备好防风外套、保暖衣层与轻便好走的运动鞋（2月大阪3-10°C）", tag: "🟡 行李准备", done: false },
-      { id: "r5", text: "随身携带暖暖包、行动电源、护照与 eSIM / 手机漫游", tag: "🟡 行李准备", done: false },
-      { id: "r6", text: "提前下载 Google Maps 离线地图并收藏民宿“b&黒門1号店”位置", tag: "🔵 实用小贴士", done: false }
+      { id: "r1", text: "【iPhone 3人】在 Apple Wallet 钱包中提前开通 Suica 交通卡并绑定信用卡充值", tag: "核心必办", done: false },
+      { id: "r2", text: "【Android 2人】抵达关西机场后，人工/自动售票机处购买实体 ICOCA 卡", tag: "核心必办", done: false },
+      { id: "r3", text: "备好适量日元现金（日常吃饭、寺庙门票及奈良公交很多只收现金）", tag: "核心必办", done: false },
+      { id: "r4", text: "准备好防风外套、保暖衣层与轻便好走的运动鞋（2月大阪3-10°C）", tag: "行李准备", done: false },
+      { id: "r5", text: "随身携带暖暖包、行动电源、护照与 eSIM / 手机漫游", tag: "行李准备", done: false },
+      { id: "r6", text: "提前下载 Google Maps 离线地图并收藏民宿“b&黒門1号店”位置", tag: "实用小贴士", done: false }
     ];
 
-    // 默认预算分类（以马币 RM 计存入云端）
     let defaultBudgetCategories = {
-      "餐饮": 4000,   // 约 15万日元
-      "交通": 1600,   // 约 6万日元
-      "住宿": 5300,   // 约 20万日元
-      "门票": 1300,   // 约 5万日元
-      "采购": 2100,   // 约 8万日元
-      "其他": 1000    // 约 4万日元
+      "餐饮": 4000,
+      "交通": 1600,
+      "住宿": 5300,
+      "门票": 1300,
+      "采购": 2100,
+      "其他": 1000
     };
 
     let currentDay = 1;
@@ -737,12 +743,12 @@
       
       const xhsBox = document.getElementById('daily-tip-xhs-box');
       let linksArr = tipData.links || [];
-      if (typeof tipData.xhs === 'string' && tipData.xhs.trim() !== '') { linksArr = [{ title: "查看小红书攻略", url: tipData.xhs }]; }
+      if (typeof tipData.xhs === 'string' && tipData.xhs.trim() !== '') { linksArr = [{ title: "查看攻略", url: tipData.xhs }]; }
       
       xhsBox.innerHTML = linksArr.map(l => {
         if (!l.url || l.url.trim() === '') return '';
-        let btnTitle = l.title && l.title.trim() !== '' ? l.title : '小红书攻略';
-        return `<a href="${l.url}" target="_blank" class="btn-xiaohongshu">📖 ${btnTitle} ↗</a>`;
+        let btnTitle = l.title && l.title.trim() !== '' ? l.title : '攻略链接';
+        return `<a href="${l.url}" target="_blank" class="btn-xiaohongshu">${btnTitle} ↗</a>`;
       }).join('');
       
       const mapBtn = document.getElementById('route-map-btn');
@@ -757,28 +763,28 @@
       }
 
       if (spots.length === 0) {
-        box.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:40px 10px; font-size:0.95rem;">🌸 这一天的行程目前还留白中，点击右上角「+ 新增景点」添加景点路线吧！</div>`;
+        box.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:40px 10px; font-size:0.95rem;">这一天的行程目前还留白中，点击右上角「+ 新增景点」添加景点路线吧！</div>`;
         return;
       }
 
       box.innerHTML = spots.map((s, idx) => {
         let query = s.mapQuery ? s.mapQuery : s.name;
-        let xhsBtnHtml = s.xhs ? `<a href="${s.xhs}" target="_blank" class="btn-xiaohongshu">📖 小红书 ↗</a>` : '';
+        let xhsBtnHtml = s.xhs ? `<a href="${s.xhs}" target="_blank" class="btn-xiaohongshu">攻略 ↗</a>` : '';
         return `
         <div class="spot-card">
           <img src="${s.img}" onerror="this.src='${fallbackImg}'" class="spot-img" alt="${s.name}">
           <div class="spot-info">
             <div class="spot-name">
-              <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('日本 大阪 ' + query)}" target="_blank" title="在 Google Maps 中查看">📍 ${s.name}</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('日本 大阪 ' + query)}" target="_blank" title="在 Google Maps 中查看">${s.name}</a>
               <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                 ${xhsBtnHtml}
                 <button class="btn-subtle" onclick="window.moveSpotUp(${idx})" ${idx === 0 ? 'disabled style="opacity:0.3;cursor:not-allowed;"' : 'style="color:#555; padding:4px 8px;"'} title="上移">▲</button>
                 <button class="btn-subtle" onclick="window.moveSpotDown(${idx})" ${idx === spots.length - 1 ? 'disabled style="opacity:0.3;cursor:not-allowed;"' : 'style="color:#555; padding:4px 8px; margin-right:4px;"'} title="下移">▼</button>
-                <button class="btn-subtle" onclick="window.editSpot(${idx})" style="color:#0056b3; font-size:0.75rem; padding:4px 8px; margin-right:4px; border:1px solid #0056b3; background:#f0f8ff;">✏️ 修改</button>
+                <button class="btn-subtle" onclick="window.editSpot(${idx})" style="color:#0056b3; font-size:0.75rem; padding:4px 8px; margin-right:4px; border:1px solid #0056b3; background:#f0f8ff;">修改</button>
                 <button class="btn-subtle" onclick="window.removeSpot(${idx})" style="color:#b22; font-size:0.75rem; padding:4px 8px;">删除</button>
               </div>
             </div>
-            <div class="spot-meta"><span>⏱ 建议：<b>${s.time||'弹性'}</b></span><span>🚇 交通：<b>${s.transit||'步行/地铁直达'}</b></span></div>
+            <div class="spot-meta"><span>建议：<b>${s.time||'弹性'}</b></span><span>交通：<b>${s.transit||'步行/地铁直达'}</b></span></div>
             <div class="spot-desc" style="white-space: pre-wrap;">${s.desc||''}</div>
           </div>
         </div>
@@ -860,7 +866,7 @@
       const t = dailyTips[currentDay] || { text: "", links: [] };
       document.getElementById('modal-tip-text').value = t.text || "";
       let arr = t.links || [];
-      if (typeof t.xhs === 'string' && t.xhs.trim() !== '') { arr = [{ title: "查看小红书攻略", url: t.xhs }]; }
+      if (typeof t.xhs === 'string' && t.xhs.trim() !== '') { arr = [{ title: "查看攻略", url: t.xhs }]; }
       window.renderXhsFields(arr);
       document.getElementById('tip-modal').classList.add('active');
     }
@@ -874,7 +880,7 @@
         row.style.cssText = "display: flex; gap: 8px; align-items: center; background: #fffdf9; padding: 8px; border: 1px solid var(--border-color); border-radius: 6px;";
         row.innerHTML = `
           <input type="text" placeholder="按钮标题（如：奈良路线）" value="${item.title || ''}" class="xhs-title-input" style="flex: 1;">
-          <input type="text" placeholder="小红书链接 URL" value="${item.url || ''}" class="xhs-url-input" style="flex: 2;">
+          <input type="text" placeholder="链接 URL" value="${item.url || ''}" class="xhs-url-input" style="flex: 2;">
           <button type="button" class="btn-subtle" onclick="this.parentElement.remove()" style="color:#b22; padding:4px 8px;">✕</button>
         `;
         container.appendChild(row);
@@ -887,7 +893,7 @@
       row.style.cssText = "display: flex; gap: 8px; align-items: center; background: #fffdf9; padding: 8px; border: 1px solid var(--border-color); border-radius: 6px;";
       row.innerHTML = `
         <input type="text" placeholder="按钮标题（如：美食攻略）" value="" class="xhs-title-input" style="flex: 1;">
-        <input type="text" placeholder="小红书链接 URL" value="" class="xhs-url-input" style="flex: 2;">
+        <input type="text" placeholder="链接 URL" value="" class="xhs-url-input" style="flex: 2;">
         <button type="button" class="btn-subtle" onclick="this.parentElement.remove()" style="color:#b22; padding:4px 8px;">✕</button>
       `;
       container.appendChild(row);
@@ -903,7 +909,7 @@
       for(let i = 0; i < urlInputs.length; i++) {
         let url = urlInputs[i].value.trim();
         let title = titleInputs[i].value.trim();
-        if(url !== "") links.push({ title: title || "小红书攻略", url: url });
+        if(url !== "") links.push({ title: title || "攻略链接", url: url });
       }
       dailyTips[currentDay] = { text, links };
       window.renderSpotList();
@@ -939,7 +945,11 @@
       document.getElementById('my-pack-list').innerHTML = myPackList.map((item, idx) => `
         <div class="check-item"><input type="checkbox" ${item.checked?'checked':''} onchange="window.togglePack(${idx})"><span style="${item.checked?'text-decoration:line-through;color:var(--text-muted);':''}">${item.text}</span><button class="btn-del-icon" onclick="window.deletePackItem(${idx})">✕</button></div>
       `).join('');
-      document.getElementById('my-budget-num').innerText = Number(localStorage.getItem('my_trip_budget') || '0').toLocaleString();
+      
+      const myrBudget = parseFloat(localStorage.getItem('my_trip_budget_myr') || '0');
+      document.getElementById('my-budget-myr').innerText = myrBudget.toFixed(2);
+      document.getElementById('my-budget-jpy').innerText = Math.round(myrBudget * 38).toLocaleString();
+
       document.getElementById('my-wish-list').innerHTML = myWishList.map((item, idx) => `
         <div class="check-item"><input type="checkbox" ${item.checked?'checked':''} onchange="window.toggleWish(${idx})"><span style="${item.checked?'text-decoration:line-through;color:var(--text-muted);':''}">${item.text}</span><button class="btn-del-icon" onclick="window.deleteWishItem(${idx})">✕</button></div>
       `).join('');
@@ -972,7 +982,15 @@
     window.toggleWish = idx => { myWishList[idx].checked = !myWishList[idx].checked; localStorage.setItem('my_trip_wish', JSON.stringify(myWishList)); window.renderMyTrip(); }
     window.addWishItem = () => { const v = document.getElementById('new-wish-input').value.trim(); if(v){ myWishList.push({text:v, checked:false}); localStorage.setItem('my_trip_wish', JSON.stringify(myWishList)); document.getElementById('new-wish-input').value=''; window.renderMyTrip(); } }
     window.deleteWishItem = idx => { myWishList.splice(idx, 1); localStorage.setItem('my_trip_wish', JSON.stringify(myWishList)); window.renderMyTrip(); }
-    window.setPersonalBudget = () => { const v = document.getElementById('budget-input-val').value; if(v){ localStorage.setItem('my_trip_budget', v); document.getElementById('budget-input-val').value=''; window.renderMyTrip(); } }
+    
+    window.setPersonalBudget = () => { 
+      const v = document.getElementById('budget-input-val').value; 
+      if(v) { 
+        localStorage.setItem('my_trip_budget_myr', v); 
+        document.getElementById('budget-input-val').value = ''; 
+        window.renderMyTrip(); 
+      } 
+    }
     
     window.addPersonalExpense = () => {
       const item = document.getElementById('my-item').value.trim();
@@ -1010,7 +1028,6 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // 1. 行程云端同步
     const itineraryCloudRef = ref(db, 'osaka_family_itinerary');
     onValue(itineraryCloudRef, (snapshot) => {
       const data = snapshot.val();
@@ -1020,7 +1037,6 @@
     });
     window.saveCloudItinerary = function(data) { set(itineraryCloudRef, data); };
 
-    // 2. 家庭账本云端同步
     const ledgerRef = ref(db, 'osaka_family_ledger');
     let familyLedger = []; 
     onValue(ledgerRef, (snapshot) => {
@@ -1030,7 +1046,6 @@
       window.renderFamilyBudget(); 
     });
 
-    // 3. 预算分类云端同步（单位：RM 马币）
     const budgetCloudRef = ref(db, 'osaka_family_budget_myr_v2');
     let cloudBudgetCategories = {};
     onValue(budgetCloudRef, (snapshot) => {
@@ -1057,7 +1072,6 @@
       }
     }
 
-    // 弹窗修改预算逻辑
     window.openEditBudgetModal = function(cat, currentLimit) {
       document.getElementById('budget-modal-cat-name').innerText = cat;
       document.getElementById('budget-modal-cat-key').value = cat;
@@ -1083,7 +1097,6 @@
       let totalBudgetLimit = 0;
       let totalSpentMYR = 0;
 
-      // 计算已花销按分类归集 (转换为 MYR)
       let spentMapMYR = {};
       familyLedger.forEach(item => {
         const myr = getMyrAmount(item.amount, item.currency);
@@ -1121,7 +1134,7 @@
               </td>
               <td>
                 <div style="display:flex; gap:6px;">
-                  <button class="btn-subtle" onclick="window.openEditBudgetModal('${cat}', ${limitMYR})" style="color:#0056b3; font-size:0.75rem; padding:3px 8px; border:1px solid #0056b3; background:#f0f8ff;">✏️ 修改</button>
+                  <button class="btn-subtle" onclick="window.openEditBudgetModal('${cat}', ${limitMYR})" style="color:#0056b3; font-size:0.75rem; padding:3px 8px; border:1px solid #0056b3; background:#f0f8ff;">修改</button>
                   <button class="btn-subtle" onclick="window.deleteBudgetCategory('${cat}')" style="color:#b22; font-size:0.75rem; padding:3px 8px;">删除</button>
                 </div>
               </td>
@@ -1139,7 +1152,6 @@
       document.getElementById('budget-overview-left').innerText = `RM ${totalLeftMYR.toFixed(2)} (¥${totalLeftJPY.toLocaleString()})`;
     };
 
-    // 4. 共同提醒事项云端同步
     const remindersCloudRef = ref(db, 'osaka_family_reminders');
     let cloudReminders = [];
     onValue(remindersCloudRef, (snapshot) => {
@@ -1189,7 +1201,6 @@
       `).join('');
     };
 
-    // 5. 记一笔公共开销逻辑
     window.renderFamilyLedger = function() {
       const filter = document.getElementById('fl-filter').value;
       const tbody = document.getElementById('family-table-body');
