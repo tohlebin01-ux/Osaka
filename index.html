@@ -128,6 +128,10 @@
     .spot-meta { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 8px; display: flex; flex-wrap: wrap; gap: 14px; }
     .spot-desc { font-size: 0.88rem; color: #4a453f; line-height: 1.5; margin-bottom: 10px; }
 
+    /* 小红书攻略按钮样式 */
+    .btn-xiaohongshu { background-color: #ff2442; color: #fff; border: none; padding: 4px 10px; border-radius: 4px; font-size: 0.78rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: background 0.2s; }
+    .btn-xiaohongshu:hover { background-color: #e01d38; }
+
     .sidebar-card { padding: 20px; background: #fffdf9; margin-bottom: 18px; }
     .sidebar-title { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; color: #242220; margin-bottom: 12px; }
     
@@ -165,7 +169,7 @@
     .modal-form-group input, .modal-form-group textarea { width: 100%; border: 1px solid #c8bead; background: #fffdf9; padding: 10px 12px;}
     .modal-form-group textarea { resize: vertical; min-height: 80px; }
 
-    /* 纯正圆形饼图卡片样式 */
+    /* 纯圆形饼图卡片样式 */
     .pie-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 24px; margin-top: 22px; box-shadow: 0 1px 4px rgba(0,0,0,0.03); }
     .pie-container { display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 15px; }
     .pie-svg-box { width: 140px; height: 140px; flex-shrink: 0; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; }
@@ -221,7 +225,7 @@
         <div>
           <div class="hero-subtitle">WINTER JOURNEY / 7 DAYS</div>
           <h2 class="hero-title">在关西，慢慢走</h2>
-          <p class="hero-desc">以【黑门市场 b&黒門1号店】为基地，贯彻随性休闲、不走回头路、美食与古迹兼顾的 5 人同行轻松节奏。</p>
+          <p class="hero-desc">以【黑门市场 b&黒門1号店】为基地，贯彻随性休闲、不走回头路、美食与古迹兼顾的 4 人同行轻松节奏。</p>
         </div>
         <div class="hero-tags">
           <span class="hero-tag">2 月 · 7 天</span>
@@ -355,7 +359,7 @@
         </div>
       </div>
 
-      <!-- 💡 饼图独立卡片：位于整个账本页面的最底部，且采用真正的纯圆形 SVG 容器 -->
+      <!-- 💡 饼图独立卡片：位于整个账本页面的最底部 -->
       <div class="pie-card">
         <div class="card-heading"><span>📊 各分类开销占比统计</span></div>
         <div class="pie-container">
@@ -433,7 +437,7 @@
     </main>
   </div>
 
-  <!-- 编辑弹窗 -->
+  <!-- 编辑弹窗 (含小红书链接输入) -->
   <div id="spot-modal" class="modal-overlay">
     <div class="modal-content">
       <div class="modal-header">
@@ -446,6 +450,7 @@
       <div class="modal-form-group"><label>🚇 交通路线</label><input type="text" id="modal-spot-transit" placeholder="如：搭乘千日前线..."></div>
       <div class="modal-form-group"><label>📝 行程详情、小贴士</label><textarea id="modal-spot-desc" placeholder="详情描述..."></textarea></div>
       <div class="modal-form-group"><label>🖼️ 景点照片网址</label><input type="text" id="modal-spot-img" placeholder="https://..."></div>
+      <div class="modal-form-group"><label>📖 小红书攻略链接 (可选)</label><input type="text" id="modal-spot-xhs" placeholder="https://www.xiaohongshu.com/discovery/item/..."></div>
       <div style="text-align: right; margin-top: 24px;">
         <button class="btn-subtle" onclick="window.closeSpotModal()" style="margin-right: 10px; padding: 8px 18px;">取消</button>
         <button class="btn-red" onclick="window.saveSpotModal()">保存行程</button>
@@ -490,39 +495,40 @@
 
     const defaultItinerary = {
       1: [
-        { name: "关西机场 ➔ 入住 b&黒門1号店", time: "抵达后 - 15:30", transit: "【南海电铁特急 Rapi:t】直达难波站，打车或步行入住", desc: "抵达大阪！出站后直接前往民宿安顿好大件行李，轻装上阵。", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=500", mapQuery: "b&黒門1号店" },
-        { name: "黑门市场 (关西的厨房)", time: "15:30 - 17:00", transit: "民宿下楼即达", desc: "近水楼台先得月！开启第一顿美食狂欢：现烤海鲜、黑毛和牛串、海胆、淡雪草莓，边逛边吃。", img: "https://images.unsplash.com/photo-1590559899731-a372a14c5688?w=500", mapQuery: "黒門市場" },
-        { name: "道顿堀与戎桥打卡", time: "17:30 - 晚间", transit: "步行 8 分钟即达", desc: "晚餐吃一兰拉面，或街头现烤章鱼烧。别忘了与格力高奔跑小人合影。", img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500", mapQuery: "道頓堀 戎橋" }
+        { name: "关西机场 ➔ 入住 b&黒門1号店", time: "抵达后 - 15:30", transit: "【南海电铁特急 Rapi:t】直达难波站，打车或步行入住", desc: "抵达大阪！出站后直接前往民宿安顿好大件行李，轻装上阵。", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=500", mapQuery: "b&黒門1号店", xhs: "" },
+        { name: "黑门市场 (关西的厨房)", time: "15:30 - 17:00", transit: "民宿下楼即达", desc: "近水楼台先得月！开启第一顿美食狂欢：现烤海鲜、黑毛和牛串、海胆、淡雪草莓，边逛边吃。", img: "https://images.unsplash.com/photo-1590559899731-a372a14c5688?w=500", mapQuery: "黒門市場", xhs: "" },
+        { name: "道顿堀与戎桥打卡", time: "17:30 - 晚间", transit: "步行 8 分钟即达", desc: "晚餐吃一兰拉面，或街头现烤章鱼烧。别忘了与格力高奔跑小人合影。", img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500", mapQuery: "道頓堀 戎橋", xhs: "" }
       ],
       2: [
-        { name: "奈良公园 (喂小鹿)", time: "09:30 - 11:00", transit: "【近铁快速急行】日本桥 ➔ 近铁奈良站，步行入园", desc: "向小鹿点头鞠躬它会跟着点头；喂完举起双手展示没食物，小鹿会自动离开。", img: "https://images.unsplash.com/photo-1549693578-cbc70b0cc850?w=500", mapQuery: "奈良公園" },
-        { name: "东大寺", time: "11:00 - 12:30", transit: "沿奈良公园步行", desc: "近距离瞻仰巨大卢舍那大佛。午餐推荐附近的「志津香釜饭」。", img: "https://images.unsplash.com/photo-1604928156637-29ec3e5f2cfc?w=500", mapQuery: "東大寺" },
-        { name: "春日大社 ➔ 奈良町老街", time: "14:00 - 17:30", transit: "步行漫游", desc: "穿过石灯笼参道至春日大社。回到商店街必买中谷堂现打麻薯！", img: "https://images.unsplash.com/photo-1615671158671-3312e75e1140?w=500", mapQuery: "春日大社" }
+        { name: "奈良公园 (喂小鹿)", time: "09:30 - 11:00", transit: "【近铁快速急行】日本桥 ➔ 近铁奈良站，步行入园", desc: "向小鹿点头鞠躬它会跟着点头；喂完举起双手展示没食物，小鹿会自动离开。", img: "https://images.unsplash.com/photo-1549693578-cbc70b0cc850?w=500", mapQuery: "奈良公園", xhs: "" },
+        { name: "东大寺", time: "11:00 - 12:30", transit: "沿奈良公园步行", desc: "近距离瞻仰巨大卢舍那大佛。午餐推荐附近的「志津香釜饭」。", img: "https://images.unsplash.com/photo-1604928156637-29ec3e5f2cfc?w=500", mapQuery: "東大寺", xhs: "" },
+        { name: "春日大社 ➔ 奈良町老街", time: "14:00 - 17:30", transit: "步行漫游", desc: "穿过石灯笼参道至春日大社。回到商店街必买中谷堂现打麻薯！", img: "https://images.unsplash.com/photo-1615671158671-3312e75e1140?w=500", mapQuery: "春日大社", xhs: "" }
       ],
       3: [
-        { name: "伏见稻荷大社", time: "09:00 - 11:30", transit: "地铁至【北浜】转【京阪本线特急】直达", desc: "震撼的千本鸟居。长辈同行建议走到“奥社奉拜所”原路折返即可，省力出片。", img: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=500", mapQuery: "伏見稲荷大社" },
-        { name: "清水寺 ➔ 二三年坂", time: "12:00 - 16:30", transit: "搭京阪电车至【清水五条】，打车直达坡下", desc: "参观清水舞台。慢步下坡逛二三年坂，品尝抹茶与伴手礼。", img: "https://images.unsplash.com/photo-1624253321171-1be53e12f5f4?w=500", mapQuery: "清水寺" },
-        { name: "祇园鸭川散步", time: "17:00 - 18:30", transit: "沿八坂神社顺势逛出", desc: "黄昏时分漫步花见小路与鸭川，感受京都清冽氛围。随后搭车返回大阪。", img: "https://images.unsplash.com/photo-1551044439-d3e75bc7bdf5?w=500", mapQuery: "鴨川 祇園" }
+        { name: "伏见稻荷大社", time: "09:00 - 11:30", transit: "地铁至【北浜】转【京阪本线特急】直达", desc: "震撼的千本鸟居。长辈同行建议走到“奥社奉拜所”原路折返即可，省力出片。", img: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=500", mapQuery: "伏見稲荷大社", xhs: "" },
+        { name: "清水寺 ➔ 二三年坂", time: "12:00 - 16:30", transit: "搭京阪电车至【清水五条】，打车直达坡下", desc: "参观清水舞台。慢步下坡逛二三年坂，品尝抹茶与伴手礼。", img: "https://images.unsplash.com/photo-1624253321171-1be53e12f5f4?w=500", mapQuery: "清水寺", xhs: "" },
+        { name: "祇园鸭川散步", time: "17:00 - 18:30", transit: "沿八坂神社顺势逛出", desc: "黄昏时分漫步花见小路与鸭川，感受京都清冽氛围。随后搭车返回大阪。", img: "https://images.unsplash.com/photo-1551044439-d3e75bc7bdf5?w=500", mapQuery: "鴨川 祇園", xhs: "" }
       ],
       4: [
-        { name: "四天王寺", time: "10:30 - 12:30", transit: "步行或坐地铁1站", desc: "睡到自然醒的悠闲一朝。参观日本最古老的官寺，感受白砂庭园。", img: "https://images.unsplash.com/photo-1627918451151-51ee3eeb2de0?w=500", mapQuery: "四天王寺" },
-        { name: "新世界与通天阁", time: "12:30 - 15:30", transit: "步行10分钟前往", desc: "感受昭和复古市井气息。午餐必吃「元祖炸串达摩」，外酥里嫩！", img: "https://images.unsplash.com/photo-1588636733221-c19b88f346b9?w=500", mapQuery: "通天閣" },
-        { name: "阿倍野 Harukas 300", time: "17:00 - 晚间", transit: "步行进入近铁百货", desc: "360度玻璃观景台看日落与夜景。晚餐推荐在百货楼上吃寿喜烧。", img: "https://images.unsplash.com/photo-1590442345511-b0db43d4c3f5?w=500", mapQuery: "あべのハルカス" }
+        { name: "四天王寺", time: "09:30 - 11:30", transit: "步行或坐地铁1站", desc: "参观日本最古老的官寺，感受白砂庭园与历史底蕴。", img: "https://images.unsplash.com/photo-1627918451151-51ee3eeb2de0?w=500", mapQuery: "四天王寺", xhs: "" },
+        { name: "大阪天王寺动物园", time: "11:30 - 14:00", transit: "步行 10 分钟或乘地铁 1 站", desc: "历史悠久的市区动物园，可以看到可爱的北极熊、大象和奇异鸟等，非常适合轻松漫步。", img: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?w=500", mapQuery: "天王寺動物園", xhs: "" },
+        { name: "新世界与通天阁 (午后/晚餐)", time: "14:00 - 17:00", transit: "步行即达", desc: "感受昭和复古市井气息。必吃「元祖炸串达摩」，外酥里嫩！", img: "https://images.unsplash.com/photo-1588636733221-c19b88f346b9?w=500", mapQuery: "通天閣", xhs: "" },
+        { name: "阿倍野 Harukas 300", time: "17:30 - 晚间", transit: "步行 10 分钟", desc: "360度玻璃观景台看日落与夜景。", img: "https://images.unsplash.com/photo-1590442345511-b0db43d4c3f5?w=500", mapQuery: "あべのハルカス", xhs: "" }
       ],
       5: [
-        { name: "大阪城天守阁", time: "09:30 - 12:30", transit: "乘地铁转中央线至【谷町四丁目站】", desc: "登天守阁俯瞰全城，了解战国历史。", img: "https://images.unsplash.com/photo-1555359739-16a4959db14d?w=500", mapQuery: "大阪城" },
-        { name: "日本桥电器街", time: "12:30 - 15:30", transit: "搭地铁返回【日本桥】", desc: "大阪秋叶原！手办盲盒、数码产品，看中心仪的直接下手。", img: "https://images.unsplash.com/photo-1544413660-299165566b1d?w=500", mapQuery: "でんでんタウン" },
-        { name: "心斋桥筋大采购", time: "15:30 - 晚间", transit: "步行向北走即达", desc: "大丸百货、大国药妆扫货。买沉了随时回公寓放行李！", img: "https://images.unsplash.com/photo-1616222629858-69cb4807469a?w=500", mapQuery: "心斎橋筋商店街" }
+        { name: "大阪城天守阁", time: "09:30 - 12:30", transit: "乘地铁转中央线至【谷町四丁目站】", desc: "登天守阁俯瞰全城，了解战国历史。", img: "https://images.unsplash.com/photo-1555359739-16a4959db14d?w=500", mapQuery: "大阪城", xhs: "" },
+        { name: "日本桥电器街", time: "12:30 - 15:30", transit: "搭地铁返回【日本桥】", desc: "大阪秋叶原！手办盲盒、数码产品，看中心仪的直接下手。", img: "https://images.unsplash.com/photo-1544413660-299165566b1d?w=500", mapQuery: "でんでんタウン", xhs: "" },
+        { name: "心斋桥筋大采购", time: "15:30 - 晚间", transit: "步行向北走即达", desc: "大丸百货、大国药妆扫货。买沉了随时回公寓放行李！", img: "https://images.unsplash.com/photo-1616222629858-69cb4807469a?w=500", mapQuery: "心斎橋筋商店街", xhs: "" }
       ],
       6: [
-        { name: "中崎町复古老街", time: "10:30 - 12:30", transit: "地铁御堂筋线至【梅田站】步行", desc: "躲过轰炸 the 木质长屋区，文艺手作店与咖啡馆，拍照极其出片。", img: "https://images.unsplash.com/photo-1609945180155-7f28ba24a1e9?w=500", mapQuery: "中崎町" },
-        { name: "梅田百货巨头商圈", time: "12:30 - 16:30", transit: "步行回梅田核心区", desc: "聚集阪急、大丸和 LUCUA。高端品牌最全。午餐推荐利久牛舌。", img: "https://images.unsplash.com/photo-1594912952835-15a0c333dfd5?w=500", mapQuery: "梅田" },
-        { name: "道顿堀水上观光船", time: "16:30 - 晚间", transit: "地铁返回难波/道顿堀", desc: "乘观光船穿过各桥，仰望霓虹灯初上。大餐推荐叙叙苑烧肉或蟹道乐！", img: "https://images.unsplash.com/photo-1563604593452-f47321e06183?w=500", mapQuery: "とんぼりリバークルーズ" }
+        { name: "中崎町复古老街", time: "10:30 - 12:30", transit: "地铁御堂筋线至【梅田站】步行", desc: "躲过轰炸的木质长屋区，文艺手作店与咖啡馆，拍照极其出片。", img: "https://images.unsplash.com/photo-1609945180155-7f28ba24a1e9?w=500", mapQuery: "中崎町", xhs: "" },
+        { name: "梅田百货巨头商圈", time: "12:30 - 16:30", transit: "步行回梅田核心区", desc: "聚集阪急、大丸和 LUCUA。高端品牌最全。午餐推荐利久牛舌。", img: "https://images.unsplash.com/photo-1594912952835-15a0c333dfd5?w=500", mapQuery: "梅田", xhs: "" },
+        { name: "道顿堀水上观光船", time: "16:30 - 晚间", transit: "地铁返回难波/道顿堀", desc: "乘观光船穿过各桥，仰望霓虹灯初上。大餐推荐叙叙苑烧肉或蟹道乐！", img: "https://images.unsplash.com/photo-1563604593452-f47321e06183?w=500", mapQuery: "とんぼりリバークルーズ", xhs: "" }
       ],
       7: [
-        { name: "难波八阪神社", time: "09:30 - 11:00", transit: "退房寄存行李，步行6分至神社", desc: "巨大的狮子头神殿！吸走厄运带来好运，祈求旅途平安的绝佳收尾。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Namba_Yasaka_Shrine_01.jpg/500px-Namba_Yasaka_Shrine_01.jpg", mapQuery: "難波八阪神社" },
-        { name: "临空城 Premium Outlets", time: "11:30 - 15:30", transit: "南海电铁机场急行至【临空城站】", desc: "在车站寄存行李。关西最大的海滨奥特莱斯，做最后扫货。", img: "https://images.unsplash.com/photo-1555529733-0e67056058ab?w=500", mapQuery: "りんくうプレミアム・アウトレット" },
-        { name: "关西机场返程", time: "16:00", transit: "乘电车/巴士 1 站直达机场", desc: "提前办理值机，在免税店补齐白色恋人、Royce 生巧等，满载而归！", img: "https://images.unsplash.com/photo-1578330752528-9844ba74044c?w=500", mapQuery: "関西国際空港" }
+        { name: "难波八阪神社", time: "09:30 - 11:00", transit: "退房寄存行李，步行6分至神社", desc: "巨大的狮子头神殿！吸走厄运带来好运，祈求旅途平安的绝佳收尾。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Namba_Yasaka_Shrine_01.jpg/500px-Namba_Yasaka_Shrine_01.jpg", mapQuery: "難波八阪神社", xhs: "" },
+        { name: "临空城 Premium Outlets", time: "11:30 - 15:30", transit: "南海电铁机场急行至【临空城站】", desc: "在车站寄存行李。关西最大的海滨奥特莱斯，做最后扫货。", img: "https://images.unsplash.com/photo-1555529733-0e67056058ab?w=500", mapQuery: "りんくうプレミアム・アウトレット", xhs: "" },
+        { name: "关西机场返程", time: "16:00", transit: "乘电车/巴士 1 站直达机场", desc: "提前办理值机，在免税店补齐白色恋人、Royce 生巧等，满载而归！", img: "https://images.unsplash.com/photo-1578330752528-9844ba74044c?w=500", mapQuery: "関西国際空港", xhs: "" }
       ]
     };
 
@@ -530,7 +536,7 @@
       1: "抵达日别排太满；先安顿行李、购买充值 ICOCA 和准备暖暖包。",
       2: "喂鹿时把鹿饼藏进包里，向小鹿鞠躬；东大寺附近步行较多，请穿好走的鞋。",
       3: "京都坡道多（二年坂/三年坂），穿舒适鞋履；热门餐厅建议避开饭点排队。",
-      4: "新世界炸串店需要排队；阿倍野展望台建议在日落前半小时抵达，可看日落+夜景。",
+      4: "天王寺动物园和四天王寺都在附近，步行即可串联，非常悠闲的一天。",
       5: "大阪城登阁需爬些楼梯；日本桥电器街手办多，看中心仪的可直接下手。",
       6: "梅田商圈犹如地下迷宫，请跟紧 Google Maps 导航；晚上游船风大注意保暖。",
       7: "预留充足时间前往机场；临空城奥特莱斯可先在电车站中心寄存大件行李。"
@@ -578,16 +584,18 @@
 
       box.innerHTML = spots.map((s, idx) => {
         let query = s.mapQuery ? s.mapQuery : s.name;
+        let xhsBtnHtml = s.xhs ? `<a href="${s.xhs}" target="_blank" class="btn-xiaohongshu">📖 小红书攻略 ↗</a>` : '';
         return `
         <div class="spot-card">
           <img src="${s.img}" onerror="this.src='${fallbackImg}'" class="spot-img" alt="${s.name}">
           <div class="spot-info">
             <div class="spot-name">
               <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('日本 大阪 ' + query)}" target="_blank" title="在 Google Maps 中查看">📍 ${s.name}</a>
-              <div>
+              <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                ${xhsBtnHtml}
                 <button class="btn-subtle" onclick="window.moveSpotUp(${idx})" ${idx === 0 ? 'disabled style="opacity:0.3;cursor:not-allowed;"' : 'style="color:#555; padding:4px 8px;"'} title="上移">▲</button>
-                <button class="btn-subtle" onclick="window.moveSpotDown(${idx})" ${idx === spots.length - 1 ? 'disabled style="opacity:0.3;cursor:not-allowed;"' : 'style="color:#555; padding:4px 8px; margin-right:6px;"'} title="下移">▼</button>
-                <button class="btn-subtle" onclick="window.editSpot(${idx})" style="color:#0056b3; font-size:0.75rem; padding:4px 10px; margin-right:6px; border:1px solid #0056b3; background:#f0f8ff;">✏️ 修改</button>
+                <button class="btn-subtle" onclick="window.moveSpotDown(${idx})" ${idx === spots.length - 1 ? 'disabled style="opacity:0.3;cursor:not-allowed;"' : 'style="color:#555; padding:4px 8px; margin-right:4px;"'} title="下移">▼</button>
+                <button class="btn-subtle" onclick="window.editSpot(${idx})" style="color:#0056b3; font-size:0.75rem; padding:4px 8px; margin-right:4px; border:1px solid #0056b3; background:#f0f8ff;">✏️ 修改</button>
                 <button class="btn-subtle" onclick="window.removeSpot(${idx})" style="color:#b22; font-size:0.75rem; padding:4px 8px;">删除</button>
               </div>
             </div>
@@ -624,6 +632,7 @@
       document.getElementById('modal-spot-transit').value = '';
       document.getElementById('modal-spot-desc').value = '';
       document.getElementById('modal-spot-img').value = '';
+      document.getElementById('modal-spot-xhs').value = '';
       document.getElementById('spot-modal').classList.add('active');
     }
 
@@ -636,6 +645,7 @@
       document.getElementById('modal-spot-transit').value = spot.transit || '';
       document.getElementById('modal-spot-desc').value = spot.desc || '';
       document.getElementById('modal-spot-img').value = spot.img || '';
+      document.getElementById('modal-spot-xhs').value = spot.xhs || '';
       document.getElementById('spot-modal').classList.add('active');
     }
 
@@ -650,14 +660,15 @@
       const transit = document.getElementById('modal-spot-transit').value.trim();
       const desc = document.getElementById('modal-spot-desc').value.trim();
       const img = document.getElementById('modal-spot-img').value.trim() || fallbackImg;
+      const xhs = document.getElementById('modal-spot-xhs').value.trim();
 
       if (!itineraryData[currentDay]) itineraryData[currentDay] = [];
 
       if (idx === -1) {
-        itineraryData[currentDay].push({ name, time, transit, desc, img, mapQuery: name });
+        itineraryData[currentDay].push({ name, time, transit, desc, img, xhs, mapQuery: name });
       } else {
         const spot = itineraryData[currentDay][idx];
-        spot.name = name; spot.time = time; spot.transit = transit; spot.desc = desc; spot.img = img;
+        spot.name = name; spot.time = time; spot.transit = transit; spot.desc = desc; spot.img = img; spot.xhs = xhs;
         if (!spot.mapQuery || spot.mapQuery === itineraryData[currentDay][idx].name) { spot.mapQuery = name; }
       }
       
@@ -783,7 +794,7 @@
       window.renderFamilyLedger();
     });
 
-    // 纯圆形饼图渲染逻辑（完美防止方形切角）
+    // 纯圆形饼图渲染逻辑
     function renderPieChart(catMap, totalJPY) {
       const svg = document.getElementById('expense-pie-svg');
       const legend = document.getElementById('expense-pie-legend');
@@ -815,7 +826,6 @@
         const dashArray = `${percent * 100} 100`;
         const dashOffset = -cumulativePercent * 100;
 
-        // stroke-width 使用 32 填满整个圆形容器，通过 dasharray 展现完美圆弧切片
         svgHtml += `<circle cx="16" cy="16" r="15.9155" fill="transparent" stroke="${color}" stroke-width="32" stroke-dasharray="${dashArray}" stroke-dashoffset="${dashOffset}"></circle>`;
         
         legendHtml += `
