@@ -128,12 +128,11 @@
     .spot-meta { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 8px; display: flex; flex-wrap: wrap; gap: 14px; }
     .spot-desc { font-size: 0.88rem; color: #4a453f; line-height: 1.5; margin-bottom: 10px; }
 
-    /* 小红书攻略按钮样式 */
     .btn-xiaohongshu { background-color: #ff2442; color: #fff; border: none; padding: 4px 10px; border-radius: 4px; font-size: 0.78rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: background 0.2s; }
     .btn-xiaohongshu:hover { background-color: #e01d38; }
 
     .sidebar-card { padding: 20px; background: #fffdf9; margin-bottom: 18px; }
-    .sidebar-title { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; color: #242220; margin-bottom: 12px; }
+    .sidebar-title { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; color: #242220; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
     
     .btn-map-route { background-color: #16395b; color: #fff; border: none; padding: 10px 16px; font-size: 0.95rem; font-weight: bold; font-family: var(--font-sans); cursor: pointer; display: inline-block; text-decoration: none; box-shadow: 4px 4px 0px #c19b4e; transition: transform 0.1s, box-shadow 0.1s; width: fit-content; margin-top: 5px;}
     .btn-map-route:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px #c19b4e; }
@@ -143,7 +142,7 @@
     .weather-box span { display: block; font-size: 0.85rem; color: #4a453e; }
     .weather-icon { font-size: 1.4rem; margin: 8px 0; color: #16395b; }
     
-    .tips-text { border-left: 4px solid #c64731; padding-left: 14px; font-size: 0.9rem; color: #444; line-height: 1.6; }
+    .tips-text { border-left: 4px solid #c64731; padding-left: 14px; font-size: 0.9rem; color: #444; line-height: 1.6; margin-bottom: 12px; }
 
     .trip-top-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-bottom: 22px; }
     @media (max-width: 900px) { .trip-top-row { grid-template-columns: 1fr; } }
@@ -169,7 +168,6 @@
     .modal-form-group input, .modal-form-group textarea { width: 100%; border: 1px solid #c8bead; background: #fffdf9; padding: 10px 12px;}
     .modal-form-group textarea { resize: vertical; min-height: 80px; }
 
-    /* 纯圆形饼图卡片样式 */
     .pie-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 24px; margin-top: 22px; box-shadow: 0 1px 4px rgba(0,0,0,0.03); }
     .pie-container { display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 15px; }
     .pie-svg-box { width: 140px; height: 140px; flex-shrink: 0; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; }
@@ -285,8 +283,12 @@
           </div>
 
           <div class="card sidebar-card">
-            <h3 class="sidebar-title">今天的贴士</h3>
-            <div class="tips-text" id="daily-tip-text">抵达日别排太满；先寄行李、买 ICOCA 和暖暖包。</div>
+            <h3 class="sidebar-title">
+              <span>今天的贴士</span>
+              <button class="btn-subtle" onclick="window.openEditTipModal()" style="font-size:0.75rem; padding:3px 8px;">✏️ 修改</button>
+            </h3>
+            <div class="tips-text" id="daily-tip-text">抵达日别排太满；先安顿行李、买 ICOCA 和暖暖包。</div>
+            <div id="daily-tip-xhs-box"></div>
           </div>
         </div>
       </div>
@@ -437,7 +439,7 @@
     </main>
   </div>
 
-  <!-- 编辑弹窗 (含小红书链接输入) -->
+  <!-- 行程点编辑弹窗 -->
   <div id="spot-modal" class="modal-overlay">
     <div class="modal-content">
       <div class="modal-header">
@@ -454,6 +456,22 @@
       <div style="text-align: right; margin-top: 24px;">
         <button class="btn-subtle" onclick="window.closeSpotModal()" style="margin-right: 10px; padding: 8px 18px;">取消</button>
         <button class="btn-red" onclick="window.saveSpotModal()">保存行程</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 今日贴士修改弹窗 -->
+  <div id="tip-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span>修改第 <span id="tip-modal-day-num">1</span> 天贴士与路线攻略</span>
+        <button class="modal-close" onclick="window.closeTipModal()">✕</button>
+      </div>
+      <div class="modal-form-group"><label>💡 今日贴士说明</label><textarea id="modal-tip-text" placeholder="输入今天的温馨提醒..."></textarea></div>
+      <div class="modal-form-group"><label>📖 今日小红书路线攻略链接 (可选)</label><input type="text" id="modal-tip-xhs" placeholder="https://www.xiaohongshu.com/..."></div>
+      <div style="text-align: right; margin-top: 24px;">
+        <button class="btn-subtle" onclick="window.closeTipModal()" style="margin-right: 10px; padding: 8px 18px;">取消</button>
+        <button class="btn-red" onclick="window.saveTipModal()">保存贴士</button>
       </div>
     </div>
   </div>
@@ -532,14 +550,14 @@
       ]
     };
 
-    const dailyTips = {
-      1: "抵达日别排太满；先安顿行李、购买充值 ICOCA 和准备暖暖包。",
-      2: "喂鹿时把鹿饼藏进包里，向小鹿鞠躬；东大寺附近步行较多，请穿好走的鞋。",
-      3: "京都坡道多（二年坂/三年坂），穿舒适鞋履；热门餐厅建议避开饭点排队。",
-      4: "天王寺动物园和四天王寺都在附近，步行即可串联，非常悠闲的一天。",
-      5: "大阪城登阁需爬些楼梯；日本桥电器街手办多，看中心仪的可直接下手。",
-      6: "梅田商圈犹如地下迷宫，请跟紧 Google Maps 导航；晚上游船风大注意保暖。",
-      7: "预留充足时间前往机场；临空城奥特莱斯可先在电车站中心寄存大件行李。"
+    let dailyTips = {
+      1: { text: "抵达日别排太满；先安顿行李、购买充值 ICOCA 和准备暖暖包。", xhs: "" },
+      2: { text: "喂鹿时把鹿饼藏进包里，向小鹿鞠躬；东大寺附近步行较多，请穿好走的鞋。", xhs: "" },
+      3: { text: "京都坡道多（二年坂/三年坂），穿舒适鞋履；热门餐厅建议避开饭点排队。", xhs: "" },
+      4: { text: "天王寺动物园和四天王寺都在附近，步行即可串联，非常悠闲的一天。", xhs: "" },
+      5: { text: "大阪城登阁需爬些楼梯；日本桥电器街手办多，看中心仪的可直接下手。", xhs: "" },
+      6: { text: "梅田商圈犹如地下迷宫，请跟紧 Google Maps 导航；晚上游船风大注意保暖。", xhs: "" },
+      7: { text: "预留充足时间前往机场；临空城奥特莱斯可先在电车站中心寄存大件行李。", xhs: "" }
     };
 
     let currentDay = 1;
@@ -567,7 +585,15 @@
       const box = document.getElementById('spots-list-box');
       const spots = itineraryData[currentDay] || [];
       
-      document.getElementById('daily-tip-text').innerText = dailyTips[currentDay] || "自由发挥，开心最重要！";
+      const tipData = dailyTips[currentDay] || { text: "自由发挥，开心最重要！", xhs: "" };
+      document.getElementById('daily-tip-text').innerText = tipData.text;
+      
+      const xhsBox = document.getElementById('daily-tip-xhs-box');
+      if (tipData.xhs) {
+        xhsBox.innerHTML = `<div style="margin-top: 10px;"><a href="${tipData.xhs}" target="_blank" class="btn-xiaohongshu">📖 查看今日小红书路线攻略 ↗</a></div>`;
+      } else {
+        xhsBox.innerHTML = '';
+      }
       
       const mapBtn = document.getElementById('route-map-btn');
       if (spots.length > 0) {
@@ -584,7 +610,7 @@
 
       box.innerHTML = spots.map((s, idx) => {
         let query = s.mapQuery ? s.mapQuery : s.name;
-        let xhsBtnHtml = s.xhs ? `<a href="${s.xhs}" target="_blank" class="btn-xiaohongshu">📖 小红书攻略 ↗</a>` : '';
+        let xhsBtnHtml = s.xhs ? `<a href="${s.xhs}" target="_blank" class="btn-xiaohongshu">📖 小红书 ↗</a>` : '';
         return `
         <div class="spot-card">
           <img src="${s.img}" onerror="this.src='${fallbackImg}'" class="spot-img" alt="${s.name}">
@@ -680,6 +706,35 @@
         itineraryData[currentDay].splice(idx, 1); 
         window.renderSpotList(); window.syncItineraryToCloud();
       }
+    }
+
+    // 贴士修改弹窗逻辑
+    window.openEditTipModal = function() {
+      document.getElementById('tip-modal-day-num').innerText = currentDay;
+      const t = dailyTips[currentDay] || { text: "", xhs: "" };
+      document.getElementById('modal-tip-text').value = t.text;
+      document.getElementById('modal-tip-xhs').value = t.xhs || '';
+      document.getElementById('tip-modal').classList.add('active');
+    }
+
+    window.closeTipModal = function() {
+      document.getElementById('tip-modal').classList.remove('active');
+    }
+
+    window.saveTipModal = function() {
+      const text = document.getElementById('modal-tip-text').value.trim();
+      const xhs = document.getElementById('modal-tip-xhs').value.trim();
+      dailyTips[currentDay] = { text, xhs };
+      window.renderSpotList();
+      window.closeTipModal();
+      // 可选：如果希望贴士也能云端同步，可以存入云端或 localStorage
+      localStorage.setItem('osaka_daily_tips', JSON.stringify(dailyTips));
+    }
+
+    // 读取本地保存的贴士
+    const savedTips = localStorage.getItem('osaka_daily_tips');
+    if (savedTips) {
+      try { dailyTips = JSON.parse(savedTips); } catch(e){}
     }
 
     let myPackList = JSON.parse(localStorage.getItem('my_trip_pack')) || [{ text: '护照、IC、保险资料', checked: false }, { text: '现金、Wise / 银行卡', checked: false }, { text: '防风外套与保暖衣', checked: false }, { text: '充电器、行动电源', checked: false }, { text: '常用药、口罩', checked: false }];
