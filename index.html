@@ -229,7 +229,7 @@
       </div>
     </header>
 
-    <!-- 实时汇率换算工具条：常驻在外、紧凑单行 -->
+    <!-- 实时汇率换算工具条 -->
     <div class="currency-converter-bar">
       <div style="font-size: 0.8rem; color: var(--text-muted); white-space: nowrap;">
         <b>实时汇率小工具</b> (1:38)
@@ -249,12 +249,12 @@
       </div>
     </div>
 
-    <!-- 折叠开关按钮：控制下方“在关西，慢慢走”和“出发前小提醒” -->
+    <!-- 折叠开关按钮 -->
     <div class="collapse-toggle-bar">
       <button class="btn-collapse-toggle" id="collapse-btn" onclick="toggleTopSection()">展开 旅程介绍与出行提醒</button>
     </div>
 
-    <!-- 默认折叠的区域 -->
+    <!-- 默认折叠区域 -->
     <div class="collapsible-container" id="collapsible-section">
       <section class="hero-grid">
         <div class="hero-banner">
@@ -368,8 +368,9 @@
           <div><label style="font-size:0.78rem; color:#666;">项目</label><input type="text" id="fl-item" placeholder="如：机票" style="width:100%;"></div>
           <div>
             <label style="font-size:0.78rem; color:#666;">类别</label>
+            <!-- 统一增加“机票”选项以完美对接预算看板 -->
             <select id="fl-category" style="width:100%;">
-              <option value="餐饮">餐饮</option><option value="交通">交通/地铁</option><option value="住宿">住宿</option><option value="门票">门票体验</option><option value="采购">超市零食</option><option value="其他">其他</option>
+              <option value="餐饮">餐饮</option><option value="交通">交通/地铁</option><option value="住宿">住宿</option><option value="门票">门票体验</option><option value="采购">超市零食</option><option value="机票">机票</option><option value="其他">其他</option>
             </select>
           </div>
           <div>
@@ -766,6 +767,7 @@
       "住宿": 5300,
       "门票": 1300,
       "采购": 2100,
+      "机票": 12000,
       "其他": 1000
     };
 
@@ -1317,7 +1319,7 @@
         legend.innerHTML = '<span style="color: var(--text-muted); font-size: 0.9rem;">暂无分类开销数据</span>';
         return;
       }
-      const colors = { "餐饮": "#c64731", "交通": "#16395b", "住宿": "#d4a359", "门票": "#6096ba", "采购": "#87bba2", "其他": "#a5a58d" };
+      const colors = { "餐饮": "#c64731", "交通": "#16395b", "住宿": "#d4a359", "门票": "#6096ba", "采购": "#87bba2", "机票": "#457b9d", "其他": "#a5a58d" };
       let cumulativePercent = 0, svgHtml = '', legendHtml = '';
       for (const [cat, amount] of Object.entries(catMap)) {
         const percent = amount / totalJPY;
